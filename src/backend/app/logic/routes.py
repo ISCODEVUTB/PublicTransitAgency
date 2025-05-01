@@ -9,7 +9,7 @@ class Routes:
 
     @route.setter
     def route(self, value: dict):
-        self._route = value
+        self._route = value 
         if 'route_id' in value:
             self._route_id = value['route_id']
 
