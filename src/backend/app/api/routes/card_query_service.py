@@ -1,9 +1,9 @@
 import logging
-from fastapi import Request, Query, APIRouter, Security
+from fastapi import Request, Query, APIRouter, Cookie
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from backend.app.core.auth import get_current_user
+from backend.app.core.auth import verify_token_and_scope
 from backend.app.models.card import CardOut
 from backend.app.logic.universal_controller_sql import UniversalController
 
@@ -11,38 +11,33 @@ from backend.app.logic.universal_controller_sql import UniversalController
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-# Create the router for card-related endpoints
+# Crear el router
 app = APIRouter(prefix="/card", tags=["card"])
 
-# Initialize universal controller instance
+# Controlador y plantillas
 controller = UniversalController()
-
-# Setup Jinja2 template engine
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 
 @app.get("/consultar", response_class=HTMLResponse)
 def consultar(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=[
+    access_token: str = Cookie(default=None)
+):
+    user_id = verify_token_and_scope(access_token, required_scopes=[
         "system", "administrador", "pasajero", "supervisor", "mantenimiento"
     ])
-):
-    """
-    Render the 'ConsultarTarjeta.html' template for the card consultation page.
-    """
-    logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de tarjeta")
+    logger.info(f"[GET /consultar] Usuario: {user_id} - Mostrando página de consulta de tarjeta")
     return templates.TemplateResponse("ConsultarTarjeta.html", {"request": request})
 
 
 @app.get("/tarjetas")
 async def get_tarjetas(
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    access_token: str = Cookie(default=None)
 ):
-    """
-    Retrieve and return all card records from the database.
-    """
-    logger.info(f"[GET /tarjetas] Usuario: {current_user['user_id']} - Consultando todas las tarjetas.")
+    user_id = verify_token_and_scope(access_token, required_scopes=["system", "administrador"])
+    logger.info(f"[GET /tarjetas] Usuario: {user_id} - Consultando todas las tarjetas.")
+    
     tarjetas = controller.read_all(CardOut)
     logger.info(f"[GET /tarjetas] Número de tarjetas encontradas: {len(tarjetas)}")
     return tarjetas
@@ -52,13 +47,11 @@ async def get_tarjetas(
 def tarjeta(
     request: Request,
     id: int = Query(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
+    access_token: str = Cookie(default=None)
 ):
-    """
-    Retrieve a card by its ID and render the 'tarjeta.html' template with its details.
-    If the card is not found, display 'None' for all fields.
-    """
-    logger.info(f"[GET /tarjeta] Usuario: {current_user['user_id']} - Consultando tarjeta con id={id}")
+    user_id = verify_token_and_scope(access_token, required_scopes=["system", "administrador", "pasajero"])
+    logger.info(f"[GET /tarjeta] Usuario: {user_id} - Consultando tarjeta con id={id}")
+    
     unit_tarjeta = controller.get_by_id(CardOut, id)
 
     if unit_tarjeta:

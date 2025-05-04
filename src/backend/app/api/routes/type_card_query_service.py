@@ -1,73 +1,54 @@
 import logging
-from fastapi import APIRouter, HTTPException, Security
+from fastapi import APIRouter, HTTPException, Cookie
 from fastapi import status
+
 from backend.app.models.type_card import TypeCardOut
 from backend.app.logic.universal_controller_sql import UniversalController
-from backend.app.core.auth import get_current_user
+from backend.app.core.auth import verify_token_and_scope
 
-# Initialize the controller for type card operations
+# Initialize the controller
 controller = UniversalController()
 
-# Create the router with prefix and tags
+# Create router
 app = APIRouter(prefix="/typecard", tags=["Type Card"])
 
-# Set up logging
+# Logging config
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
+
 @app.get("/typecards/")
-def read_all(
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-):
+def read_all(access_token: str = Cookie(default=None)):
     """
     Fetches all records of TypeCard.
-
-    Args:
-        current_user (dict): The current user, validated via security.
-    
-    Returns:
-        List of TypeCard records.
     """
+    user_id = verify_token_and_scope(access_token, ["system", "administrador"])
     try:
-        logger.info(f"[GET /typecards/] User {current_user['user_id']} is fetching all TypeCard records.")
+        logger.info(f"[GET /typecards/] User {user_id} is fetching all TypeCard records.")
         typecards = controller.read_all(TypeCardOut)
         logger.info(f"[GET /typecards/] Successfully fetched {len(typecards)} TypeCard records.")
         return typecards
     except Exception as e:
-        logger.error(f"[GET /typecards/] Error occurred while fetching TypeCard records: {str(e)}")
+        logger.error(f"[GET /typecards/] Error: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal server error")
-    
-@app.get("/{id}")
 
-def get_by_id(
-    id: int, 
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-):
+
+@app.get("/{id}")
+def get_by_id(id: int, access_token: str = Cookie(default=None)):
     """
     Fetches a TypeCard record by its ID.
-
-    Args:
-        id (int): The ID of the TypeCard to retrieve.
-        current_user (dict): The current user, validated via security.
-    
-    Raises:
-        HTTPException: If the TypeCard is not found (404).
-    
-    Returns:
-        TypeCard record details as a dictionary.
     """
+    user_id = verify_token_and_scope(access_token, ["system", "administrador"])
     try:
-        logger.info(f"[GET /{id}] User {current_user['user_id']} is fetching TypeCard with ID {id}.")
+        logger.info(f"[GET /{id}] User {user_id} is fetching TypeCard with ID {id}.")
         result = controller.get_by_id(TypeCardOut, id)
         if not result:
             logger.warning(f"[GET /{id}] TypeCard with ID {id} not found.")
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="TypeCard not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="TypeCard not found")
         logger.info(f"[GET /{id}] Successfully fetched TypeCard with ID {id}.")
         return result.to_dict()
-    except HTTPException as e:
-        raise e  # Deja pasar los HTTPException
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"[GET /{id}] Error occurred while fetching TypeCard with ID {id}: {str(e)}")
+        logger.error(f"[GET /{id}] Error: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal server error")

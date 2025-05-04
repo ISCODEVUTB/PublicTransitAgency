@@ -15,6 +15,7 @@ fake_users_db = {
     "admin": {"username": "admin", "password": "adminpass", "scope": "administrador"},
     "john": {"username": "john", "password": "johnpass", "scope": "pasajero"},
     "jane": {"username": "jane", "password": "janepass", "scope": "supervisor"},
+    "pedro": {"username": "pedro", "password": "pedropass", "scope": "tecnico"},
 }
 
 app = APIRouter(prefix="/login", tags=["login"])
@@ -25,6 +26,8 @@ templates = Jinja2Templates(directory="src/frontend/templates")
 async def login_form(request: Request):
     print("[LOGIN GET] Rendering login form")
     return templates.TemplateResponse("login.html", {"request": request})
+
+
 @app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = fake_users_db.get(form_data.username)
@@ -32,17 +35,19 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     if not user or user["password"] != form_data.password:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
 
+    # Generamos el payload con un único scope
     payload = {
         "sub": user["username"],
-        "scope": user["scope"]
+        "scope": user["scope"]  # 'scope' es solo una cadena
     }
 
-    token = encode_token(payload)
+    token = encode_token(payload)  # Esto debería ser la función que genera el JWT
 
     return {
         "access_token": token,
         "token_type": "bearer"
     }
+
 
 @app.post("/", response_class=HTMLResponse)
 async def login_user(request: Request, username: str = Form(...), password: str = Form(...)):
@@ -65,7 +70,7 @@ async def login_user(request: Request, username: str = Form(...), password: str 
     token = encode_token(payload)
     print(f"[LOGIN POST] Token generated: {token}")
 
-    response = RedirectResponse(url=request.url_for("get_scope_page", scope=scope),status_code=status.HTTP_303_SEE_OTHER)
+    response = RedirectResponse(url=request.url_for("get_scope_page", scope=scope), status_code=status.HTTP_303_SEE_OTHER)
     response.set_cookie(key="access_token", value=f"Bearer {token}", httponly=True)
 
     return response
@@ -74,7 +79,10 @@ async def login_user(request: Request, username: str = Form(...), password: str 
 @app.get("/user/{scope}", name="get_scope_page", response_class=HTMLResponse)
 async def get_scope_page(request: Request, scope: str):
     try:
-        token_cookie = request.cookies.get("access_token", "").replace("Bearer ", "")
+        token_cookie = request.cookies.get("access_token", "")
+        if token_cookie.startswith("Bearer "):
+            token_cookie = token_cookie.replace("Bearer ", "")
+
         user_data = {"username": "Unknown", "scope": scope}
 
         if token_cookie:
@@ -84,6 +92,7 @@ async def get_scope_page(request: Request, scope: str):
                 user_data["scope"] = payload.get("scope", "Unknown")
             except JWTError as e:
                 print(f"[SCOPE GET] Token decode error: {e}")
+                raise HTTPException(status_code=401, detail="Invalid token")
 
         template_path = f"{scope}.html"
         full_path = os.path.join("src/frontend/templates", template_path)

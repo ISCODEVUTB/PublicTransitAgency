@@ -9,10 +9,10 @@
   <div class="container">
     <div class="sidebar">
       <h2>Técnico</h2>
-      <button class="menu-btn">Consultar historial de bus</button>
-      <button class="menu-btn">Itinerario</button>
-      <button class="menu-btn">Registrar Mantenimiento</button>
-      <button class="menu-btn">Alertas</button>
+      <button class="menu-btn" id="btnHistorial">Consultar historial de bus</button>
+      <button class="menu-btn" id="btnItinerario">Itinerario</button>
+      <button class="menu-btn" id="btnMantenimiento">Registrar Mantenimiento</button>
+      <button class="menu-btn" id="btnAlertas">Alertas</button>
     </div>
     <div class="main-content">
       <div class="header">
@@ -35,5 +35,22 @@
       </div>
     </div>
   </div>
+  <script>
+    // ✅ Definimos primero la función utilitaria
+    function getTokenFromStorage() {
+        return localStorage.getItem('access_token') || '';
+    }
+
+    const apiUrl = 'http://localhost:8000/maintenance';
+
+    // ✅ Registrar mantenimiento y redirigir con token en cookie
+    document.getElementById("btnMantenimiento").addEventListener("click", function() {
+        const token = getTokenFromStorage();
+        document.cookie = `access_token=Bearer ${token}; path=/;`;
+        window.location.href = "/maintainance/crear";
+    });
+
+    // Aquí van tus otros botones como btnItinerario, btnHistorial, etc.
+</script>
 </body>
 </html>

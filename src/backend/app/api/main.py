@@ -17,23 +17,25 @@ from backend.app.api.routes import (
     type_transport_cud_service,
     rol_user_cud_service,
     movement_cud_service,
-    login_service
+    login_service,
+    transport_unit_CUD_service,
+    transport_unit_query_service
 )
 
 # Initialize the FastAPI app
-api_router = FastAPI(title=settings.PROJECT_NAME)
+api_router = FastAPI(title=settings.PROJECT_NAME,debug=True)
 
 # Add global middlewares
 add_middlewares(api_router)
 
 # Configure CORS middleware
-api_router.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,  # Allow specific origins
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
-)
+#api_router.add_middleware(
+#    CORSMiddleware,
+#    allow_origins=settings.ALLOWED_ORIGINS,  # Allow specific origins
+#    allow_credentials=True,
+#    allow_methods=["*"],  # Allow all HTTP methods
+#    allow_headers=["*"],  # Allow all headers
+#)
 
 # Serve static files from the frontend directory
 api_router.mount("/static", StaticFiles(directory="src/frontend/static"), name="static")
@@ -68,8 +70,8 @@ api_router.include_router(incidence_CUD_service.app)
 # api_router.include_router(payment_cud_service.app)
 # api_router.include_router(payment_query_service.app)
 # api_router.include_router(maintainance_status_cud_service.app)
-# api_router.include_router(transport_unit_cud_service.app)
-# api_router.include_router(transport_unit_query_service.app)
+api_router.include_router(transport_unit_CUD_service.app)
+api_router.include_router(transport_unit_query_service.app)
 # api_router.include_router(schedule_cud_service.app)
 # api_router.include_router(schedule_query_service.app)
 # api_router.include_router(price_query_service.app)
