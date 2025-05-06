@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d04a274f-d711-4a8f-95b9-f3d28516305c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/movement_cud_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/movement_cud_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/movement_query_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/movement_query_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/price_cud_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/price_cud_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/price_query_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/price_query_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/rol_user_cud_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/rol_user_cud_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/rol_user_query_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/rol_user_query_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/type_movement_cud_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/type_movement_cud_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/type_movement_query_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/type_movement_query_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/type_transport_cud_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/type_transport_cud_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/type_transport_query_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/type_transport_query_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/api/routes/user_query_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/api/routes/user_query_service.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/backend/app/api/con clases/user_diagram.puml" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2wc7uX97OnXVs55D3vRaLjVcIPN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-PY-251.23774.444" />
+        <option value="bundled-python-sdk-890ed5b35930-d9c5bdb153f4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.23774.444" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d04a274f-d711-4a8f-95b9-f3d28516305c" name="Changes" comment="" />
+      <created>1746329235530</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1746329235530</updated>
+      <workItem from="1746329237832" duration="954000" />
+      <workItem from="1746330220919" duration="2049000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
