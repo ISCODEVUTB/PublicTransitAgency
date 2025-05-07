@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Form, HTTPException, Security
-from backend.app.logic.universal_controller_postgres import UniversalController
+from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.models.shift import Shift
 from backend.app.core.auth import get_current_user
 

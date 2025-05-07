@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request, Security
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_postgres import UniversalController
+from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.models.shift import Shift
 from backend.app.core.auth import get_current_user
 

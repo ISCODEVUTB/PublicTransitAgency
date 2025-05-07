@@ -45,7 +45,7 @@ async def get_users(
 @app.get("/{id}", response_class=HTMLResponse)
 def usuario(
     request: Request,
-    id: int = Query(...)
+    id: int
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
 ):
     """
