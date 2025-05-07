@@ -3,9 +3,12 @@ from backend.app.models.schedule import Schedule
 from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.core.auth import get_current_user
 from starlette.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from fastapi import Request
+
 app = APIRouter(prefix="/schedules", tags=["schedules"])
 controller = UniversalController()
+templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/create", response_class=HTMLResponse)
 def crear_horario_form(request: Request):

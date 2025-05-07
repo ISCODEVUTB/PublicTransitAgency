@@ -4,27 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Nueva Ruta</title>
-<<<<<<< HEAD
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #eef2f7;
-            padding: 2em;
-        }
-        .container {
-            background-color: #ffffff;
-            max-width: 400px;
-            margin: auto;
-            padding: 2em;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .detail {
-            margin: 1em 0;
-            font-size: 1.1em;
-            padding:5px;
-=======
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -129,28 +108,10 @@
             form {
                 width: 95%;
             }
->>>>>>> 1bb25e3 (modification to all services)
         }
     </style>
 </head>
 <body>
-<<<<<<< HEAD
-    <h1 style="text-align: center;">Crear Nueva Ruta</h1>
-    <div class="container">
-    <form action="/routes/crear" method="post">
-        <div class="detail">
-            <label for="route_id">ID de Ruta:</label>
-            <input type="text" id="route_id" name="route_id" required>
-        </div>
-        <div class="detail">
-            <label for="route_data">Datos de la Ruta (JSON):</label><br>
-            <textarea id="route_data" name="route_data" rows="5" cols="50" placeholder='{"punto_inicio": "...", "punto_fin": "...", ...}' required></textarea>
-        </div>
-        <button type="submit">Crear Ruta</button>
-    </form>
-    </div>
-    <p style="text-align: center;"><a href="/">Volver</a></p>
-=======
     <h1>Crear Nueva Ruta</h1>
     <form action="/routes/create" method="post">
         <div>
@@ -171,6 +132,5 @@
     <footer>
         <p>© 2024 Sistema de Gestión de Transportes. Todos los derechos reservados.</p>
     </footer>
->>>>>>> 1bb25e3 (modification to all services)
 </body>
 </html>

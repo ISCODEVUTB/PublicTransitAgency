@@ -1,5 +1,5 @@
 from fastapi import Request
-
+from fastapi.responses import HTMLResponse
 from fastapi import APIRouter, Form, HTTPException, Security
 from fastapi.templating import Jinja2Templates
 from backend.app.logic.universal_controller_sql import UniversalController
@@ -10,15 +10,15 @@ app = APIRouter(prefix="/routes", tags=["routes"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
-@app.get("/create", response_class=Jinja2Templates)
+@app.get("/create", response_class=HTMLResponse)
 def crear_ruta_form(request: Request):
     return templates.TemplateResponse("CrearRuta.html", {"request": request})
 
-@app.get("/update", response_class=Jinja2Templates)
+@app.get("/update", response_class=HTMLResponse)
 def actualizar_ruta_form(request: Request):
     return templates.TemplateResponse("ActualizarRuta.html", {"request": request})
 
-@app.get("/delete", response_class=Jinja2Templates)
+@app.get("/delete", response_class=HTMLResponse)
 def eliminar_ruta_form(request: Request):
     return templates.TemplateResponse("EliminarRuta.html", {"request": request})
 

@@ -1,6 +1,7 @@
 from fastapi import Request
 from fastapi import APIRouter, Form, HTTPException, Security
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.models.rutaparada import RutaParada
 from backend.app.core.auth import get_current_user
@@ -12,7 +13,7 @@ controller = UniversalController()
 # Set up the templates directory for HTML rendering
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
-@app.get("/create", response_class=Jinja2Templates)
+@app.get("/create", response_class=HTMLResponse)
 def crear_rutaparada_form(request: Request):
     """
     Renders the form for creating a new route-stop relationship.
@@ -25,7 +26,7 @@ def crear_rutaparada_form(request: Request):
     """
     return templates.TemplateResponse("CrearRutaParada.html", {"request": request})
 
-@app.get("/update", response_class=Jinja2Templates)
+@app.get("/update", response_class=HTMLResponse)
 def actualizar_rutaparada_form(request: Request):
     """
     Renders the form for updating an existing route-stop relationship.
@@ -38,7 +39,7 @@ def actualizar_rutaparada_form(request: Request):
     """
     return templates.TemplateResponse("ActualizarRutaParada.html", {"request": request})
 
-@app.get("/delete", response_class=Jinja2Templates)
+@app.get("/delete", response_class=HTMLResponse)
 def eliminar_rutaparada_form(request: Request):
     """
     Renders the form for deleting a route-stop relationship.

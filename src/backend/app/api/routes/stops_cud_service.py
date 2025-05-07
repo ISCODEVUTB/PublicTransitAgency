@@ -5,9 +5,11 @@ from backend.app.models.stops import Parada
 from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.core.auth import get_current_user
 from starlette.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 app = APIRouter(prefix="/paradas", tags=["paradas"])
 controller = UniversalController()
+templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/create", response_class=HTMLResponse)
 def crear_parada_form(request: Request):

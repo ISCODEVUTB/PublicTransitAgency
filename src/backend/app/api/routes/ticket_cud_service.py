@@ -3,10 +3,12 @@ from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.models.ticket import Ticket
 from backend.app.core.auth import get_current_user
 from starlette.responses import HTMLResponse
-from src.backend.app.api.routes.card_query_service import templates
+from fastapi.templating import Jinja2Templates
 from fastapi import Request
+
 app = APIRouter(prefix="/tickets", tags=["tickets"])
 controller = UniversalController()
+templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/create", response_class=HTMLResponse)
 def crear_ticket_form(request: Request):

@@ -4,19 +4,19 @@ from fastapi.templating import Jinja2Templates
 from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.models.maintainance_status import MaintainanceStatus
 from backend.app.core.auth import get_current_user
-
+from fastapi.responses import HTMLResponse
 app = APIRouter(prefix="/maintainance_status", tags=["maintainance_status"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
-@app.get("/create", response_class=Jinja2Templates)
+@app.get("/create", response_class=HTMLResponse)
 def crear_estado_form(request: Request):
     return templates.TemplateResponse("CrearEMaintenimiento.html", {"request": request})
 
-@app.get("/update", response_class=Jinja2Templates)
+@app.get("/update", response_class=HTMLResponse)
 def actualizar_estado_form(request: Request):
     return templates.TemplateResponse("ActualizarEMaintenimiento.html", {"request": request})
 
-@app.get("/delete", response_class=Jinja2Templates)
+@app.get("/delete", response_class=HTMLResponse)
 def eliminar_estado_form(request: Request):
     return templates.TemplateResponse("EliminarEMaintenimiento.html", {"request": request})
 
@@ -24,8 +24,7 @@ def eliminar_estado_form(request: Request):
 def crear_estado(
     id: int = Form(...),
     type: str = Form(...),
-    status: str = Form(...),
-   # current_user: dict = Security(get_current_user, scopes=["system", "mantenimiento"])
+    status: str = Form(...)
 ):
     """
     Crea un nuevo estado de mantenimiento.
@@ -41,8 +40,7 @@ def crear_estado(
 def actualizar_estado(
     id: int = Form(...),
     type: str = Form(...),
-    status: str = Form(...),
-   # current_user: dict = Security(get_current_user, scopes=["system", "mantenimiento"])
+    status: str = Form(...)
 ):
     """
     Actualiza un estado de mantenimiento existente.
@@ -60,8 +58,7 @@ def actualizar_estado(
 
 @app.post("/delete")
 def eliminar_estado(
-    id: int = Form(...),
-   # current_user: dict = Security(get_current_user, scopes=["system", "mantenimiento"])
+    id: int = Form(...)
 ):
     """
     Elimina un estado de mantenimiento por su ID.
