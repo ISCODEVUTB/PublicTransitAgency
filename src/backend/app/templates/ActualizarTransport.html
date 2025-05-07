@@ -4,32 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Transporte</title>
+    <!-- Link to the enhanced CSS file -->
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Actualizar Transporte</h1>
-    <form action="/transports/update" method="post">
-        <div>
-            <label for="id">ID del Transporte a Actualizar:</label>
-            <input type="text" id="id" name="id" required>
-        </div>
-        <div>
-            <label for="type">Nuevo Tipo:</label>
-            <input type="text" id="type" name="type">
-        </div>
-        <div>
-            <label for="status">Nuevo Estado:</label>
-            <input type="text" id="status" name="status">
-        </div>
-        <div>
-            <label for="ubication">Nueva Ubicación:</label>
-            <input type="text" id="ubication" name="ubication">
-        </div>
-        <div>
-            <label for="capacity">Nueva Capacidad:</label>
-            <input type="number" id="capacity" name="capacity">
-        </div>
-        <button type="submit">Actualizar Transporte</button>
-    </form>
-    <p><a href="/transports/consultar">Volver a la página de consulta</a></p>
+    <!-- Main heading with animation effect -->
+    <h1 class="fade-in">Actualizar Transporte</h1>
+
+    <!-- Navigation links with flexbox layout -->
+    <div class="nav-links">
+        <a href="/transports">Volver a la lista de transportes</a>
+    </div>
+
+    <!-- Container for the main content -->
+    <div class="container">
+        <!-- Form with styled inputs and validation -->
+        <form action="/transports/update" method="post" class="slide-in">
+            <div class="form-group">
+                <label for="id">ID del Transporte a Actualizar:</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+            <div class="form-group">
+                <label for="idtype">Nuevo Tipo:</label>
+                <input type="text" id="idtype" name="idtype" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Nuevo Estado:</label>
+                <input type="text" id="status" name="status" required>
+            </div>
+            <div class="form-group">
+                <label for="ubication">Nueva Ubicación:</label>
+                <input type="text" id="ubication" name="ubication" required>
+            </div>
+            <div class="form-group">
+                <label for="capacity">Nueva Capacidad:</label>
+                <input type="number" id="capacity" name="capacity" required>
+            </div>
+            <div class="form-group">
+                <label for="idruta">Nuevo ID Ruta:</label>
+                <input type="number" id="idruta" name="idruta" required>
+            </div>
+            <button type="submit" class="btn">Actualizar Transporte</button>
+        </form>
+    </div>
 </body>
 </html>

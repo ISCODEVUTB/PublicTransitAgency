@@ -4,23 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Rutas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        h1 { color: #2c3e50; }
+        .route-card { 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+        }
+        .route-card h2 { margin-top: 0; color: #3498db; }
+        .route-card p { margin: 5px 0; }
+        .route-card a { 
+            display: inline-block; 
+            margin-top: 10px; 
+            padding: 5px 10px; 
+            background-color: #3498db; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 3px; 
+        }
+        .route-card a:hover { background-color: #2980b9; }
+        .actions { margin-top: 20px; }
+        .actions a { 
+            display: inline-block; 
+            margin-right: 10px; 
+            padding: 8px 15px; 
+            text-decoration: none; 
+            border-radius: 3px; 
+            color: white; 
+        }
+        .create { background-color: #2ecc71; }
+        .home { background-color: #7f8c8d; }
+        footer { margin-top: 30px; color: #7f8c8d; font-size: 0.9em; }
+    </style>
 </head>
 <body>
     <h1>Listado de Rutas</h1>
     <p>Esta página muestra todas las rutas disponibles en el sistema.</p>
 
-    {% for route in routes %}
-        <div>
-            <h2>{{ route.Nombre }}</h2>
-            <p>ID de Ruta: {{ route.ID }}</p>
-            <p>Destino: {{ route.IDHorario }}</p>
-            <a href="/routes/{{ route.ID }}">Ver Detalles</a>
-        </div>
-    {% endfor %}
+    {% if routes %}
+        {% for route in routes %}
+            <div class="route-card">
+                <h2>{{ route.name }}</h2>
+                <p><strong>ID de Ruta:</strong> {{ route.id }}</p>
+                <p><strong>ID de Horario:</strong> {{ route.idhorario }}</p>
+                <a href="/routes/{{ route.id }}">Ver Detalles</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay rutas registradas en el sistema.</p>
+    {% endif %}
 
-    <a href="/">Volver al Inicio</a>
+    <div class="actions">
+        <a href="/routes/create" class="create">Crear Nueva Ruta</a>
+        <a href="/" class="home">Volver al Inicio</a>
+    </div>
+
     <footer>
-        <p>© {{ year }} Sistema de Gestión de Rutas. Todos los derechos reservados.</p>
+        <p>© {% now 'Y' %} Sistema de Gestión de Rutas. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>

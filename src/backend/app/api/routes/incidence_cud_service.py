@@ -12,7 +12,7 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/create", response_class=HTMLResponse)
 def crear_incidencia_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Render the form for creating a new incidence. Requires authentication.
@@ -21,17 +21,17 @@ def crear_incidencia_form(
 
 @app.post("/create")
 def crear_incidencia(
-    ID: int = Form(...),
-    IDTicket: int = Form(...),
-    Descripcion: str = Form(...),
-    Tipo: str = Form(...),
-    IDUnidad: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    id: int = Form(...),
+    idticket: int = Form(...),
+    description: str = Form(...),
+    type: str = Form(...),
+    idunit: int = Form(...),
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Create a new incidence. Requires authentication.
     """
-    incidencia = Incidence(ID=ID, IDTicket=IDTicket, Descripcion=Descripcion, Tipo=Tipo, IDUnidad=IDUnidad)
+    incidencia = Incidence(id=id, idticket=idticket, description=description, type=type, idunit=idunit)
     try:
         controller.add(incidencia)
         return {
@@ -46,7 +46,7 @@ def crear_incidencia(
 @app.get("/update", response_class=HTMLResponse)
 def actualizar_incidencia_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Render the form for updating an incidence. Requires authentication.
@@ -55,17 +55,17 @@ def actualizar_incidencia_form(
 
 @app.post("/update")
 def actualizar_incidencia(
-    ID: int = Form(...),
-    IDTicket: int = Form(...),
-    Descripcion: str = Form(...),
-    Tipo: str = Form(...),
-    IDUnidad: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    id: int = Form(...),
+    idticket: int = Form(...),
+    description: str = Form(...),
+    type: str = Form(...),
+    idunit: int = Form(...),
+   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Update an existing incidence. Requires authentication.
     """
-    incidencia = Incidence(ID=ID, IDTicket=IDTicket, Descripcion=Descripcion, Tipo=Tipo, IDUnidad=IDUnidad)
+    incidencia = Incidence(id=id, idticket=idticket, description=description, type=type, idunit=idunit)
     try:
         controller.update(incidencia)
         return {
@@ -80,7 +80,7 @@ def actualizar_incidencia(
 @app.get("/delete", response_class=HTMLResponse)
 def eliminar_incidencia_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Render the form for deleting an incidence. Requires authentication.
@@ -89,14 +89,14 @@ def eliminar_incidencia_form(
 
 @app.post("/delete")
 def eliminar_incidencia(
-    ID: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    id: int = Form(...),
+   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Delete an incidence by ID. Requires authentication.
     """
     try:
-        controller.delete(Incidence(ID=ID, IDTicket=0, Descripcion="", Tipo="", IDUnidad=0))
+        controller.delete(Incidence(id=id, idticket=0, description="", type="", idunit=0))
         return {
             "operation": "delete",
             "success": True,

@@ -29,24 +29,24 @@ def teardown_function():
 def test_crear_incidencia():
     """Test that the '/incidences/create' route creates a new incidence."""
     response = client.post("/incidences/create", data={
-        "ID": 1,
-        "IDTicket": 1,
-        "Descripcion": "Test",
-        "Tipo": "Tipo1",
-        "IDUnidad": 1
+        "id": 1,
+        "idticket": 1,
+        "description": "Test",
+        "type": "Tipo1",
+        "idunit": 1
     }, headers=headers)
     assert response.status_code == 200
     assert response.json()["message"] == "Incidencia creada exitosamente."
 
 def test_actualizar_incidencia():
     """Test that the '/incidences/update' route updates an existing incidence."""
-    controller.add(Incidence(ID=1, IDTicket=1, Descripcion="Old", Tipo="Tipo1", IDUnidad=1))
+    controller.add(Incidence(id=1, idticket=1, description="Old", type="Tipo1", idunit=1))
     response = client.post("/incidences/update", data={
-        "ID": 1,
-        "IDTicket": 1,
-        "Descripcion": "Updated",
-        "Tipo": "Tipo2",
-        "IDUnidad": 2
+        "id": 1,
+        "idticket": 1,
+        "description": "Updated",
+        "type": "Tipo2",
+        "idunit": 2
     }, headers=headers)
     assert response.status_code == 200
     assert response.json()["message"] == "Incidencia actualizada exitosamente."

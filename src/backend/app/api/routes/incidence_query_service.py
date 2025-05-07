@@ -12,7 +12,7 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/", response_class=HTMLResponse)
 def listar_incidencias(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     List all incidences. Requires authentication.
@@ -24,7 +24,7 @@ def listar_incidencias(
 def detalle_incidencia(
     id: int,
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Get details of a specific incidence by ID. Requires authentication.

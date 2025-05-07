@@ -12,26 +12,25 @@
         <table>
             <thead>
                 <tr>
-                    <th>Id De Horario</th>
-                    <th>Fecha De Llegada</th>
-                    <th>Fecha De Salida</th>
-                    <th>Ruta</th>
+                    <th>ID de Horario</th>
+                    <th>Fecha de Llegada</th>
+                    <th>Fecha de Salida</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for horario in horarios %}
                 <tr>
-                    <td>{{ horario.ID }}</td>
-                    <td>{{ horario.Llegada }}</td>
-                    <td>{{ horario.Salida }}</td>
-                    <td><a href="/schedules/{{ horario.ID }}">Ver Detalle</a></td>
+                    <td>{{ horario.id }}</td>
+                    <td>{{ horario.llegada }}</td>
+                    <td>{{ horario.salida }}</td>
+                    <td><a href="/schedules/{{ horario.id }}">Ver Detalle</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         {% else %}
-        <p>No Se Encontraron Horarios.</p>
+        <p>No hay horarios disponibles.</p> <!-- Cambiado a texto esperado -->
         {% endif %}
     </div>
     <p><a href="/schedules/consultar">Volver A La Página De Consulta</a></p>

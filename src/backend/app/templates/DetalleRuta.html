@@ -4,40 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Ruta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .detail-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .detail-label {
+            font-weight: bold;
+            width: 150px;
+        }
+        .actions {
+            margin-top: 20px;
+        }
+        .actions a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 3px;
+            color: white;
+        }
+        .edit {
+            background-color: #2ecc71;
+        }
+        .delete {
+            background-color: #e74c3c;
+        }
+        .back {
+            background-color: #7f8c8d;
+        }
+        footer {
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
-    <h1>Detalle de la Ruta</h1>
+    <div class="container">
+        <h1>Detalle de la Ruta</h1>
 
-    <div>
-        <h2>Información de la Ruta</h2>
-        <p>ID de Ruta: {{ route.ID }}</p>
-        <p>Nombre de la Ruta: {{ route.Nombre }}</p>
-        <p>Destino: {{ route.IDHorario }}</p>
+        <div class="card">
+            <h2>Información de la Ruta</h2>
+            <div class="detail-row">
+                <div class="detail-label">ID de Ruta:</div>
+                <div>{{ route.id }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Nombre:</div>
+                <div>{{ route.name }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">ID de Horario:</div>
+                <div>{{ route.idhorario }}</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="/routes/update?id={{ route.id }}" class="edit">Editar</a>
+            <a href="/routes/delete?id={{ route.id }}" class="delete">Eliminar</a>
+            <a href="/routes/" class="back">Volver a la lista de rutas</a>
+        </div>
+
+        <footer>
+            <p>© {% now 'Y' %} Sistema de Gestión de Rutas. Todos los derechos reservados.</p>
+        </footer>
     </div>
-    <div>
-        <h2>Descripción</h2>
-        <p>
-            Esta ruta es una de las más populares y eficientes de nuestra red,
-            ofreciendo un viaje seguro y confortable a nuestro destino principal.
-            Descubre por qué tantos viajeros eligen esta ruta cada día.
-        </p>
-    </div>
-
-    <div>
-        <h3>Servicios Adicionales</h3>
-        <ul>
-            <li>Wifi gratuito a bordo</li>
-            <li>Asientos reclinables</li>
-            <li>Aire acondicionado</li>
-            <li>Entretenimiento a bordo</li>
-            <li>Paradas en puntos de interés</li>
-        </ul>
-    </div>
-
-    <a href="/routes/rutas">Volver a Rutas</a>
-
-    <footer>
-        <p>© {{ year }} Sistema de Gestión de Rutas. Todos los derechos reservados.</p>
-    </footer>
 </body>
 </html>

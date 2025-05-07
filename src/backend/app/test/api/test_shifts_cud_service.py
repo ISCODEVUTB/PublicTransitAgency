@@ -1,41 +1,61 @@
-import pytest
-from fastapi.testclient import TestClient
-from backend.app.api.routes.shifts_cud_service import app as shifts_router
-from backend.app.logic.universal_controller_postgres import UniversalController
+from fastapi import APIRouter, Form, HTTPException, Security
+from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.models.shift import Shift
-from backend.app.core.conf import headers
-from fastapi import FastAPI
+from backend.app.core.auth import get_current_user
 
-app_for_test = FastAPI()
-app_for_test.include_router(shifts_router)
-client = TestClient(app_for_test)
+app = APIRouter(prefix="/shifts", tags=["shifts"])
 controller = UniversalController()
 
-@pytest.fixture(autouse=True)
-def setup_and_teardown():
-    controller.clear_tables()
-    yield
-    controller.clear_tables()
+@app.post("/create")
+def crear_turno(
+    id: int = Form(...),
+    tipoturno: str = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+):
+    """
+    Crea un turno con los datos proporcionados.
+    """
+    turno = Shift(id=id, tipoturno=tipoturno)
+    try:
+        controller.add(turno)
+        return {"message": "Turno creado exitosamente.", "data": turno.to_dict()}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-def test_crear_turno():
-    response = client.post("/shifts/create", data={
-        "id": 1,
-        "tipoturno": "Diurno"
-    }, headers=headers)
-    assert response.status_code == 200
-    #assert response.json()["message"] == "Turno creado exitosamente."
+@app.post("/update")
+def actualizar_turno(
+    id: int = Form(...),
+    tipoturno: str = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+):
+    """
+    Actualiza la información de un turno existente.
+    """
+    existing_turno = controller.get_by_id(Shift, id)
+    if not existing_turno:
+        raise HTTPException(status_code=404, detail="Turno no encontrado")
 
-def test_actualizar_turno():
-    controller.add(Shift(id=1, tipoturno="Diurno"))
-    response = client.post("/shifts/update", data={
-        "id": 1,
-        "tipoturno": "Nocturno"
-    }, headers=headers)
-    assert response.status_code == 200
-    #assert response.json()["message"] == "Turno actualizado exitosamente."
+    turno = Shift(id=id, tipoturno=tipoturno)
+    try:
+        controller.update(turno)
+        return {"message": "Turno actualizado exitosamente.", "data": turno.to_dict()}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-def test_eliminar_turno():
-    controller.add(Shift(id=1, tipoturno="Diurno"))
-    response = client.post("/shifts/delete", data={"id": 1}, headers=headers)
-    assert response.status_code == 200
-    #assert response.json()["message"] == "Turno eliminado exitosamente."
+@app.post("/delete")
+def eliminar_turno(
+    id: int = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+):
+    """
+    Elimina un turno existente por su ID.
+    """
+    existing_turno = controller.get_by_id(Shift, id)
+    if not existing_turno:
+        raise HTTPException(status_code=404, detail="Turno no encontrado")
+
+    try:
+        controller.delete(existing_turno)
+        return {"message": "Turno eliminado exitosamente."}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

@@ -11,18 +11,33 @@
         input { width: 100%; padding: 8px; margin-top: 5px; }
         button { margin-top: 20px; padding: 10px 15px; background-color: #f44336; color: white; border: none; cursor: pointer; }
         button:hover { background-color: #d32f2f; }
+<<<<<<< HEAD
         .warning { color: #f44336; font-weight: bold; }
     </style>
 </head>
 <body>
     <h1 style="text-align: center;">Eliminar Ruta Existente</h1>
     <form action="/routes/eliminar" method="post">
+=======
+        a { display: inline-block; margin-top: 20px; color: #2196F3; text-decoration: none; }
+        .warning { color: #f44336; font-weight: bold; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Eliminar Ruta Existente</h1>
+    <form action="/routes/delete" method="post">
+>>>>>>> 1bb25e3 (modification to all services)
         <div>
-            <label for="route_id">ID de Ruta a Eliminar:</label>
-            <input type="text" id="route_id" name="route_id" required>
+            <label for="id">ID de Ruta a Eliminar:</label>
+            <input type="number" id="id" name="id" required>
         </div>
+        <p class="warning">¡Advertencia: Esta acción no se puede deshacer!</p>
         <button type="submit">Eliminar Ruta</button>
     </form>
+<<<<<<< HEAD
     <p style="text-align: center;"><a href="/">Volver</a></p>
+=======
+    <p><a href="/routes/">Volver a la lista de rutas</a></p>
+>>>>>>> 1bb25e3 (modification to all services)
 </body>
 </html>

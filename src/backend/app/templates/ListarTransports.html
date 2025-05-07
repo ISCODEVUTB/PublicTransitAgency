@@ -4,36 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Transportes</title>
+    <!-- Link to the enhanced CSS file -->
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Lista de Transportes</h1>
-    {% if transports %}
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Estado</th>
-                <th>Ubicación</th>
-                <th>Capacidad</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for transport in transports %}
-            <tr>
-                <td>{{ transport.id }}</td>
-                <td>{{ transport.type }}</td>
-                <td>{{ transport.status }}</td>
-                <td>{{ transport.ubication }}</td>
-                <td>{{ transport.capacity }}</td>
-                <td><a href="/transports/{{ transport.id }}">Ver Detalle</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No se encontraron transportes.</p>
-    {% endif %}
+    <!-- Main heading with animation effect -->
+    <h1 class="fade-in">Lista de Transportes</h1>
+
+    <!-- Navigation links with flexbox layout -->
+    <div class="nav-links">
+        <a href="/transports/create">Crear Nuevo Transporte</a>
+        <a href="/transports/update">Actualizar Transporte</a>
+        <a href="/transports/delete">Eliminar Transporte</a>
+    </div>
+
+    <!-- Container for the main content -->
+    <div class="container">
+        {% if transports %}
+        <!-- Responsive table with hover effects -->
+        <table class="slide-in">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Ubicación</th>
+                    <th>Capacidad</th>
+                    <th>ID Ruta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transport in transports %}
+                <tr>
+                    <td>{{ transport.id }}</td>
+                    <td>{{ transport.idtype }}</td>
+                    <td>{{ transport.status }}</td>
+                    <td>{{ transport.ubication }}</td>
+                    <td>{{ transport.capacity }}</td>
+                    <td>{{ transport.idruta }}</td>
+                    <td><a href="/transports/{{ transport.id }}">Ver Detalle</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <!-- Message for when no transports are found -->
+        <p class="message info">No se encontraron transportes.</p>
+        {% endif %}
+    </div>
 </body>
 </html>

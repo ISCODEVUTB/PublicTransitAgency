@@ -12,7 +12,7 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/create", response_class=HTMLResponse)
 def crear_pago_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Render the form for creating a new payment. Requires authentication.
@@ -22,23 +22,23 @@ def crear_pago_form(
 @app.post("/create")
 def crear_pago(
     id: int = Form(...),
-    user: str = Form(...),
-    payment_quantity: float = Form(...),
-    payment_method: bool = Form(...),
-    vehicle_type: int = Form(...),
-    card_id: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    iduser: int = Form(...),
+    amount: float = Form(...),
+    idmovement: int = Form(...),
+    idtransportunit: int = Form(...),
+    idcard: int = Form(...),
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Create a new payment. Requires authentication.
     """
     pago = Payment(
         id=id,
-        user=user,
-        payment_quantity=payment_quantity,
-        payment_method=payment_method,
-        vehicle_type=vehicle_type,
-        card_id=card_id
+        iduser=iduser,
+        amount=amount,
+        idmovement=idmovement,
+        idtransportunit=idtransportunit,
+        idcard=idcard
     )
     try:
         controller.add(pago)
@@ -54,7 +54,7 @@ def crear_pago(
 @app.get("/update", response_class=HTMLResponse)
 def actualizar_pago_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Render the form for updating a payment. Requires authentication.
@@ -64,23 +64,23 @@ def actualizar_pago_form(
 @app.post("/update")
 def actualizar_pago(
     id: int = Form(...),
-    user: str = Form(...),
-    payment_quantity: float = Form(...),
-    payment_method: bool = Form(...),
-    vehicle_type: int = Form(...),
-    card_id: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    iduser: int = Form(...),
+    amount: float = Form(...),
+    idmovement: int = Form(...),
+    idtransportunit: int = Form(...),
+    idcard: int = Form(...),
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Update an existing payment. Requires authentication.
     """
     pago = Payment(
         id=id,
-        user=user,
-        payment_quantity=payment_quantity,
-        payment_method=payment_method,
-        vehicle_type=vehicle_type,
-        card_id=card_id
+        iduser=iduser,
+        amount=amount,
+        idmovement=idmovement,
+        idtransportunit=idtransportunit,
+        idcard=idcard
     )
     try:
         controller.update(pago)
@@ -96,7 +96,7 @@ def actualizar_pago(
 @app.get("/delete", response_class=HTMLResponse)
 def eliminar_pago_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Render the form for deleting a payment. Requires authentication.
@@ -106,7 +106,7 @@ def eliminar_pago_form(
 @app.post("/delete")
 def eliminar_pago(
     id: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Delete a payment by ID. Requires authentication.

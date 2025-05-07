@@ -12,7 +12,7 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/", response_class=HTMLResponse)
 def listar_unidades(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     List all transport units. Requires authentication.
@@ -24,7 +24,7 @@ def listar_unidades(
 def detalle_unidad(
     id: int,
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Get details of a specific transport unit by ID. Requires authentication.

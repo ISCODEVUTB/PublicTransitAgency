@@ -3,33 +3,39 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.models.routes import Route
-from backend.app.core.auth import get_current_user  # Import for authentication
+from backend.app.core.auth import get_current_user
 
 app = APIRouter(prefix="/routes", tags=["routes"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
-@app.get("/list", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 def listar_rutas(
-    request: Request
-    
+    request: Request,
+   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
-    List all routes. Requires authentication.
+    Lista todas las rutas.
     """
-    rutas = controller.read_all(Route)
-    return templates.TemplateResponse("ListarRutas.html", {"request": request, "routes": rutas})
+    try:
+        rutas = controller.read_all(Route)
+        return templates.TemplateResponse("ListarRutas.html", {"request": request, "routes": rutas})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/{ID}", response_class=HTMLResponse)
+@app.get("/{id}", response_class=HTMLResponse)
 def detalle_ruta(
-    ID: int,
-    request: Request
-    
+    id: int,
+    request: Request,
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
-    Get details of a specific route by ID. Requires authentication.
+    Muestra el detalle de una ruta específica por ID.
     """
-    ruta = controller.get_by_id(Route, ID)
-    if not ruta:
-        raise HTTPException(status_code=404, detail="Ruta no encontrada")
-    return templates.TemplateResponse("DetalleRuta.html", {"request": request, "route": ruta})
+    try:
+        ruta = controller.get_by_id(Route, id)
+        if not ruta:
+            raise HTTPException(status_code=404, detail="Ruta no encontrada")
+        return templates.TemplateResponse("DetalleRuta.html", {"request": request, "route": ruta.to_dict()})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

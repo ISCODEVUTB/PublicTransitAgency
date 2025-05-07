@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Ruta Existente</title>
     <style>
+<<<<<<< HEAD
         body {
             font-family: Arial, sans-serif;
             background-color: #eef2f7;
@@ -42,5 +43,34 @@
     </form>
     <p><a href="/">Volver</a></p>
     </div>
+=======
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { max-width: 500px; margin: auto; }
+        label { display: block; margin-top: 10px; }
+        input { width: 100%; padding: 8px; margin-top: 5px; }
+        button { margin-top: 20px; padding: 10px 15px; background-color: #2196F3; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0b7dda; }
+        a { display: inline-block; margin-top: 20px; color: #2196F3; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>Actualizar Ruta Existente</h1>
+    <form action="/routes/update" method="post">
+        <div>
+            <label for="id">ID de Ruta a Actualizar:</label>
+            <input type="number" id="id" name="id" required>
+        </div>
+        <div>
+            <label for="idhorario">Nuevo ID de Horario:</label>
+            <input type="number" id="idhorario" name="idhorario" required>
+        </div>
+        <div>
+            <label for="name">Nuevo Nombre de la Ruta:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <button type="submit">Actualizar Ruta</button>
+    </form>
+    <p><a href="/routes/">Volver a la lista de rutas</a></p>
+>>>>>>> 1bb25e3 (modification to all services)
 </body>
 </html>

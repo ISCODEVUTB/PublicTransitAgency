@@ -30,30 +30,32 @@ def test_crear_unidad():
     """Test that the '/transports/create' route creates a new transport unit."""
     response = client.post("/transports/create", data={
         "id": "1",
-        "type": "Bus",
+        "idtype": "1",
         "status": "bien",
         "ubication": "Garage",
-        "capacity": 50
+        "capacity": "50",
+        "idruta": "1"
     }, headers=headers)
     assert response.status_code == 200
     assert response.json()["message"] == "Unidad creada exitosamente."
 
 def test_actualizar_unidad():
     """Test that the '/transports/update' route updates an existing transport unit."""
-    controller.add(Transport(id="1", type="Bus", status="bien", ubication="Garage", capacity=50))
+    controller.add(Transport(id="1", idtype=1, status="bien", ubication="Garage", capacity=50, idruta=1))
     response = client.post("/transports/update", data={
         "id": "1",
-        "type": "Bus",
+        "idtype": "1",
         "status": "mantenimiento",
         "ubication": "Garage",
-        "capacity": 50
+        "capacity": "50",
+        "idruta": "1"
     }, headers=headers)
     assert response.status_code == 200
     assert response.json()["message"] == "Unidad actualizada exitosamente."
 
 def test_eliminar_unidad():
     """Test that the '/transports/delete' route deletes an existing transport unit."""
-    controller.add(Transport(id="1", type="Bus", status="bien", ubication="Garage", capacity=50))
+    controller.add(Transport(id="1", idtype=1, status="bien", ubication="Garage", capacity=50, idruta=1))
     response = client.post("/transports/delete", data={"id": "1"}, headers=headers)
     assert response.status_code == 200
     assert response.json()["message"] == "Unidad eliminada exitosamente."

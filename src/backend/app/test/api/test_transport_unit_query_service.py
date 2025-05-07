@@ -28,17 +28,17 @@ def teardown_function():
 
 def test_listar_unidades():
     """Test that the '/transports/' route lists all transport units."""
-    controller.add(Transport(id="1", type="Bus", status="bien", ubication="Garage", capacity=50))
+    controller.add(Transport(id="1", idtype=1, status="bien", ubication="Garage", capacity=50, idruta=1))
     response = client.get("/transports/", headers=headers)
     assert response.status_code == 200
-    assert "Bus" in response.text
+    assert "bien" in response.text
 
 def test_detalle_unidad_existente():
     """Test that the '/transports/{id}' route retrieves an existing transport unit."""
-    controller.add(Transport(id="1", type="Bus", status="bien", ubication="Garage", capacity=50))
+    controller.add(Transport(id="1", idtype=1, status="bien", ubication="Garage", capacity=50, idruta=1))
     response = client.get("/transports/1", headers=headers)
     assert response.status_code == 200
-    assert "Bus" in response.text
+    assert "bien" in response.text
 
 def test_detalle_unidad_no_existente():
     """Test that the '/transports/{id}' route returns 404 for a non-existent transport unit."""

@@ -3,17 +3,24 @@ from pydantic import BaseModel
 
 class Route(BaseModel):
     __entity_name__ = "ruta"  # Nombre de la tabla en la base de datos
+
     id: Optional[int] = None  # Clave primaria
-    idHorario: Optional[int] = None  # Clave foránea a la tabla Horario (opcional)
-    name: Optional[str] = None  # Nombre de la ruta (opcional)
+    idhorario: int  # Clave foránea a la tabla Horario
+    name: str  # Nombre de la ruta
 
     def to_dict(self):
+        """
+        Serializa el modelo `Route` en un diccionario.
+        """
         return self.model_dump()
 
     @classmethod
     def get_fields(cls):
+        """
+        Define los campos de la tabla para su creación.
+        """
         return {
-            "ID": "INTEGER PRIMARY KEY",
-            "IDHorario": "INTEGER NOT NULL",
-            "Nombre": "VARCHAR(100) NOT NULL"
+            "id": "INT PRIMARY KEY",
+            "idhorario": "INT NOT NULL",
+            "name": "VARCHAR(255) NOT NULL"
         }

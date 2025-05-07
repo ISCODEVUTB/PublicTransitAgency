@@ -12,7 +12,6 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/create", response_class=HTMLResponse)
 def crear_unidad_form(
     request: Request
-    
 ):
     """
     Render the form for creating a new transport unit. Requires authentication.
@@ -22,16 +21,17 @@ def crear_unidad_form(
 @app.post("/create")
 def crear_unidad(
     id: int = Form(...),
-    type: str = Form(...),
+    idtype: int = Form(...),
     status: str = Form(...),
     ubication: str = Form(...),
     capacity: int = Form(...),
-    
+    idruta: int = Form(...),
+
 ):
     """
     Create a new transport unit. Requires authentication.
     """
-    unidad = Transport(id=id, type=type, status=status, ubication=ubication, capacity=capacity)
+    unidad = Transport(id=id, idtype=idtype, status=status, ubication=ubication, capacity=capacity, idruta=idruta)
     try:
         controller.add(unidad)
         return {
@@ -46,7 +46,6 @@ def crear_unidad(
 @app.get("/update", response_class=HTMLResponse)
 def actualizar_unidad_form(
     request: Request
-    
 ):
     """
     Render the form for updating a transport unit. Requires authentication.
@@ -56,16 +55,17 @@ def actualizar_unidad_form(
 @app.post("/update")
 def actualizar_unidad(
     id: int = Form(...),
-    type: str = Form(...),
+    idtype: int = Form(...),
     status: str = Form(...),
     ubication: str = Form(...),
     capacity: int = Form(...),
-    
+    idruta: int = Form(...),
+
 ):
     """
     Update an existing transport unit. Requires authentication.
     """
-    unidad = Transport(id=id, type=type, status=status, ubication=ubication, capacity=capacity)
+    unidad = Transport(id=id, idtype=idtype, status=status, ubication=ubication, capacity=capacity, idruta=idruta)
     try:
         controller.update(unidad)
         return {
@@ -80,7 +80,7 @@ def actualizar_unidad(
 @app.get("/delete", response_class=HTMLResponse)
 def eliminar_unidad_form(
     request: Request
-    
+
 ):
     """
     Render the form for deleting a transport unit. Requires authentication.
@@ -90,12 +90,12 @@ def eliminar_unidad_form(
 @app.post("/delete")
 def eliminar_unidad(
     id: int = Form(...),
-    
+
 ):
     """
     Delete a transport unit by ID. Requires authentication.
     """
-    unidad = Transport(id=id, type="", status="", ubication="", capacity=0)
+    unidad = Transport(id=id, idtype=0, status="", ubication="", capacity=0, idruta=0)
     try:
         controller.delete(unidad)
         return {

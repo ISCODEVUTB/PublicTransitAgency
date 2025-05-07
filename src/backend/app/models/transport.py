@@ -6,8 +6,9 @@ class Transport(BaseModel):
     id: Optional[int] = None
     idtype: Optional[int] = None
     status: Optional[str] = None
-    ubication: Optional[str]     = None
+    ubication: Optional[str] = None
     capacity: Optional[int] = None
+    idruta: Optional[int] = None
 
     def to_dict(self):
         return self.model_dump()
@@ -16,8 +17,9 @@ class Transport(BaseModel):
     def get_fields(cls):
         return {
             "id": "INTEGER PRIMARY KEY",
-            "idtype": "INTEGER",
-            "status": "TEXT",
-            "ubication": "TEXT",
-            "capacity": "INTEGER"
+            "idtype": "INTEGER NOT NULL",
+            "status": "VARCHAR NOT NULL",
+            "ubication": "VARCHAR NOT NULL",
+            "capacity": "INTEGER NOT NULL",
+            "idruta": "INTEGER NOT NULL"
         }

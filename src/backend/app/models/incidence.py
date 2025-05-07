@@ -2,12 +2,12 @@ from typing import Optional
 from pydantic import BaseModel
 
 class Incidence(BaseModel):
-    __entity_name__ = "Incidencia"  # Nombre de la tabla en la base de datos
+    __entity_name__ = "incidencia"  # Nombre de la tabla en la base de datos
     id: Optional[int] = None  # Clave primaria
-    idTicket: int = None  # Clave foránea al ticket
-    description: str = None  # Descripción de la incidencia
-    type: str = None  # Tipo de incidencia
-    idunit: int = None  # Clave foránea a la unidad de transporte
+    idticket: Optional[int] = None  # Clave foránea al ticket
+    description: Optional[str] = None  # Descripción de la incidencia
+    type: Optional[str] = None  # Tipo de incidencia
+    idunit: Optional[int] = None  # Clave foránea a la unidad de transporte
 
     def to_dict(self):
         return self.model_dump()
@@ -15,11 +15,11 @@ class Incidence(BaseModel):
     @classmethod
     def get_fields(cls):
         return {
-            "ID": "INTEGER PRIMARY KEY",
-            "IDTicket": "INTEGER NOT NULL",
-            "Descripcion": "VARCHAR(100) NOT NULL",
-            "Tipo": "VARCHAR(20) NOT NULL",
-            "IDUnidad": "INTEGER NOT NULL"
+            "id": "INTEGER PRIMARY KEY",
+            "idticket": "INTEGER NOT NULL",
+            "description": "VARCHAR NOT NULL",
+            "type": "VARCHAR NOT NULL",
+            "idunit": "INTEGER NOT NULL"
         }
 
     @classmethod

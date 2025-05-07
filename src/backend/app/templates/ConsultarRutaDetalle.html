@@ -3,18 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Detalle De Ruta {{ route.route_id }}</title>
+    <title>Consultar Detalle de Ruta {{ route.id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .detail-row {
+            margin-bottom: 10px;
+        }
+        .detail-label {
+            font-weight: bold;
+        }
+        .actions {
+            margin-top: 20px;
+        }
+        .actions a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 3px;
+            color: white;
+        }
+        .edit {
+            background-color: #2ecc71;
+        }
+        .delete {
+            background-color: #e74c3c;
+        }
+        .back {
+            background-color: #7f8c8d;
+        }
+    </style>
 </head>
 <body>
-    <h1>Detalle De La Ruta</h1>
-    {% if route %}
-    <div>
-        <p><strong>Id De Ruta:</strong> {{ route.route_id }}</p>
-        <p><strong>Nombre De Ruta:</strong> {{ route.route }}</p>
+    <div class="container">
+        <h1>Detalle de la Ruta</h1>
+
+        {% if route %}
+        <div class="card">
+            <div class="detail-row">
+                <span class="detail-label">ID de Ruta:</span> {{ route.id }}
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Nombre de Ruta:</span> {{ route.name }}
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">ID de Horario:</span> {{ route.idhorario }}
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="/routes/update?id={{ route.id }}" class="edit">Editar</a>
+            <a href="/routes/delete?id={{ route.id }}" class="delete">Eliminar</a>
+            <a href="/routes/" class="back">Volver a la lista de rutas</a>
+        </div>
+        {% else %}
+        <p>No se encontró la ruta.</p>
+        <a href="/routes/" class="back">Volver a la lista de rutas</a>
+        {% endif %}
     </div>
-    <p><a href="/routes">Volver A La Lista De Rutas</a></p>
-    {% else %}
-    <p>No se encontró la ruta.</p>
-    {% endif %}
 </body>
 </html>

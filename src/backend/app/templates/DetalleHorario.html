@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle Del Horario {{ horario.ID }}</title>
+    <title>Detalle del Horario {{ horario.id }}</title>
 </head>
 <body>
-    <h1>Detalle Del Horario</h1>
+    <h1>Detalle del Horario</h1>
     {% if horario %}
     <div>
-        <p><strong>Id De Horario:</strong> {{ horario.ID }}</p>
-        <p><strong>Fecha De Llegada:</strong> {{ horario.Llegada }}</p>
-        <p><strong>Fecha De Salida:</strong> {{ horario.Salida }}</p>
-        <p><strong>Ruta:</strong> {{ horario.route }}</p>
+        <p><strong>ID de Horario:</strong> {{ horario.id }}</p>
+        <p><strong>Fecha de Llegada:</strong> {{ horario.llegada }}</p>
+        <p><strong>Fecha de Salida:</strong> {{ horario.salida }}</p>
     </div>
-    <p><a href="/schedules">Volver A La Lista De Horarios</a></p>
-    <p><a href="/schedules/consultar">Volver A La Página De Consulta</a></p>
+    <p><a href="/schedules">Volver a la Lista de Horarios</a></p>
+    <p><a href="/schedules/consultar">Volver a la Página de Consulta</a></p>
     {% else %}
-    <p>No Se Encontró El Horario.</p>
+    <p>No se encontró el horario.</p>
     {% endif %}
 </body>
 </html>
