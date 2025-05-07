@@ -123,10 +123,7 @@ async def update(
 
 
 @app.post("/delete")
-async def delete_maintenance(
-    id: int = Form(...)
-    
-):
+async def delete_maintenance(id: int = Form(...)):
     """
     Route to delete an existing maintenance record by its ID.
     """

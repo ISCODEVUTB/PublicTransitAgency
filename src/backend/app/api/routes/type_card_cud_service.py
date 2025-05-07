@@ -3,7 +3,7 @@ from fastapi import APIRouter, Form, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from backend.app.models.type_card import TypeCardOut, TypeCardCreate
-from backend.app.logic.universal_controller_postgres import UniversalController
+from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.core.auth import get_current_user
 from fastapi import Security
 
@@ -22,31 +22,28 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 # Route to create a new type of card
 @app.get("/crear", response_class=HTMLResponse)
-def create_typecard_form(request: Request, current_user: dict = Security(get_current_user, scopes=["system", "administrador"])):
+def create_typecard_form(request: Request):
     """
     Displays the form to create a new type of card.
     """
-    logger.info(f"[GET /crear] User {current_user['user_id']} accessed the create card type form.")
     return templates.TemplateResponse(request,"CrearTipoTarjeta.html", {"request": request})
 
 
 # Route to delete an existing type of card
 @app.get("/eliminar", response_class=HTMLResponse)
-def delete_typecard_form(request: Request, current_user: dict = Security(get_current_user, scopes=["system", "administrador"])):
+def delete_typecard_form(request: Request):
     """
     Displays the form to delete a type of card.
     """
-    logger.info(f"[GET /eliminar] User {current_user['user_id']} accessed the delete card type form.")
     return templates.TemplateResponse(request,"EliminarTipoTarjeta.html", {"request": request})
 
 
 # Route to update an existing type of card
 @app.get("/actualizar", response_class=HTMLResponse)
-def update_typecard_form(request: Request, current_user: dict = Security(get_current_user, scopes=["system", "administrador"])):
+def update_typecard_form(request: Request):
     """
     Displays the form to update an existing type of card.
     """
-    logger.info(f"[GET /actualizar] User {current_user['user_id']} accessed the update card type form.")
     return templates.TemplateResponse(request,"ActualizarTipoTarjeta.html", {"request": request})
 
 
@@ -54,8 +51,8 @@ def update_typecard_form(request: Request, current_user: dict = Security(get_cur
 @app.post("/create")
 async def create_typecard(
     id: int = Form(...),
-    type: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    type: str = Form(...)
+    
 ):
     """
     Creates a new type of card with the provided ID and type.
@@ -65,9 +62,6 @@ async def create_typecard(
 
         # Add the new type of card using the controller
         controller.add(new_typecard)
-
-        logger.info(f"[POST /create] User {current_user['user_id']} created a new card type with ID {new_typecard.id} and type '{new_typecard.type}'.")
-
         return {
             "operation": "create",
             "success": True,
@@ -87,7 +81,7 @@ async def create_typecard(
 async def update_typecard(
     id: int = Form(...),
     type: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    
 ):
     """
     Updates an existing type of card by its ID and new type.
@@ -105,9 +99,6 @@ async def update_typecard(
 
         # Update the type of card using the controller
         controller.update(updated_typecard)
-
-        logger.info(f"[POST /update] User {current_user['user_id']} updated card type {id} to type '{updated_typecard.type}'.")
-
         return {
             "operation": "update",
             "success": True,
@@ -123,7 +114,7 @@ async def update_typecard(
 @app.post("/delete")
 async def delete_typecard(
     id: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    
 ):
     """
     Deletes an existing type of card by its ID.
@@ -138,9 +129,6 @@ async def delete_typecard(
 
         # Delete the type of card using the controller
         controller.delete(existing)
-
-        logger.info(f"[POST /delete] User {current_user['user_id']} deleted card type with ID {id}.")
-
         return {
             "operation": "delete",
             "success": True,

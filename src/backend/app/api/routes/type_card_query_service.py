@@ -2,7 +2,7 @@ import logging
 from fastapi import APIRouter, HTTPException, Security
 from fastapi import status
 from backend.app.models.type_card import TypeCardOut
-from backend.app.logic.universal_controller_postgres import UniversalController
+from backend.app.logic.universal_controller_sql import UniversalController
 from backend.app.core.auth import get_current_user
 
 # Initialize the controller for type card operations
@@ -16,9 +16,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 @app.get("/typecards/")
-def read_all(
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-):
+def read_all():
     """
     Fetches all records of TypeCard.
 
@@ -29,7 +27,6 @@ def read_all(
         List of TypeCard records.
     """
     try:
-        logger.info(f"[GET /typecards/] User {current_user['user_id']} is fetching all TypeCard records.")
         typecards = controller.read_all(TypeCardOut)
         logger.info(f"[GET /typecards/] Successfully fetched {len(typecards)} TypeCard records.")
         return typecards
@@ -41,7 +38,7 @@ def read_all(
 
 def get_by_id(
     id: int, 
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    
 ):
     """
     Fetches a TypeCard record by its ID.
@@ -57,7 +54,6 @@ def get_by_id(
         TypeCard record details as a dictionary.
     """
     try:
-        logger.info(f"[GET /{id}] User {current_user['user_id']} is fetching TypeCard with ID {id}.")
         result = controller.get_by_id(TypeCardOut, id)
         if not result:
             logger.warning(f"[GET /{id}] TypeCard with ID {id} not found.")

@@ -125,7 +125,7 @@ class UniversalController:
             self.cursor.execute(f"DELETE FROM {table_name}")
         self.conn.commit()
     def get_by_unit(self, unit_id: int) -> list[dict]:
-        sql = "SELECT * FROM mantenimiento WHERE id_unit = %s"
+        sql = "SELECT * FROM mantenimiento WHERE id_unit = ?"
         self.cursor.execute(sql, (unit_id,))
         rows = self.cursor.fetchall()
         return [dict(row) for row in rows]

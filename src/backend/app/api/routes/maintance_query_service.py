@@ -67,21 +67,7 @@ def get_by_id(
 
 
 @app.get("/unit/{unit_id}")
-def get_by_unit(
-    id_unit: int,
-    
-):
-    """
-    Returns all maintenance records associated with a specific unit.
-
-    Args:
-    - unit_id (int): The ID of the unit.
-    - current_user (dict): User information from authentication.
-
-    Returns:
-    - List of maintenance records associated with the unit.
-    """
-    
+def get_by_unit(id_unit: int): 
     try:
         records = controller_maintenance.get_by_unit(id_unit)
         logger.info(f"[GET /unit/{id_unit}] Se han recuperado {len(records)} registros de mantenimiento para la unidad {id_unit}.")
