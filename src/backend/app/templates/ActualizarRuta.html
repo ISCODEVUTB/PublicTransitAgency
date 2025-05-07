@@ -4,20 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Ruta Existente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        .container {
+            background-color: #ffffff;
+            max-width: 400px;
+            margin: auto;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .detail {
+            margin: 1em 0;
+            font-size: 1.1em;
+            padding:5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Actualizar Ruta Existente</h1>
+    <h1 style="text-align: center;">Actualizar Ruta Existente</h1>
+    <div class="container">
     <form action="/routes/actualizar" method="post">
-        <div>
+        <div class="detail">
             <label for="route_id">ID de Ruta a Actualizar:</label>
             <input type="text" id="route_id" name="route_id" required>
         </div>
-        <div>
+        <div class="detail">
             <label for="route_data">Nuevos Datos de la Ruta (JSON):</label><br>
             <textarea id="route_data" name="route_data" rows="5" cols="50" placeholder='{"punto_inicio": "...", "punto_fin": "...", ...}' required></textarea>
         </div>
         <button type="submit">Actualizar Ruta</button>
     </form>
     <p><a href="/">Volver</a></p>
+    </div>
 </body>
 </html>

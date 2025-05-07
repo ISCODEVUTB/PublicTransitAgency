@@ -4,11 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Paradas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        .container {
+            background-color: #ffffff;
+            max-width: 400px;
+            margin: auto;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .detail {
+            margin: 1em 0;
+            font-size: 1.1em;
+            padding:5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Consulta De Paradas</h1>
+    <h1 style="text-align: center;">Consulta De Paradas</h1>
     <p><a href="/stops">Ver Todas Las Paradas</a></p>
-    <h2>Buscar Paradas</h2>
+    <h2>Buscar Paradas</h2> 
     <form action="/stops/buscar" method="get">
         <div>
             <label for="nombre">Nombre:</label>
