@@ -61,10 +61,19 @@ def price(
     #logger.info(f"[GET /price] Usuario: {current_user['user_id']} - Consultando precio con id={id}")
     unit_price= controller.get_by_id(PriceOut, id)
 
-    if unit_price:
+    """if unit_price:
         #logger.info(f"[GET /price] Precio encontrado: {unit_price.id}, {unit_price.unidadtransportype},{unit_price.amount}")
         return JSONResponse(content=unit_price.model_dump(), status_code=200)
 
     else:
         #logger.warning(f"[GET /price] No se encontró precio con id={id}")
-        return JSONResponse(content="Precio no encontrado", status_code=404)
+        return JSONResponse(content="Precio no encontrado", status_code=404)"""
+    
+    context = {
+        "request": request,
+        "ID": unit_price.ID if unit_price else "None",
+        "IDTipoMovimiento": unit_price.IDTipoTransporte if unit_price else "None",
+        "Monto": unit_price.Monto if unit_price else "None",
+    }
+
+    return templates.TemplateResponse(request,"precio.html", context)

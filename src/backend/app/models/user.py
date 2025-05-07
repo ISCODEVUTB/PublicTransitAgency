@@ -8,7 +8,8 @@ class UserCreate(BaseModel):
     Correo: str
     Contrasena: str
     IDRolUsuario: int
-    IDTarjeta: int
+    IDTurno:int
+    #IDTarjeta: int
 
     def to_dict(self):
         return self.model_dump()
@@ -16,14 +17,14 @@ class UserCreate(BaseModel):
     @classmethod
     def get_fields(cls) -> dict:
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "identification": "INTEGER",
-            "name": "VARCHAR(100)",
-            "lastname": "VARCHAR(100)",
-            "email": "VARCHAR(100)",
-            "password": "VARCHAR(100)",
-            "idtype_user": "INTEGER",
-            "idturn": "INTEGER"
+            "ID": "INTEGER PRIMARY KEY",
+            "Identificacion": "INTEGER",
+            "Nombre": "VARCHAR(100)",
+            "Apellido": "VARCHAR(100)",
+            "Correo": "VARCHAR(100)",
+            "Contrasena": "VARCHAR(100)",
+            "IDRolUsuario": "INTEGER",
+            "IDTurno": "INTEGER"
         }
 class UserOut(UserCreate):
     __entity_name__ = "Usuario"  # <- También aquí, porque se usa para lectura

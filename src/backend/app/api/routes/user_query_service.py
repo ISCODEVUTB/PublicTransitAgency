@@ -45,20 +45,33 @@ async def get_users(
 @app.get("/{id}", response_class=HTMLResponse)
 def usuario(
     request: Request,
-    id: int,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
+    id: int = Query(...)
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
 ):
     """
     Retrieve a user by its ID and render the 'usuario.html' template with its details.
     If the user is not found, display 'None' for all fields.
     """
-    logger.info(f"[GET /user] Usuario: {current_user['user_id']} - Consultando usuario con id={id}")
+    #logger.info(f"[GET /user] Usuario: {current_user['user_id']} - Consultando usuario con id={id}")
     unit_usuario= controller.get_by_id(UserOut, id)
 
-    if unit_usuario:
-        logger.info(f"[GET /user] Usuario encontrados: {unit_usuario.id}, {unit_usuario.identification},{unit_usuario.name},{unit_usuario.lastname},{unit_usuario.email},{unit_usuario.password},{unit_usuario.idtype_user},{unit_usuario.idturn}")
-        return JSONResponse(content=unit_usuario.model_dump(), status_code=200)
+    """if unit_usuario:
+        logger.info(f"[GET /user] Usuario encontrados: {unit_usuario.ID}, {unit_usuario.Identificacion},{unit_usuario.Nombre},{unit_usuario.Apellido},{unit_usuario.Correo},{unit_usuario.Contrasena},{unit_usuario.IDRolUsuario},{unit_usuario.IDTurno}")
+        #return JSONResponse(content=unit_usuario.model_dump(), status_code=200)
+    
 
     else:
         logger.warning(f"[GET /user] No se encontró usuario con id={id}")
-        return JSONResponse(content="Usuario no encontrado", status_code=404)
+        #return JSONResponse(content="Usuario no encontrado", status_code=404)"""
+    
+    context = {
+        "request": request,
+        "ID": unit_usuario.ID if unit_usuario else "None",
+        "Identificacion": unit_usuario.Identificacion if unit_usuario else "None",
+        "Nombre": unit_usuario.Nombre if unit_usuario else "None",
+        "Apellido": unit_usuario.Apellido if unit_usuario else "None",
+        "IDRolUsuario": unit_usuario.IDRolUsuario if unit_usuario else "None",
+        "IDTurno": unit_usuario.IDTurno if unit_usuario else "None"
+    }
+
+    return templates.TemplateResponse(request,"usuario.html", context)

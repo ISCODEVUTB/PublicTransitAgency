@@ -4,21 +4,47 @@
     <meta charset="UTF-8">
     <title>Actualizar Movimiento</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        .container {
+            background-color: #ffffff;
+            max-width: 400px;
+            margin: auto;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .detail {
+            margin: 1em 0;
+            font-size: 1.1em;
+            padding:5px;
+        }
+    </style>
 </head>
 <body>
     <h2 style="text-align: center;">Actualizar Movimiento</h2>
-    <form action="/movement/update" method="post">
-        <label for="id">ID del Movimiento a Actualizar:</label>
-        <input type="number" id="id" name="id" required>
-
-        <label for="type">Nuevo Tipo de Movimiento:</label>
-        <select id="type" name="type" required>
-            <option value="Ingreso al Sistema">Ingreso</option>
-            <option value="Recarga de Saldo">Recarga</option>
-        </select>
-
-        <label for="amount">Nuevo Monto:</label>
-        <input type="number" step="any" id="amount" name="amount" required>
+    <div class="container">
+        <form action="/movement/update" method="post">
+            <div class="detail">
+                <label for="ID">Nuevo ID:</label>
+                <input type="number" id="ID" name="ID" required>
+            </div>
+            <div class ="detail">
+                <label for="IDTipoMovimiento">Nuevo Tipo de Movimiento:</label>
+                <select id="IDTipoMovimiento" name="IDTipoMovimiento" required>
+                    <option value="1">Ingreso al Sistema</option>
+                    <option value="2">Carga Saldo</option>
+                </select>
+            </div>
+            <div class="detail">
+                <label for="Monto">Nuevo Monto:</label>
+                <input type="number" id="Monto" name="Monto" required>
+            </div>
 
         <button type="submit">Actualizar Movimiento</button>
     </form>

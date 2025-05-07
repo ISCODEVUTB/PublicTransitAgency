@@ -64,6 +64,7 @@ class UniversalController:
 
     def get_by_id(self, model, id):
         """Retrieve a single record by ID."""
+        self._ensure_table_exists(model)
         table = model.__entity_name__
         primary_key = list(model.get_fields().keys())[0]  # Obtener el nombre de la clave primaria
         sql = f"SELECT * FROM {table} WHERE {primary_key} = ?"

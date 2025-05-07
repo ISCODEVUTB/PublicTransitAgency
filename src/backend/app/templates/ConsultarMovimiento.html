@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Usuarios</title>
+    <title>Consultar Movimientos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,18 +27,18 @@
     </style>
 </head>
 <body>
-    <h1 style="text-align: center;">Consulta De Usuarios</h1>
+    <h1 style="text-align: center;">Consulta De Movimientos</h1>
     <div class="container">
-        <h2>Buscar Usuarios</h2>
-        <form action="/user/consultar" method="get">
+        <h2>Buscar Movimientos</h2>
+        <form action="/movement/consultar" method="get">
             <div class="detail">
-                <label for="ID">ID:</label>
-                <input type="text" id="ID" name="ID">
+                <label for="nombre">ID:</label>
+                <input type="text" id="nombre" name="nombre">
             </div>
             <button type="submit">Buscar</button>
         </form>
         <div class="detail">
-            <p><a href="/user/users">Ver Todos Los Usuarios</a></p>
+            <p><a href="/movement">Ver Todos Los Movimientos</a></p>
         </div>
     </div>
 </body>

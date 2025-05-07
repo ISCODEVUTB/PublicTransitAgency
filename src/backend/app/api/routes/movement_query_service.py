@@ -1,7 +1,7 @@
 #movement_query_service.py
 # # This file contains the query service for the Movement model using FastAPI.
 # # It includes routes for retrieving all movements and fetching a specific movement by ID.
-#import logging
+import logging
 from fastapi import FastAPI, HTTPException, APIRouter, Form, Request, status, Query, Security
 from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -14,8 +14,8 @@ from backend.app.models.movement import MovementOut
 from backend.app.logic.universal_controller_sql import UniversalController
 
 # Configuración del logger
-#logger = logging.getLogger(__name__)
-#logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 # Initialize the controller to handle database operations
 controller = UniversalController()
@@ -58,9 +58,18 @@ def get_by_id(
     #logger.info(f"[GET /movement] Usuario: {current_user['user_id']} - Consultando movimiento con id={id}")
     result = controller.get_by_id(MovementOut, id)
 
-    if result:
+    """if result:
         #logger.info(f"[GET /movement] Movimiento encontrada: {result.id}, Tipo: {result.idtype}, Monto: {result.amount}")
-        return JSONResponse(content=result.model_dump(), status_code=200)
+        #return JSONResponse(content=result.model_dump(), status_code=200)
     else:
-        #logger.warning(f"[GET /movement] No se encontró movimiento con id={id}")
-        return JSONResponse(content="Movimiento no encontrado", status_code=404)
+        logger.warning(f"[GET /movement] No se encontró movimiento con id={id}")
+        #return JSONResponse(content="Movimiento no encontrado", status_code=404)"""
+    
+    context = {
+        "request": request,
+        "ID": result.ID if result else "None",
+        "IDTipoMovimiento": result.IDTipoMovimiento if result else "None",
+        "Monto": result.Monto if result else "None",
+    }
+
+    return templates.TemplateResponse(request,"movimiento.html", context)

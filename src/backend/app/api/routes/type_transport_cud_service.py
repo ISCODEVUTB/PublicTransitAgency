@@ -48,20 +48,20 @@ def index_delete(
 @app.post("/create")
 async def create_typetransport(
     id: int = Form(...),
-    type: str = Form(...)
+    TipoTransporte: str = Form(...)
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /create] Usuario: {current_user['user_id']} - Intentando crear tipo de transporte {type}")
+    #logger.info(f"[POST /create] Usuario: {current_user['user_id']} - Intentando crear tipo de transporte {TipoTransporte}")
 
     try:
         # Verificar si el tipo de transporte ya existe
-        existing_transport = controller.get_by_column(TypeTransportOut, "type", type)  
+        existing_transport = controller.get_by_column(TypeTransportOut, "TipoTransporte", TipoTransporte)  
         if existing_transport:
             #logger.warning(f"[POST /create] Error de validación: El tipo de transporte ya existe con id {id}")
             raise HTTPException(400, detail="El tipo de transporte ya existe con la misma identificación.")
 
         # Crear tipo de transporte
-        new_typetransport = TypeTransportCreate(id=id, type=type)
+        new_typetransport = TypeTransportCreate(id=id, TipoTransporte=TipoTransporte)
         #logger.info(f"Intentando insertar rol de usuario con datos: {new_typetransport.model_dump()}")
         controller.add(new_typetransport)
         #logger.info(f"Rol de Usuario insertado con ID: {new_typetransport.id}")  # Verifica si el ID se asigna
@@ -69,7 +69,7 @@ async def create_typetransport(
         return {
             "operation": "create",
             "success": True,
-            "data": TypeTransportOut(id=new_typetransport.id, type=new_typetransport.type).model_dump(),
+            "data": TypeTransportOut(id=new_typetransport.id, TipoTransporte=new_typetransport.TipoTransporte).model_dump(),
             "message": "TypeTransport created successfully."
         }
         
@@ -84,7 +84,7 @@ async def create_typetransport(
 @app.post("/update")
 async def update_typetransport(
     id: int = Form(...),
-    type: str = Form(...),
+    TipoTransporte: str = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     #logger.info(f"[POST /update] Usuario: {current_user['user_id']} - Actualizando tipo de transporte id={id}")
@@ -94,13 +94,13 @@ async def update_typetransport(
             #logger.warning(f"[POST /update] Tipo de Transporte no encontrada: id={id}")
             raise HTTPException(404, detail="TypeTransport not found")
 
-        updated_typetransport = TypeTransportOut(id=id, type=type)
+        updated_typetransport = TypeTransportOut(id=id, TipoTransporte=TipoTransporte)
         controller.update(updated_typetransport)
         #logger.info(f"[POST /update] TipoTransporte actualizada exitosamente: {updated_typetransport}")
         return {
             "operation": "update",
             "success": True,
-            "data": TypeTransportOut(id=id, type=updated_typetransport.type).model_dump(),
+            "data": TypeTransportOut(id=id, TipoTransporte=updated_typetransport.TipoTransporte).model_dump(),
             "message": f"TypeTransport {id} updated successfully."
         }
     except ValueError as e:

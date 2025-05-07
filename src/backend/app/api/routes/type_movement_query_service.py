@@ -47,23 +47,31 @@ async def get_typemovement(
     return typemovements
 
 
-@app.get("/{id}", response_class=HTMLResponse)
+@app.get("/{ID}", response_class=HTMLResponse)
 def typetransport(
     request: Request,
-    id: int
+    ID: int
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve a user by its ID and render the 'typetransport.html' template with its details.
     If the user is not found, display 'None' for all fields.
     """
-    #logger.info(f"[GET /typemovement] Usuario: {current_user['user_id']} - Consultando tipo de movimiento con id={id}")
-    unit_typemovement= controller.get_by_id(TypeMovementOut, id)
+    #logger.info(f"[GET /typemovement] Usuario: {current_user['user_id']} - Consultando tipo de movimiento con ID={ID}")
+    unit_typemovement= controller.get_by_id(TypeMovementOut, ID)
 
-    if unit_typemovement:
-        #logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.id}, {unit_typemovement.type}")
+    """if unit_typemovement:
+        #logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.ID}, {unit_typemovement.type}")
         return JSONResponse(content=unit_typemovement.model_dump(), status_code=200)
 
     else:
-        #logger.warning(f"[GET /typemovement] No se encontró tipo de movimientos con id={id}")
-        return JSONResponse(content="Tipo de Movimientos no encontrado", status_code=404)
+        #logger.warning(f"[GET /typemovement] No se encontró tipo de movimientos con ID={ID}")
+        return JSONResponse(content="Tipo de Movimientos no encontrado", status_code=404)"""
+        
+    context = {
+        "request": request,
+        "ID": unit_typemovement.ID if unit_typemovement else "None",
+        "TipoMovimiento": unit_typemovement.TipoMovimiento if unit_typemovement else "None",
+    }
+
+    return templates.TemplateResponse(request,"tipomovimiento.html", context)

@@ -60,10 +60,18 @@ def roluser(
     #logger.info(f"[GET /roluser] Usuario: {current_user['user_id']} - Consultando tipo de usuario con id={id}")
     unit_roluser= controller.get_by_id(RolUserOut, id)
 
-    if unit_roluser:
+    """if unit_roluser:
         #logger.info(f"[GET /roluser] Tipo de Usuario encontrado: {unit_roluser.id}, {unit_roluser.type}")
         return JSONResponse(content=unit_roluser.model_dump(), status_code=200)
 
     else:
         #logger.warning(f"[GET /roluser] No se encontró tipo de usuario con id={id}")
-        return JSONResponse(content="Tipo de Usuario no encontrado", status_code=404)
+        return JSONResponse(content="Tipo de Usuario no encontrado", status_code=404)"""
+        
+    context = {
+        "request": request,
+        "id": unit_roluser.id if unit_roluser else "None",
+        "type": unit_roluser.type if unit_roluser else "None",
+    }
+
+    return templates.TemplateResponse(request,"rolusuario.html", context)

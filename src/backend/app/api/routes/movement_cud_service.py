@@ -13,7 +13,7 @@ from backend.app.logic.universal_controller_sql import UniversalController
 #logger = logging.getLogger(__name__)
 #logging.basicConfig(level=logging.INFO)
 
-app = FastAPI(prefix="/movement", tags=["movement"])
+app = APIRouter(prefix="/movement", tags=["movement"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
@@ -80,7 +80,7 @@ async def create_movement(
         raise HTTPException(400, detail=str(e))
     except Exception as e:
         #logger.error(f"[POST /create] Error interno: {str(e)}")
-        raise HTTPException(500, detail=f"Internal server error: {str(e)}")
+        raise HTTPException(500, detail=f"Internal server error: {str(e)}") 
 
 
 @app.post("/update")
