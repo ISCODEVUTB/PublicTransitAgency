@@ -1,10 +1,10 @@
 from pydantic import BaseModel
 
 class MovementCreate(BaseModel):
-    __entity_name__ =  "movimiento"  # <- Aquí se define el nombre general de la entidad
-    id: int
-    idtype: int
-    amount: float
+    __entity_name__ =  "Movimiento"  # <- Aquí se define el nombre general de la entidad
+    ID: int
+    IDTipoMovimiento: int
+    Monto: float
 
     def to_dict(self):
         return self.model_dump()
@@ -12,13 +12,13 @@ class MovementCreate(BaseModel):
     @classmethod
     def get_fields(cls) -> dict:
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "idtype": "INTEGER",
-            "amount": "FLOAT"
+            "ID": "INTEGER PRIMARY KEY",
+            "IDTipoMovimiento": "INTEGER",
+            "Monto": "FLOAT"
         }
 
 class MovementOut(MovementCreate):
-    __entity_name__ = "movimiento"  # <- También aquí, porque se usa para lectura
+    __entity_name__ = "Movimiento"  # <- También aquí, porque se usa para lectura
     @classmethod
     def from_dict(cls, data: dict):
         return cls(**data)

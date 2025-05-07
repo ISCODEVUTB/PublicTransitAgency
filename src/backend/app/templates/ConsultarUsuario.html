@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Usuario</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+</head>
+<body>
+    <h2 style="text-align: center;">Consultar Saldo</h2>
+    <form action="/user/tarjeta" method="get">
+        <label for="id">ID de tarjeta:</label>
+        <input type="text" id="id" name="id" min="0" step="0.01" required>
+        <button type="submit">Consultar</button>
+    </form>
+</body>
+</html>

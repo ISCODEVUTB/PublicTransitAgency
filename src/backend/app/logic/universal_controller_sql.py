@@ -33,7 +33,7 @@ class UniversalController:
         sql = f"CREATE TABLE IF NOT EXISTS {table} ({columns})"
         self.cursor.execute(sql)
         self.conn.commit()
-
+        
     def add(self, obj: Any) -> Any:
         """Add a new object to the database."""
         self._ensure_table_exists(obj)

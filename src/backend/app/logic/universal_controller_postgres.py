@@ -1,4 +1,4 @@
-import os
+"""import os
 import psycopg2
 import psycopg2.extras
 from backend.app.core.config import Settings
@@ -24,7 +24,7 @@ class UniversalController:
             raise ValueError("El objeto o su clase no tienen definido '__entity_name__'.")
 
     def _ensure_table_exists(self, obj: Any):
-        """Crea la tabla si no existe, permitiendo que algunas tengan SERIAL en su clave primaria."""
+        #Crea la tabla si no existe, permitiendo que algunas tengan SERIAL en su clave primaria.
         table = self._get_table_name(obj)
         fields = obj.get_fields()
 
@@ -43,7 +43,7 @@ class UniversalController:
         self.conn.commit()
 
     def drop_table(self, obj: Any) -> None:
-        """Elimina la tabla de la base de datos (solo para desarrollo)."""
+        #Elimina la tabla de la base de datos (solo para desarrollo).
         table = self._get_table_name(obj)
         sql = f'DROP TABLE IF EXISTS "{table}" CASCADE'
         self.cursor.execute(sql)
@@ -151,11 +151,11 @@ class UniversalController:
 
 
     def clear_tables(self):
-        """Vacía todas las tablas del esquema público."""
-        self.cursor.execute("""
-            SELECT tablename FROM pg_tables 
-            WHERE schemaname = 'public'
-        """)
+        #Vacía todas las tablas del esquema público
+        self.cursor.execute(
+            #SELECT tablename FROM pg_tables 
+            #WHERE schemaname = 'public'
+        )
         tables = self.cursor.fetchall()
         for table in tables:
             self.cursor.execute(f'DELETE FROM {table["tablename"]}')
@@ -164,4 +164,4 @@ class UniversalController:
         sql = "SELECT * FROM mantenimiento WHERE id_unit = %s"
         self.cursor.execute(sql, (unit_id,))
         rows = self.cursor.fetchall()
-        return [dict(row) for row in rows]
+        return [dict(row) for row in rows]"""

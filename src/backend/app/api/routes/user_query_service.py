@@ -1,16 +1,16 @@
-import logging
+#import logging
 import json
 from fastapi import Request, Query, APIRouter, Security
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 
-from backend.app.core.auth import get_current_user
+#from backend.app.core.auth import get_current_user
 from backend.app.models.user import UserOut
 from backend.app.logic.universal_controller_sql import UniversalController
 
 # Configuración del logger
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+#logger = logging.getLogger(__name__)
+#logging.basicConfig(level=logging.INFO)
 
 # Create the router for user-related endpoints
 app = APIRouter(prefix="/user", tags=["user"])

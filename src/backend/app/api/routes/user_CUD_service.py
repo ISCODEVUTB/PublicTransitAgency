@@ -7,11 +7,11 @@ from fastapi.responses import HTMLResponse
 
 from backend.app.models.user import UserCreate, UserOut
 from backend.app.logic.universal_controller_sql import UniversalController
-from backend.app.core.auth import get_current_user
+#from backend.app.core.auth import get_current_user
 
 # Configuración de logging
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+#logger = logging.getLogger(__name__)
+#logging.basicConfig(level=logging.INFO)
 
 app = APIRouter(prefix="/user", tags=["user"])
 controller = UniversalController()

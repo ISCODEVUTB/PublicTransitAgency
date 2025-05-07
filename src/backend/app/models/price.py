@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 
 class PriceCreate(BaseModel):
-    __entity_name__ = "precio"  # <- Aquí se define el nombre general de la entidad
+    __entity_name__ = "Precio"  # <- Aquí se define el nombre general de la entidad
 
-    id: int
-    unidadtransportype: int
-    amount: float
+    ID: int
+    IDTipoTransporte: int
+    Monto: float
 
     def to_dict(self):
         return self.model_dump()
@@ -13,12 +13,12 @@ class PriceCreate(BaseModel):
     @classmethod
     def get_fields(cls) -> dict:
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "unidadtransportype": "INTEGER",
-            "amount": "FLOAT"
+            "ID": "INTEGER PRIMARY KEY",
+            "IDTipoTransporte": "INTEGER",
+            "Monto": "FLOAT"
         }
 class PriceOut(PriceCreate):
-    __entity_name__ = "precio"  # <- También aquí, porque se usa para lectura
+    __entity_name__ = "Precio"  # <- También aquí, porque se usa para lectura
 
     @classmethod
     def from_dict(cls, data: dict):

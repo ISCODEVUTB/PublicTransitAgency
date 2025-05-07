@@ -1,14 +1,14 @@
 from pydantic import BaseModel
 class UserCreate(BaseModel):
-    __entity_name__ = "usuario"  # <- Aquí se define el nombre general de la entidad
-    id: int
-    identification: int
-    name: str
-    lastname: str
-    email: str
-    password: str
-    idtype_user: int
-    idturn: int
+    __entity_name__ = "Usuario"  # <- Aquí se define el nombre general de la entidad
+    ID: int
+    Identificacion: int
+    Nombre: str
+    Apellido: str
+    Correo: str
+    Contrasena: str
+    IDRolUsuario: int
+    IDTarjeta: int
 
     def to_dict(self):
         return self.model_dump()
@@ -26,7 +26,7 @@ class UserCreate(BaseModel):
             "idturn": "INTEGER"
         }
 class UserOut(UserCreate):
-    __entity_name__ = "usuario"  # <- También aquí, porque se usa para lectura
+    __entity_name__ = "Usuario"  # <- También aquí, porque se usa para lectura
 
     @classmethod
     def from_dict(cls, data: dict):
