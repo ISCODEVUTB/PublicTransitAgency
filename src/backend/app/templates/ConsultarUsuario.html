@@ -4,42 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Usuarios</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #eef2f7;
-            padding: 2em;
-        }
-        .container {
-            background-color: #ffffff;
-            max-width: 400px;
-            margin: auto;
-            padding: 2em;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .detail {
-            margin: 1em 0;
-            font-size: 1.1em;
-            padding:5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
     <h1 style="text-align: center;">Consulta De Usuarios</h1>
-    <div class="container">
-        <h2>Buscar Usuarios</h2>
-        <form action="/user/consultar" method="get">
-            <div class="detail">
-                <label for="ID">ID:</label>
-                <input type="text" id="ID" name="ID">
-            </div>
-            <button type="submit">Buscar</button>
-        </form>
-        <div class="detail">
-            <p><a href="/user/users">Ver Todos Los Usuarios</a></p>
-        </div>
-    </div>
+    <h2>Buscar Usuarios</h2>
+    <form action="/user/consultar" method="get">
+        <label for="ID">ID:</label>
+        <input type="text" id="ID" name="ID">
+        <button type="submit">Buscar</button>
+    </form>
+    <p><a href="/user/users">Ver Todos Los Usuarios</a></p>
 </body>
 </html>

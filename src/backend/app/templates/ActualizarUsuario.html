@@ -3,58 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Actualizar Usuario</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-      body {
-          font-family: Arial, sans-serif;
-          background-color: #eef2f7;
-          padding: 2em;
-      }
-      .container {
-          background-color: #ffffff;
-          max-width: 400px;
-          margin: auto;
-          padding: 2em;
-          border-radius: 10px;
-          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-          text-align: center;
-      }
-      .detail {
-          margin: 1em 0;
-          font-size: 1.1em;
-          padding:5px;
-      }
-  </style>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
     <h2 style="text-align: center;">Actualizar Usuario</h2>
-    <div class="container">
-      <form action="/user/create" method="post">
-        <div class="detail">
+    <form action="/user/create" method="post">
           <label for="ID">ID:</label>
           <input type="number" id="ID" name="ID" required>
-        </div>
-        <div class="detail">
           <label for="Identificacion">Identificacion:</label>
           <input type="number" id="Identificacion" name="Identificacion" required>
-        </div>
-        <div class="detail">
           <label for="Nombre">Nombre:</label>
           <input type="text" id="Nombre" name="Nombre" required>
-        </div>
-        <div class="detail">
           <label for="Apellido">Apellido:</label>
           <input type="text" id="Apellido" name="Apellido" required>
-        </div>
-        <div class="detail">
           <label for="Correo">Correo:</label>
           <input type="text" id="Correo" name="Correo" required>
-        </div>
-        <div class="detail">
           <label for="Contrasena">Contraseña:</label>
           <input type="text" id="Contrasena" name="Contrasena" required>
-        </div>
-        <div class="detail">
           <label for="IDRolUsuario">Tipo de Usuario:</label>
           <select id="IDRolUsuario" name="IDRolUsuario">
               <option value="1">Pasajero</option>
@@ -63,8 +28,6 @@
               <option value="4">Mantenimiento</option>
               <option value="5">Administrador</option>
             </select>
-        </div>
-        <div class="detail">
           <label for="IDTurno">Turno Laboral:</label>
           <select id="IDTurno" name="IDTurno">
               <option value="1">Turno diurno</option>
@@ -77,9 +40,7 @@
               <option value="8">Turno de fin de semana</option>
               <option value="9">Ninguno</option>
             </select>
-        </div>
           <button type="submit">Actualizar Usuario</button>
       </form>
-  </div>
 </body>
 </html>
