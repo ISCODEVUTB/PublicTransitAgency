@@ -9,10 +9,10 @@
   <div class="container">
     <div class="sidebar">
       <h2>Técnico</h2>
-      <button class="menu-btn">Consultar historial de bus</button>
-      <button class="menu-btn">Itinerario</button>
-      <button class="menu-btn">Registrar Mantenimiento</button>
-      <button class="menu-btn">Alertas</button>
+      <button class="menu-btn" onclick="location.href='/schedules/'">Consultar historial de bus</button>
+      <button class="menu-btn" onclick="location.href='/schedules/'">Itinerario</button>
+      <button class="menu-btn" onclick="location.href='/schedules/create'">Registrar Mantenimiento</button>
+      <button class="menu-btn" onclick="location.href='/report/alert-tec'">Alertas</button>
     </div>
     <div class="main-content">
       <div class="header">
@@ -22,15 +22,15 @@
       <div class="info-section">
         <div class="info-box">
           <h3>Buses en Mantenimiento</h3>
-          <p>12</p>
+          <p>{{buses_mantenimiento}}</p>
         </div>
         <div class="info-box">
           <h3>Próximos Mantenimientos</h3>
-          <p>5</p>
+          <p>{{proximo_mantenimiento}}</p>
         </div>
         <div class="info-box">
           <h3>Historial Técnico</h3>
-          <p>45 registros</p>
+          <p>{{registros_mantenimiento}} registros</p>
         </div>
       </div>
     </div>

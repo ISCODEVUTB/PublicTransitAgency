@@ -36,7 +36,8 @@ from backend.app.api.routes import (
     schedule_cud_service,
     schedule_query_service,
     routes_query_service,
-    user_query_service
+    user_query_service,
+    planificador
 )
 
 # Initialize the FastAPI app
@@ -58,6 +59,7 @@ api_router.add_middleware(
 api_router.mount("/static", StaticFiles(directory="src/frontend/static"), name="static")
 
 # Include API service routes
+api_router.include_router(planificador.app)
 api_router.include_router(type_card_cud_service.app)
 api_router.include_router(login_service.app)
 api_router.include_router(card_cud_service.app)

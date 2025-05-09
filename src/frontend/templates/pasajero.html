@@ -10,12 +10,12 @@
         <!-- Panel Izquierdo -->
         <aside class="sidebar">
             <h2>Pasajero</h2>
-            <button class="menu-btn" onclick="location.href='/planificador'">Planificador de viaje</button>
-            <button class="menu-btn" onclick="location.href='/schedules/consultar'">Líneas, horarios y medios</button>
+            <button class="menu-btn" onclick="location.href='/planificador/consultar'">Planificador de viaje</button>
+            <button class="menu-btn" onclick="location.href='/schedules/'">Líneas, horarios y medios</button>
             <button class="menu-btn" onclick="location.href='/price/consultar'">Tarifas y peajes</button>
-            <button class="menu-btn" onclick="location.href='/incidence/consultar'">Noticias y Alertas</button>
+            <button class="menu-btn" onclick="location.href='/incidences/consultar'">Noticias y Alertas</button>
             <button class="menu-btn" onclick="location.href='/movement/consultar'">Movimientos</button>
-            <button class="menu-btn" onclick="location.href='/suggestions/consultar'">Sugerencias y Quejas</button>
+            <button class="menu-btn" onclick="location.href='/pqr/crear'">Sugerencias y Quejas</button>
         </aside>
 
         <!-- Panel Derecho -->
@@ -24,7 +24,7 @@
                 <h2>Información general del pasajero</h2>
                 <div class="user-info">
                     <p><strong>Nombre:</strong> {{ user.username or 'No disponible' }}</p>
-                    <p><strong>ID:</strong> {{ user.username or 'No disponible' }}</p>
+                    <p><strong>ID:</strong> {{ user.id or 'No disponible' }}</p>
                     <p><strong>Correo:</strong> {{ user.email or 'No disponible' }}</p>
                     <p><strong>Teléfono:</strong> {{ user.tel or 'No disponible' }}</p>
                     <p><strong>Tipo de tarjeta:</strong> {{ user.type_card or 'No disponible' }}</p>

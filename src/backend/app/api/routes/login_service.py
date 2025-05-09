@@ -8,23 +8,25 @@ from starlette.responses import HTMLResponse
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import Depends
+from backend.app.core.deps import ultimo_uso_tarjeta, total_unidades, total_pasajeros, total_supervisor, total_operario,get_type_card,total_mantenimiento,proximos_mantenimientos
 import os
 
-# Simulate user store with hardcoded credentials (replace with real user DB/service)
+# Simulated user store with hardcoded credentials (replace with real user DB/service)
 fake_users_db = {
-    "admin": {"username": "admin", "password": "adminpass", "scope": "administrador"},
-    "john": {"username": "john", "password": "johnpass", "scope": "pasajero"},
-    "jane": {"username": "jane", "password": "janepass", "scope": "supervisor"},
+    "admin": {"username": "admin", "password": "adminpass", "scope": "administrador", "email": "admin@domain.com", "tel": "123456789", "ID": 1, "Nombre": "Administrador", "Apellido": "Admin", "Contrasena": "adminpass", "IDRolUsuario": 1, "IDTurno": 1},
+    "pasajero": {"username": "john", "password": "pasajeropass", "scope": "pasajero", "email": "john@domain.com", "tel": "987654321", "ID": 2, "Nombre": "John", "Apellido": "Doe", "Contrasena": "pasajeropass", "IDRolUsuario": 2, "IDTurno": 1},
+    "supervisor": {"username": "jane", "password": "supervisorpass", "scope": "supervisor", "email": "jane@domain.com", "tel": "111222333", "ID": 3, "Nombre": "Jane", "Apellido": "Smith", "Contrasena": "supervisorpass", "IDRolUsuario": 3, "IDTurno": 2},
+    "Tecnico": {"username": "Joshph", "password": "tecnicopass", "scope": "mantenimiento", "email": "joshph@domain.com", "tel": "444555666", "ID": 4, "Nombre": "Joshph", "Apellido": "Technico", "Contrasena": "tecnicopass", "IDRolUsuario": 4, "IDTurno": 3},
 }
 
 app = APIRouter(prefix="/login", tags=["login"])
 templates = Jinja2Templates(directory="src/frontend/templates")
 
-
 @app.get("/", response_class=HTMLResponse)
 async def login_form(request: Request):
     print("[LOGIN GET] Rendering login form")
     return templates.TemplateResponse("login.html", {"request": request})
+
 @app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = fake_users_db.get(form_data.username)
@@ -65,11 +67,10 @@ async def login_user(request: Request, username: str = Form(...), password: str 
     token = encode_token(payload)
     print(f"[LOGIN POST] Token generated: {token}")
 
-    response = RedirectResponse(url=request.url_for("get_scope_page", scope=scope),status_code=status.HTTP_303_SEE_OTHER)
+    response = RedirectResponse(url=request.url_for("get_scope_page", scope=scope), status_code=status.HTTP_303_SEE_OTHER)
     response.set_cookie(key="access_token", value=f"Bearer {token}", httponly=True)
 
     return response
-
 
 @app.get("/user/{scope}", name="get_scope_page", response_class=HTMLResponse)
 async def get_scope_page(request: Request, scope: str):
@@ -85,19 +86,23 @@ async def get_scope_page(request: Request, scope: str):
             except JWTError as e:
                 print(f"[SCOPE GET] Token decode error: {e}")
 
-        template_path = f"{scope}.html"
-        full_path = os.path.join("src/frontend/templates", template_path)
+        user = fake_users_db.get(user_data["username"], {})
 
-        print(f"[SCOPE GET] Requested scope: {scope}")
-        print(f"[SCOPE GET] Full template path: {full_path}")
-        print(f"[SCOPE GET] Exists: {os.path.exists(full_path)}")
+        # Verificar si el ID está presente en los datos del usuario
+        user_id = user.get("ID", "No disponible")
 
-        if not os.path.exists(full_path):
-            raise HTTPException(status_code=404, detail=f"Template '{template_path}' not found.")
-
-        return templates.TemplateResponse(template_path, {
+        # Pasamos los datos completos del usuario a la plantilla
+        return templates.TemplateResponse(f"{scope}.html", {
             "request": request,
-            "user": user_data
+            "user": user,
+            "total_vehiculos": total_unidades(),
+            "total_passanger": total_pasajeros(),
+            "total_operative": total_operario(),
+            "total_supervisors": total_supervisor(),
+            "type_card": get_type_card(user_id),
+            "buses_mantenimiento": total_unidades(),
+            "registros_mantenimiento": total_mantenimiento(),
+            "proximos_mantenimientos": proximos_mantenimientos()
         })
 
     except Exception as e:
