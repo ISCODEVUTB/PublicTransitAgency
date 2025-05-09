@@ -71,7 +71,6 @@ async def login_user(request: Request, username: str = Form(...), password: str 
     response.set_cookie(key="access_token", value=f"Bearer {token}", httponly=True)
 
     return response
-
 @app.get("/user/{scope}", name="get_scope_page", response_class=HTMLResponse)
 async def get_scope_page(request: Request, scope: str):
     try:
