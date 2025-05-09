@@ -8,7 +8,7 @@ from starlette.responses import HTMLResponse
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import Depends
-from backend.app.core.deps import ultimo_uso_tarjeta, total_unidades, total_pasajeros, total_supervisor, total_operario,get_type_card,total_mantenimiento,proximos_mantenimientos
+from backend.app.core.deps import *
 import os
 
 # Simulated user store with hardcoded credentials (replace with real user DB/service)
@@ -89,12 +89,13 @@ async def get_scope_page(request: Request, scope: str):
         user = fake_users_db.get(user_data["username"], {})
 
         # Verificar si el ID está presente en los datos del usuario
-        user_id = user.get("ID", "No disponible")
+        user_id = user.get("ID", "No ID found")
 
         # Pasamos los datos completos del usuario a la plantilla
         return templates.TemplateResponse(f"{scope}.html", {
             "request": request,
             "user": user,
+            "id": user_id,
             "total_vehiculos": total_unidades(),
             "total_passanger": total_pasajeros(),
             "total_operative": total_operario(),
@@ -102,7 +103,11 @@ async def get_scope_page(request: Request, scope: str):
             "type_card": get_type_card(user_id),
             "buses_mantenimiento": total_unidades(),
             "registros_mantenimiento": total_mantenimiento(),
-            "proximos_mantenimientos": proximos_mantenimientos()
+            "proximo_mantenimiento": proximos_mantenimientos(),
+            "ultimo_uso_tarjeta": last_card_used(user_id),
+            "nombre":"None",
+            "turno":"None",
+            "zona":"None"
         })
 
     except Exception as e:

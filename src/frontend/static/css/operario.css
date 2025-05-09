@@ -30,15 +30,16 @@
   }
   
   .menu-btn {
-    background-color: #00bcd4;
-    color: white;
+    background-color: #4fc3f7;
+    color: #003c4d;
     padding: 12px;
+    width: 100%;
+    font-weight: bold;
     border: none;
     border-radius: 8px;
-    font-weight: bold;
     cursor: pointer;
-    width: 100%;
-    transition: background 0.3s ease;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
   }
   
   .menu-btn:hover {

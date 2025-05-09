@@ -59,17 +59,6 @@ def obtener_ruta_con_interconexion(ubicacion_llegada, ubicacion_final):
         print(f'Error al ejecutar el query: {error}')
     
     return answer
-
-#Pasajero
-def ultimo_uso_tarjeta(id_tarjeta: int) -> str:
-    """Get the last usage date of a card."""
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-    sql = "SELECT fecha_uso FROM tarjeta WHERE id = ?"
-    cursor.execute(sql, (id_tarjeta,))
-    row = cursor.fetchone()
-    conn.close()
-    return row[0] if row else None
 def total_unidades() -> int:
     """Get the total number of units."""
     conn = sqlite3.connect(DB_FILE)
@@ -128,8 +117,87 @@ def proximos_mantenimientos() -> list:
     """Get the next maintenance records."""
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
-    sql = "SELECT * FROM mantenimiento WHERE fecha > DATE('now')"
+    sql = "SELECT COUNT(*) FROM mantenimiento WHERE fecha > DATE('now')"
+    cursor.execute(sql)
+    rows = cursor.fetchone()
+    conn.close()
+    return rows[0] if rows else 0
+def alerta_mantenimiento_atrasados() -> list:
+    """Get the maintenance alert records."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    sql = "SELECT * FROM mantenimiento WHERE fecha < DATE('now')"
     cursor.execute(sql)
     rows = cursor.fetchall()
     conn.close()
     return rows if rows else 0
+def alerta_mantenimiento_proximos() -> list:
+    """Get the next maintenance alert records."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    sql = "SELECT * FROM mantenimiento WHERE fecha BETWEEN DATE('now') AND DATE('now', '+7 days')"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    conn.close()
+    return rows if rows else 0
+def total_movimientos() -> int:
+    """Get the total number of movements."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    sql = "SELECT COUNT(*) FROM movimiento"
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else 0
+def total_usuarios() -> int:
+    """Get the total number of users."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    sql = "SELECT COUNT(*) FROM usuario"
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else 0
+def total_buses_activos() -> int:
+    """Get the total number of active buses."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    sql = "SELECT COUNT(*) FROM unidadtransporte WHERE status = 'activo'"
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else 0
+def total_buses_inactivos() -> int:
+    """Get the total number of inactive buses."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    sql = "SELECT COUNT(*) FROM unidadtransporte WHERE status = 'inactivo'"
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else 0
+def promedio_horas_trabajadas() -> float:
+    """Get the average hours worked."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    sql = "SELECT AVG(horastrabajadas) FROM rendimiento"
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else 0.0
+def last_card_used(id_card: int) -> str:
+    """Get the last card used."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    sql = """
+    SELECT a.TipoMovimiento, m.Monto
+    FROM Movimiento m
+    INNER JOIN TipoMovimiento a ON m.IDTipoMovimiento = a.ID
+    WHERE a.ID = ?
+    ORDER BY m.ID DESC
+    LIMIT 1;
+"""
+    cursor.execute(sql, (id_card,))
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else None

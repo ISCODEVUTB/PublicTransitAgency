@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Mantenimiento</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/tecnico.css') }}">
+</head>
+<body>
+    <h1>Reporte de Mantenimiento</h1>
+    <div>
+        <h2>Mantenimientos Atrasados</h2>
+        {% for mantenimiento in mantenimientos_atrasados %}
+            <p>{{ mantenimiento }}</p>
+        {% endfor %}
+        <h2>Mantenimientos Próximos</h2>
+        {% for mantenimiento in mantenimientos_proximos %}
+            <p>{{ mantenimiento }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
