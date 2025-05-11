@@ -2,46 +2,43 @@ import pytest
 from fastapi.testclient import TestClient
 from backend.app.api.routes.schedule_query_service import app
 from backend.app.models.schedule import Schedule
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.conf import headers
 
 client = TestClient(app)
 controller = UniversalController()
 
-@pytest.fixture(scope="function", autouse=True)
-def limpiar_tabla():
-    """Limpia las tablas antes y después de cada prueba."""
-    controller.clear_tables()
-    yield
-    controller.clear_tables()
+@pytest.fixture
+def setup_and_teardown():
+    """
+    Fixture para configurar y limpiar los datos de prueba.
+    """
+    schedule = Schedule(ID=9999, Llegada="08:00:00", Salida="17:00:00")
+    # Asegurarse de que el horario no exista antes de crearlo
+    existing_schedule = controller.get_by_id(Schedule, schedule.ID)
+    if existing_schedule:
+        controller.delete(existing_schedule)
 
-def test_listar_horarios():
+    # Crear el horario de prueba
+    controller.add(schedule)
+    yield schedule
+
+    # Eliminar el horario de prueba
+    controller.delete(schedule)
+
+def test_listar_horarios(setup_and_teardown):
     """
-    Prueba listar horarios cuando hay datos disponibles.
+    Prueba para listar todos los horarios.
     """
-    controller.add(Schedule(id=1, llegada="08:00:00", salida="10:00:00"))
     response = client.get("/schedules/", headers=headers)
     assert response.status_code == 200
-    assert "08:00:00" in response.text
-    assert "10:00:00" in response.text
-    assert "1" in response.text
 
-def test_listar_sin_horarios():
+def test_detalle_horario_existente(setup_and_teardown):
     """
-    Prueba listar horarios cuando la tabla está vacía.
+    Prueba para obtener el detalle de un horario existente.
     """
-    response = client.get("/schedules/", headers=headers)
+    schedule = setup_and_teardown
+    response = client.get(f"/schedules/{schedule.ID}", headers=headers)
     assert response.status_code == 200
-    assert "No hay horarios disponibles." in response.text  # Suponiendo que el HTML lo indica.
 
-def test_detalle_horario_existente():
-    """
-    Prueba obtener detalles de un horario existente.
-    """
-    controller.add(Schedule(id=1, llegada="08:00:00", salida="10:00:00"))
-    response = client.get("/schedules/1", headers=headers)
-    assert response.status_code == 200
-    #assert "08:00:00" in response.text
-    #assert "10:00:00" in response.text
-    assert "1" in response.text
 

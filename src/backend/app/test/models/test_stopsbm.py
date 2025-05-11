@@ -1,27 +1,50 @@
-"""import unittest
-from backend.app.models.stops import Stop
+import unittest
+from backend.app.models.stops import Parada
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 
-class TestStop(unittest.TestCase):
+class TestParada(unittest.TestCase):
     def setUp(self):
-        self.stop = Stop(ID=1, Nombre="Central Stop", Ubicacion="Downtown")
+        """
+        Configuración inicial para las pruebas.
+        """
+        self.controller = UniversalController()
+        self.parada = Parada(ID=9999, Nombre="Parada Test", Ubicacion="Ubicación Test")
+
+        # Agregar la parada de prueba a la base de datos
+        self.controller.add(self.parada)
+
+    def tearDown(self):
+        """
+        Limpieza después de cada prueba.
+        """
+        # Eliminar la parada de prueba de la base de datos
+        self.controller.delete(self.parada)
 
     def test_initialization(self):
-        self.assertEqual(self.stop.ID, 1)
-        self.assertEqual(self.stop.Nombre, "Central Stop")
-        self.assertEqual(self.stop.Ubicacion, "Downtown")
+        """
+        Prueba la inicialización del modelo Parada.
+        """
+        self.assertEqual(self.parada.ID, 9999)
+        self.assertEqual(self.parada.Nombre, "Parada Test")
+        self.assertEqual(self.parada.Ubicacion, "Ubicación Test")
 
     def test_to_dict(self):
-        stop_dict = self.stop.to_dict()
-        self.assertEqual(stop_dict["ID"], 1)
-        self.assertEqual(stop_dict["Nombre"], "Central Stop")
-        self.assertEqual(stop_dict["Ubicacion"], "Downtown")
+        """
+        Prueba la conversión del modelo Parada a un diccionario.
+        """
+        parada_dict = self.parada.to_dict()
+        self.assertEqual(parada_dict["ID"], 9999)
+        self.assertEqual(parada_dict["Nombre"], "Parada Test")
+        self.assertEqual(parada_dict["Ubicacion"], "Ubicación Test")
 
     def test_get_fields(self):
-        fields = Stop.get_fields()
+        """
+        Prueba la obtención de los campos del modelo Parada.
+        """
+        fields = Parada.get_fields()
         self.assertIn("ID", fields)
         self.assertIn("Nombre", fields)
         self.assertIn("Ubicacion", fields)
 
 if __name__ == "__main__":
     unittest.main()
-    """

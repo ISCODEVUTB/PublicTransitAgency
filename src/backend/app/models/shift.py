@@ -2,12 +2,12 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 class Shift(BaseModel):
-    __entity_name__ = "turno"  # Nombre de la tabla en la base de datos
-    id: Optional[int] = Field(None, description="Clave primaria")
-    tipoturno: str = Field(..., max_length=30, description="Tipo de turno (por ejemplo, 'Diurno', 'Nocturno')")
+    __entity_name__ = "Turno"  # Nombre de la tabla en la base de datos
+    ID: Optional[int] = Field(None, description="Clave primaria")
+    TipoTurno: str = Field(..., max_length=30)
 
     def to_dict(self):
-        return self.model_dump()
+        return self.dict()
 
     @classmethod
     def from_dict(cls, data: dict):
@@ -16,6 +16,6 @@ class Shift(BaseModel):
     @classmethod
     def get_fields(cls):
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "tipoturno": "VARCHAR(30) NOT NULL"
+            "ID": "INTEGER PRIMARY KEY",
+            "TipoTurno": "VARCHAR(30) NOT NULL"
         }

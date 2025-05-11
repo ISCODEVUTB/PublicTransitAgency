@@ -4,29 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Turnos</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Listado de Turnos</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID del Turno</th>
-                <th>Tipo de Turno</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for turno in turnos %}
-            <tr>
-                <td>{{ turno.id }}</td>
-                <td>{{ turno.tipoturno }}</td>
-                <td><a href="/shifts/{{ turno.id }}">Detalles</a></td>
-            </tr>
-            {% else %}
-            <tr><td colspan="3">No hay turnos registrados.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <p><a href="/">Volver</a></p>
+    <header>
+        <h1 class="main-title">Listado de Turnos</h1>
+    </header>
+    <main>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Horario</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for turno in turnos %}
+                <tr>
+                    <td>{{ turno.ID }}</td>
+                    <td>{{ turno.Nombre }}</td>
+                    <td>{{ turno.Horario }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="3">No hay turnos registrados.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p><a href="/" class="btn">Volver</a></p>
+    </footer>
 </body>
 </html>

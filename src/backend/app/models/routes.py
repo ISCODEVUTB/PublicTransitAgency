@@ -2,17 +2,18 @@ from typing import Optional
 from pydantic import BaseModel
 
 class Route(BaseModel):
-    __entity_name__ = "ruta"  # Nombre de la tabla en la base de datos
+    __entity_name__ = "Rutas"  # Nombre de la tabla en la base de datos
 
-    id: Optional[int] = None  # Clave primaria
-    idhorario: int  # Clave foránea a la tabla Horario
-    name: str  # Nombre de la ruta
+    ID: Optional[int] = None  # Clave primaria
+    IDHorario: int  # Clave foránea a la tabla Horario
+    Nombre: str  # Nombre de la ruta
 
     def to_dict(self):
-        """
-        Serializa el modelo `Route` en un diccionario.
-        """
-        return self.model_dump()
+        return self.dict()
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(**data)
 
     @classmethod
     def get_fields(cls):
@@ -20,7 +21,7 @@ class Route(BaseModel):
         Define los campos de la tabla para su creación.
         """
         return {
-            "id": "INT PRIMARY KEY",
-            "idhorario": "INT NOT NULL",
-            "name": "VARCHAR(255) NOT NULL"
+            "ID": "INT PRIMARY KEY",
+            "IDHorario": "INT NOT NULL",
+            "Nombre": "VARCHAR(255) NOT NULL"
         }

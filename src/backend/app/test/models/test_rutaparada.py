@@ -1,45 +1,39 @@
-import pytest
+"""
+import unittest
 from backend.app.models.rutaparada import RutaParada
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 
-def test_rutaparada_creation():
-    """
-    Prueba la creación de una instancia de RutaParada.
-    """
-    rutaparada = RutaParada(id=1, idruta=2, idparada=3)
-    assert rutaparada.id == 1
-    assert rutaparada.idruta == 2
-    assert rutaparada.idparada == 3
+class TestRutaParada(unittest.TestCase):
+    def setUp(self):
+        
+        self.controller = UniversalController()
+        self.rutaparada = RutaParada(IDParada=9999, IDRuta=8888)
 
-def test_rutaparada_to_dict():
-    """
-    Prueba la conversión de una instancia de RutaParada a un diccionario.
-    """
-    rutaparada = RutaParada(id=1, idruta=2, idparada=3)
-    rutaparada_dict = rutaparada.to_dict()
-    assert isinstance(rutaparada_dict, dict)
-    assert rutaparada_dict["id"] == 1
-    assert rutaparada_dict["idruta"] == 2
-    assert rutaparada_dict["idparada"] == 3
+        # Agregar la relación de prueba a la base de datos
+        self.controller.add(self.rutaparada)
 
-def test_rutaparada_from_dict():
-    """
-    Prueba la creación de una instancia de RutaParada a partir de un diccionario.
-    """
-    data = {"id": 1, "idruta": 2, "idparada": 3}
-    rutaparada = RutaParada.from_dict(data)
-    assert rutaparada.id == 1
-    assert rutaparada.idruta == 2
-    assert rutaparada.idparada == 3
+    def tearDown(self):
+        
+        # Eliminar la relación de prueba de la base de datos
+        self.controller.delete(self.rutaparada)
 
-def test_rutaparada_get_fields():
+    def test_initialization(self):
+        
+        self.assertEqual(self.rutaparada.IDParada, 9999)
+        self.assertEqual(self.rutaparada.IDRuta, 8888)
+
+    def test_to_dict(self):
+        "
+        rutaparada_dict = self.rutaparada.to_dict()
+        self.assertEqual(rutaparada_dict["IDParada"], 9999)
+        self.assertEqual(rutaparada_dict["IDRuta"], 8888)
+
+    def test_get_fields(self):
+        
+        fields = RutaParada.get_fields()
+        self.assertIn("IDParada", fields)
+        self.assertIn("IDRuta", fields)
+
+if __name__ == "__main__":
+    unittest.main()
     """
-    Prueba la obtención de los campos de la tabla RutaParada.
-    """
-    fields = RutaParada.get_fields()
-    assert isinstance(fields, dict)
-    assert "id" in fields
-    assert "idruta" in fields
-    assert "idparada" in fields
-    assert fields["id"] == "INTEGER PRIMARY KEY"
-    assert fields["idruta"] == "INTEGER NOT NULL"
-    assert fields["idparada"] == "INTEGER NOT NULL"

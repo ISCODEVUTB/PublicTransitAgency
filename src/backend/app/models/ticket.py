@@ -2,12 +2,20 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 class Ticket(BaseModel):
-    __entity_name__ = "ticket"  # Nombre de la tabla en la base de datos
-    id: Optional[int] = Field(None, description="Clave primaria")
-    estadoincidencia: str = Field(..., max_length=20, description="Estado de la incidencia")
+    """
+    Modelo para la tabla Ticket en SQL Server.
+
+    Campos:
+    - ID: Identificador único del ticket
+    - EstadoIncidencia: Estado de la incidencia del ticket
+    """
+    __entity_name__ = "Ticket"
+
+    ID: int = Field(..., description="Identificador único del ticket")
+    EstadoIncidencia: str = Field(..., max_length=20, description="Estado de la incidencia")
 
     def to_dict(self):
-        return self.model_dump()
+        return self.dict()
 
     @classmethod
     def from_dict(cls, data: dict):
@@ -16,6 +24,6 @@ class Ticket(BaseModel):
     @classmethod
     def get_fields(cls):
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "estadoincidencia": "VARCHAR(20) NOT NULL"
+            "ID": "INTEGER PRIMARY KEY",
+            "EstadoIncidencia": "VARCHAR(20) NOT NULL"
         }

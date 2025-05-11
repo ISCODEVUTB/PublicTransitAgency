@@ -1,106 +1,93 @@
-from fastapi import APIRouter, Form, HTTPException, Request, Security
+from fastapi import APIRouter, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.incidence import Incidence
-from backend.app.core.auth import get_current_user  # Import for authentication
 
 app = APIRouter(prefix="/incidences", tags=["incidences"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
+
 @app.get("/create", response_class=HTMLResponse)
-def crear_incidencia_form(
-    request: Request,
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
+def crear_incidencia_form(request: Request):
     """
-    Render the form for creating a new incidence. Requires authentication.
+    Renderiza el formulario para crear una nueva incidencia.
     """
     return templates.TemplateResponse("CrearIncidencia.html", {"request": request})
 
 @app.post("/create")
 def crear_incidencia(
-    id: int = Form(...),
-    idticket: int = Form(...),
-    description: str = Form(...),
-    type: str = Form(...),
-    idunit: int = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    ID: int = Form(...),
+    IDTicket: int = Form(...),
+    Descripcion: str = Form(...),
+    Tipo: str = Form(...),
+    IDUnidad: int = Form(...)
 ):
     """
-    Create a new incidence. Requires authentication.
+    Crea una nueva incidencia.
     """
-    incidencia = Incidence(id=id, idticket=idticket, description=description, type=type, idunit=idunit)
+    incidencia = Incidence(ID = ID, IDTicket=IDTicket, Descripcion=Descripcion, Tipo=Tipo, IDUnidad=IDUnidad)
     try:
         controller.add(incidencia)
-        return {
-            "operation": "create",
-            "success": True,
-            "data": incidencia.to_dict(),
-            "message": "Incidencia creada exitosamente."
-        }
+        return {"message": "Incidencia creada exitosamente.", "data": incidencia.to_dict()}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@app.get("/update", response_class=HTMLResponse)
-def actualizar_incidencia_form(
-    request: Request,
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
+@app.get("/{ID}", response_class=HTMLResponse)
+def detalle_incidencia(ID: int, request: Request):
     """
-    Render the form for updating an incidence. Requires authentication.
+    Obtiene el detalle de una incidencia por su ID.
+    """
+    try:
+        incidencia = controller.get_by_id(Incidence, ID)
+        if not incidencia:
+            raise HTTPException(status_code=404, detail="Incidencia no encontrada")
+        return templates.TemplateResponse("DetalleIncidencia.html", {"request": request, "incidencia": incidencia.to_dict()})
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/update", response_class=HTMLResponse)
+def actualizar_incidencia_form(request: Request):
+    """
+    Renderiza el formulario para actualizar una incidencia.
     """
     return templates.TemplateResponse("ActualizarIncidencia.html", {"request": request})
 
 @app.post("/update")
 def actualizar_incidencia(
-    id: int = Form(...),
-    idticket: int = Form(...),
-    description: str = Form(...),
-    type: str = Form(...),
-    idunit: int = Form(...),
-   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    ID: int = Form(...),
+    IDTicket: int = Form(...),
+    Descripcion: str = Form(...),
+    Tipo: str = Form(...),
+    IDUnidad: int = Form(...)
 ):
     """
-    Update an existing incidence. Requires authentication.
+    Actualiza una incidencia existente.
     """
-    incidencia = Incidence(id=id, idticket=idticket, description=description, type=type, idunit=idunit)
+    incidencia = Incidence(ID=ID, IDTicket=IDTicket, Descripcion=Descripcion, Tipo=Tipo, IDUnidad=IDUnidad)
     try:
         controller.update(incidencia)
-        return {
-            "operation": "update",
-            "success": True,
-            "data": incidencia.to_dict(),
-            "message": "Incidencia actualizada exitosamente."
-        }
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail="Incidencia no encontrada")  # Cambiado el mensaje
+        return {"message": "Incidencia actualizada exitosamente.", "data": incidencia.to_dict()}
+    except ValueError:
+        raise HTTPException(status_code=404, detail="Incidencia no encontrada")
 
 @app.get("/delete", response_class=HTMLResponse)
-def eliminar_incidencia_form(
-    request: Request,
-   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
+def eliminar_incidencia_form(request: Request):
     """
-    Render the form for deleting an incidence. Requires authentication.
+    Renderiza el formulario para eliminar una incidencia.
     """
     return templates.TemplateResponse("EliminarIncidencia.html", {"request": request})
 
 @app.post("/delete")
-def eliminar_incidencia(
-    id: int = Form(...),
-   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
+def eliminar_incidencia(ID: int = Form(...)):
     """
-    Delete an incidence by ID. Requires authentication.
+    Elimina una incidencia por su ID.
     """
     try:
-        controller.delete(Incidence(id=id, idticket=0, description="", type="", idunit=0))
-        return {
-            "operation": "delete",
-            "success": True,
-            "message": "Incidencia eliminada exitosamente."
-        }
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail="Incidencia no encontrada")  # Cambiado el mensaje
+        controller.delete(Incidence(ID=ID))
+        return {"message": "Incidencia eliminada exitosamente."}
+    except ValueError:
+        raise HTTPException(status_code=404, detail="Incidencia no encontrada")

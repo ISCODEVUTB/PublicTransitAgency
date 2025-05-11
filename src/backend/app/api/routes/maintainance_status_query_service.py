@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request, Security
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.maintainance_status import MaintainanceStatus
 from backend.app.core.auth import get_current_user
 
@@ -35,7 +35,12 @@ def detalle_estado(
     try:
         estado = controller.get_by_id(MaintainanceStatus, id)
         if not estado:
+            # Si el estado no existe, devolver un error 404
             raise HTTPException(status_code=404, detail="Estado de mantenimiento no encontrado")
-        return templates.TemplateResponse("DetalleEstado.html", {"request": request, "estado": estado.dict()})
+        return templates.TemplateResponse("DetalleEMantenimiento.html", {"request": request, "estado": estado.to_dict()})
+    except HTTPException as e:
+        # Re-lanzar excepciones HTTP para que sean manejadas correctamente
+        raise e
     except Exception as e:
+        # Manejar cualquier otro error como un error interno del servidor
         raise HTTPException(status_code=500, detail=str(e))

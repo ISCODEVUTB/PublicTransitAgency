@@ -4,24 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Nueva Parada</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { max-width: 500px; margin: auto; }
+        div { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        a { color: #2196F3; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
     <h1>Crear Nueva Parada</h1>
-    <form action="/stop/create" method="post">
+    <form action="/paradas/create" method="post">
         <div>
-            <label for="stop_id">ID de la Parada:</label>
-            <input type="text" id="stop_id" name="stop_id" required>
+            <label for="id">ID de la Parada:</label>
+            <input type="number" id="id" name="id" required>
         </div>
         <div>
-            <label for="name">Nombre de la Parada:</label>
-            <input type="text" id="name" name="name" required>
+            <label for="Nombre">Nombre de la Parada:</label>
+            <input type="text" id="Nombre" name="Nombre" required>
         </div>
         <div>
-            <label for="location">Ubicación de la Parada:</label>
-            <input type="text" id="location" name="location" required>
+            <label for="Ubicacion">Ubicación de la Parada:</label>
+            <input type="text" id="Ubicacion" name="Ubicacion" required>
         </div>
         <button type="submit">Crear Parada</button>
     </form>
-    <p><a href="/stops">Volver a la lista de paradas</a></p>
+    <p><a href="/paradas/">Volver a la lista de paradas</a></p>
 </body>
 </html>

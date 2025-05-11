@@ -1,38 +1,44 @@
 import unittest
 from backend.app.models.transport import Transport
 
-class TestTransport(unittest.TestCase):
+class TestTransportModel(unittest.TestCase):
     def setUp(self):
-        self.transport = Transport(
-            id=1,
-            type="Bus",
-            status="Active",
-            ubication="Downtown",
-            capacity=50
-        )
+        """
+        Configuración inicial para las pruebas.
+        """
+        self.transport = Transport(ID=1, Ubicacion="Estación Central", Capacidad=50, IDRuta=1, IDTipo=2)
 
     def test_initialization(self):
-        self.assertEqual(self.transport.id, 1)
-        self.assertEqual(self.transport.type, "Bus")
-        self.assertEqual(self.transport.status, "Active")
-        self.assertEqual(self.transport.ubication, "Downtown")
-        self.assertEqual(self.transport.capacity, 50)
+        """
+        Prueba la inicialización del modelo Transport.
+        """
+        self.assertEqual(self.transport.ID, 1)
+        self.assertEqual(self.transport.Ubicacion, "Estación Central")
+        self.assertEqual(self.transport.Capacidad, 50)
+        self.assertEqual(self.transport.IDRuta, 1)
+        self.assertEqual(self.transport.IDTipo, 2)
 
     def test_to_dict(self):
+        """
+        Prueba la conversión del modelo Transport a un diccionario.
+        """
         transport_dict = self.transport.to_dict()
-        self.assertEqual(transport_dict["id"], 1)
-        self.assertEqual(transport_dict["type"], "Bus")
-        self.assertEqual(transport_dict["status"], "Active")
-        self.assertEqual(transport_dict["ubication"], "Downtown")
-        self.assertEqual(transport_dict["capacity"], 50)
+        self.assertEqual(transport_dict["ID"], 1)
+        self.assertEqual(transport_dict["Ubicacion"], "Estación Central")
+        self.assertEqual(transport_dict["Capacidad"], 50)
+        self.assertEqual(transport_dict["IDRuta"], 1)
+        self.assertEqual(transport_dict["IDTipo"], 2)
 
     def test_get_fields(self):
+        """
+        Prueba la obtención de los campos del modelo Transport.
+        """
         fields = Transport.get_fields()
-        self.assertIn("id", fields)
-        self.assertIn("type", fields)
-        self.assertIn("status", fields)
-        self.assertIn("ubication", fields)
-        self.assertIn("capacity", fields)
+        self.assertIn("ID", fields)
+        self.assertIn("Ubicacion", fields)
+        self.assertIn("Capacidad", fields)
+        self.assertIn("IDRuta", fields)
+        self.assertIn("IDTipo", fields)
 
 if __name__ == "__main__":
     unittest.main()

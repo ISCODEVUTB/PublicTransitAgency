@@ -7,30 +7,14 @@
 </head>
 <body>
     <h1>Actualizar Turno</h1>
-    <form action="/shift/update" method="post">
+    <form action="/shifts/update" method="post">
         <div>
-            <label for="shift_id">ID del Turno a Actualizar:</label>
-            <input type="text" id="shift_id" name="shift_id" required>
+            <label for="id">ID del Turno a Actualizar:</label>
+            <input type="number" id="id" name="id" required>
         </div>
         <div>
-            <label for="unit">Nueva Unidad:</label>
-            <input type="text" id="unit" name="unit" required>
-        </div>
-        <div>
-            <label for="start_time">Nueva Hora de Inicio (YYYY-MM-DD HH:MM:SS):</label>
-            <input type="datetime-local" id="start_time" name="start_time" required>
-        </div>
-        <div>
-            <label for="end_time">Nueva Hora de Fin (YYYY-MM-DD HH:MM:SS):</label>
-            <input type="datetime-local" id="end_time" name="end_time" required>
-        </div>
-        <div>
-            <label for="driver">Nuevo Conductor:</label>
-            <input type="text" id="driver" name="driver" required>
-        </div>
-        <div>
-            <label for="schedule">Nuevo Horario:</label>
-            <input type="text" id="schedule" name="schedule" required>
+            <label for="TipoTurno">Nuevo Tipo de Turno:</label>
+            <input type="text" id="TipoTurno" name="TipoTurno" maxlength="30" required>
         </div>
         <button type="submit">Actualizar Turno</button>
     </form>

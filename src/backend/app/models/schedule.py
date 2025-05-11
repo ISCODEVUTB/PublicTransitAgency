@@ -1,11 +1,20 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class Schedule(BaseModel):
+    """
+    Modelo para la tabla Horario en SQL Server.
+
+    Campos:
+    - ID: Identificador único del horario
+    - Llegada: Hora de llegada
+    - Salida: Hora de salida
+    """
     __entity_name__ = "horario"  # Nombre de la tabla en la base de datos
-    id: Optional[int] = None
-    llegada: Optional[str] = None  # Hora de llegada (tipo TIME)
-    salida: Optional[str] = None  # Hora de salida (tipo TIME)
+
+    ID: int = Field(..., description="Identificador único del horario")
+    Llegada: str = Field(..., description="Hora de llegada (formato TIME)")
+    Salida: str = Field(..., description="Hora de salida (formato TIME)")
 
     def to_dict(self):
         return self.dict()
@@ -17,7 +26,7 @@ class Schedule(BaseModel):
     @classmethod
     def get_fields(cls):
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "llegada": "TIME NOT NULL",
-            "salida": "TIME NOT NULL"
+            "ID": "INTEGER PRIMARY KEY",
+            "Llegada": "TIME NOT NULL",
+            "Salida": "TIME NOT NULL"
         }

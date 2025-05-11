@@ -44,17 +44,16 @@
     <div class="container">
         <h1>Detalle del Estado de Mantenimiento</h1>
 
-        {% if data %}
+        {% if estado %}
         <div class="detail">
-            <p><strong>ID:</strong> {{ data.id }}</p>
-            <p><strong>Tipo:</strong> {{ data.type }}</p> <!-- Nuevo -->
-            <p><strong>Estado:</strong> {{ data.status }}</p> <!-- Nuevo -->
+            <p><strong>ID:</strong> {{ estado.id }}</p>
+            <p><strong>Tipo de Estado:</strong> {{ estado.TipoEstado }}</p>
         </div>
         {% else %}
         <p>No se encontraron detalles para este estado de mantenimiento.</p>
         {% endif %}
 
-        <a href="/maintainance_state/" class="back-btn">Volver a la lista</a>
+        <a href="/maintainance_status/" class="back-btn">Volver a la lista</a>
     </div>
 </body>
 </html>

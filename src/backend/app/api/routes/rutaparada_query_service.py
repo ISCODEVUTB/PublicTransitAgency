@@ -1,41 +1,27 @@
-from fastapi import APIRouter, HTTPException, Request, Security
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.rutaparada import RutaParada
-from backend.app.core.auth import get_current_user
 
 app = APIRouter(prefix="/rutaparada", tags=["rutaparada"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/", response_class=HTMLResponse)
-def listar_rutaparadas(
-    request: Request,
-  #  current_user: dict = Security(get_current_user, scopes=["system", "rutas"])
-):
+def listar_rutaparada(request: Request):
     """
-    Lista todas las relaciones entre rutas y paradas.
+    Lista todas las relaciones Ruta-Parada.
     """
-    try:
-        rutaparadas = controller.read_all(RutaParada)
-        return templates.TemplateResponse("ListaRutaParadas.html", {"request": request, "rutaparadas": rutaparadas})
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    rutaparadas = controller.read_all(RutaParada)
+    return templates.TemplateResponse("ListarRutaParada.html", {"request": request, "rutaparadas": rutaparadas})
 
-@app.get("/{id}", response_class=HTMLResponse)
-def detalle_rutaparada(
-    id: int,
-    request: Request,
-   # current_user: dict = Security(get_current_user, scopes=["system", "rutas"])
-):
+@app.get("/{IDParada}", response_class=HTMLResponse)
+def detalle_rutaparada(IDParada: int, request: Request):
     """
-    Obtiene el detalle de una relación entre ruta y parada por su ID.
+    Obtiene el detalle de una relación Ruta-Parada por su IDParada.
     """
-    try:
-        rutaparada = controller.get_by_id(RutaParada, id)
-        if not rutaparada:
-            raise HTTPException(status_code=404, detail="Relación ruta-parada no encontrada")
-        return templates.TemplateResponse("DetalleRutaParada.html", {"request": request, "rutaparada": rutaparada.to_dict()})
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    rutaparada = controller.get_by_id(RutaParada, IDParada)
+    if not rutaparada:
+        raise HTTPException(status_code=404, detail="Relación Ruta-Parada no encontrada")
+    return templates.TemplateResponse("DetalleRutaParada.html", {"request": request, "rutaparada": rutaparada.to_dict()})

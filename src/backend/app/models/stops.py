@@ -3,11 +3,11 @@ from pydantic import BaseModel
 
 
 class Parada(BaseModel):
-    __entity_name__ = "parada"  # Nombre de la tabla en la base de datos
+    __entity_name__ = "Parada"  
 
-    id: Optional[int] = None  # Clave primaria ID
-    name: str  # Nombre de la parada
-    ubication: str  # Ubicación de la parada
+    ID: Optional[int] = None  
+    Ubicacion: str  
+    Nombre: str  
 
     def to_dict(self):
         """
@@ -28,7 +28,7 @@ class Parada(BaseModel):
         Define los campos de la tabla para su creación.
         """
         return {
-            "id": "INT PRIMARY KEY",
-            "name": "VARCHAR NOT NULL",
-            "ubication": "VARCHAR NOT NULL"
+            "ID": "INT PRIMARY KEY",
+            "Ubicacion": "VARCHAR NOT NULL",
+            "Nombre": "VARCHAR NOT NULL"
         }

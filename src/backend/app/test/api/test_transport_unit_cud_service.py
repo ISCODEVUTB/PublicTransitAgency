@@ -1,61 +1,54 @@
 import pytest
 from fastapi.testclient import TestClient
-from fastapi import FastAPI
-from backend.app.api.routes.transport_unit_cud_service import app as transport_router
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.api.routes.transport_unit_cud_service import app
 from backend.app.models.transport import Transport
-from backend.app.core.conf import headers  # Import headers for authentication
-from unittest.mock import patch
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 
-# Setup the test application
-app_for_test = FastAPI()
-app_for_test.include_router(transport_router)
-client = TestClient(app_for_test)
+client = TestClient(app)
 controller = UniversalController()
 
-# Mock authentication globally
-@pytest.fixture(autouse=True)
-def mock_get_current_user():
-    with patch("backend.app.core.auth.get_current_user") as mock_user:
-        mock_user.return_value = {"user_id": 1, "scopes": ["system", "administrador", "supervisor"]}
-        yield mock_user
+@pytest.fixture
+def setup_and_teardown():
+    """
+    Fixture para configurar y limpiar los datos de prueba.
+    """
+    transport = Transport(Ubicacion="Estación Central", Capacidad=50, IDRuta=1, IDTipo=2)
+    # Crear la unidad de prueba
+    controller.add(transport)
+    created_transport = controller.read_all(Transport)[-1]  # Obtener el último registro creado
+    yield created_transport
 
-def setup_function():
-    controller.clear_tables()
-
-def teardown_function():
-    controller.clear_tables()
+    # Eliminar la unidad de prueba
+    controller.delete(created_transport)
 
 def test_crear_unidad():
-    """Test that the '/transports/create' route creates a new transport unit."""
-    response = client.post("/transports/create", data={
-        "id": "1",
-        "idtype": "1",
-        "status": "bien",
-        "ubication": "Garage",
-        "capacity": "50",
-        "idruta": "1"
-    }, headers=headers)
-    assert response.status_code == 200
-    assert response.json()["message"] == "Unidad creada exitosamente."
+    """
+    Prueba para crear una unidad de transporte.
+    """
+    transport = Transport(Ubicacion="Estación Norte", Capacidad=40, IDRuta=1, IDTipo=2)
+    try:
+        response = client.post("/transports/create", data=transport.to_dict())
+        assert response.status_code == 200
+        assert response.json()["message"] == "Unidad de transporte creada exitosamente."
+    finally:
+        # Teardown: Eliminar la unidad creada
+        created_transport = controller.read_all(Transport)[-1]  # Obtener el último registro creado
+        controller.delete(created_transport)
 
-def test_actualizar_unidad():
-    """Test that the '/transports/update' route updates an existing transport unit."""
-    controller.add(Transport(id="1", idtype=1, status="bien", ubication="Garage", capacity=50, idruta=1))
-    response = client.post("/transports/update", data={
-        "id": "1",
-        "idtype": "1",
-        "status": "mantenimiento",
-        "ubication": "Garage",
-        "capacity": "50",
-        "idruta": "1"
-    }, headers=headers)
+def test_actualizar_unidad(setup_and_teardown):
+    """
+    Prueba para actualizar una unidad de transporte existente.
+    """
+    transport = setup_and_teardown
+    response = client.post("/transports/update", data={"ID": transport.ID, "Ubicacion": "Estación Sur", "Capacidad": 60, "IDRuta": 2, "IDTipo": 3})
     assert response.status_code == 200
-    assert response.json()["message"] == "Unidad actualizada exitosamente."
+    assert response.json()["message"] == "Unidad de transporte actualizada exitosamente."
 
-def test_eliminar_unidad():
-    """Test that the '/transports/delete' route deletes an existing transport unit."""
-    controller.add(Transport(id="1", idtype=1, status="bien", ubication="Garage", capacity=50, idruta=1))
-    response = client.post("/transports/delete", data={"id": "1"}, headers=headers)
+def test_eliminar_unidad(setup_and_teardown):
+    """
+    Prueba para eliminar una unidad de transporte existente.
+    """
+    transport = setup_and_teardown
+    response = client.post("/transports/delete", data={"ID": transport.ID})
     assert response.status_code == 200
-    assert response.json()["message"] == "Unidad eliminada exitosamente."
+    assert response.json()["message"] == "Unidad de transporte eliminada exitosamente."

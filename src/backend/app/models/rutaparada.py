@@ -4,9 +4,8 @@ from pydantic import BaseModel
 class RutaParada(BaseModel):
     __entity_name__ = "rutaparada"  # Nombre de la tabla en la base de datos
 
-    id: Optional[int] = None  # Clave primaria
-    idruta: Optional[int] = None  # Clave foránea a la tabla ruta
-    idparada: Optional[int] = None  # Clave foránea a la tabla parada
+    IDParada: Optional[int] = None  # Clave foránea a la tabla ruta
+    IDRuta: Optional[int] = None  # Clave foránea a la tabla parada
 
     def to_dict(self):
         """
@@ -27,7 +26,6 @@ class RutaParada(BaseModel):
         Define los campos de la tabla para su creación.
         """
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "idruta": "INTEGER NOT NULL",
-            "idparada": "INTEGER NOT NULL"
+            "IDParada": "INTEGER NOT NULL",
+            "IDRuta": "INTEGER NOT NULL"
         }

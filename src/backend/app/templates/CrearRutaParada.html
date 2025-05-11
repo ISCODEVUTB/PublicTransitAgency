@@ -13,7 +13,7 @@
 
     <!-- Navigation links with flexbox layout -->
     <div class="nav-links">
-        <a href="/rutaparada">Volver a la lista de relaciones</a>
+        <a href="/">Volver</a>
     </div>
 
     <!-- Container for the main content -->
@@ -21,21 +21,16 @@
         <!-- Form with styled inputs and validation -->
         <form action="/rutaparada/create" method="post" class="slide-in">
             <div class="form-group">
-                <label for="id">ID:</label>
-                <input type="number" id="id" name="id" required>
+                <label for="IDParada">ID de la Parada:</label>
+                <input type="number" id="IDParada" name="IDParada" required>
             </div>
 
             <div class="form-group">
-                <label for="idruta">ID de Ruta:</label>
-                <input type="number" id="idruta" name="idruta" required>
+                <label for="IDRuta">ID de la Ruta:</label>
+                <input type="number" id="IDRuta" name="IDRuta" required>
             </div>
 
-            <div class="form-group">
-                <label for="idparada">ID de Parada:</label>
-                <input type="number" id="idparada" name="idparada" required>
-            </div>
-
-            <button type="submit" class="btn btn-secondary">Crear Relación</button>
+            <button type="submit" class="btn btn-secondary">Crear</button>
         </form>
     </div>
 </body>

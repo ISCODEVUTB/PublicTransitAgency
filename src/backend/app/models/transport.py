@@ -2,24 +2,34 @@ from typing import Optional
 from pydantic import BaseModel
 
 class Transport(BaseModel):
-    __entity_name__ = "unidadtransporte"
-    id: Optional[int] = None
-    idtype: Optional[int] = None
-    status: Optional[str] = None
-    ubication: Optional[str] = None
-    capacity: Optional[int] = None
-    idruta: Optional[int] = None
+    """
+    Modelo para la tabla UnidadTransporte.
+    """
+    __entity_name__ = "UnidadTransporte"
+
+    ID: Optional[int] = None  # Clave primaria autoincremental
+    Ubicacion: str  # Ubicación de la unidad
+    Capacidad: int  # Capacidad de la unidad
+    IDRuta: int  # Clave foránea a la tabla Ruta
+    IDTipo: int  # Clave foránea a la tabla Tipo
 
     def to_dict(self):
-        return self.model_dump()
+        return self.dict()
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(**data)
 
     @classmethod
     def get_fields(cls):
+        """
+        Define los campos de la tabla para su creación.
+        """
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "idtype": "INTEGER NOT NULL",
-            "status": "VARCHAR NOT NULL",
-            "ubication": "VARCHAR NOT NULL",
-            "capacity": "INTEGER NOT NULL",
-            "idruta": "INTEGER NOT NULL"
+            "ID": "INT IDENTITY(1,1) PRIMARY KEY",
+            "Ubicacion": "VARCHAR(200) NOT NULL",
+            "Capacidad": "INT NOT NULL",
+            "IDRuta": "INT NOT NULL",
+            "IDTipo": "INT NOT NULL"
         }
+

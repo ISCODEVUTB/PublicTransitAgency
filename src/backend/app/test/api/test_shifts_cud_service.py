@@ -1,61 +1,69 @@
-from fastapi import APIRouter, Form, HTTPException, Security
-from backend.app.logic.universal_controller_sql import UniversalController
+from fastapi.testclient import TestClient
+from backend.app.api.routes.shifts_cud_service import app
 from backend.app.models.shift import Shift
-from backend.app.core.auth import get_current_user
+from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.core.conf import headers
 
-app = APIRouter(prefix="/shifts", tags=["shifts"])
+client = TestClient(app)
 controller = UniversalController()
 
-@app.post("/create")
-def crear_turno(
-    id: int = Form(...),
-    tipoturno: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
+def test_crear_turno():
     """
-    Crea un turno con los datos proporcionados.
+    Prueba para crear un turno.
     """
-    turno = Shift(id=id, tipoturno=tipoturno)
-    try:
-        controller.add(turno)
-        return {"message": "Turno creado exitosamente.", "data": turno.to_dict()}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    turno_id = 9999
+    turno_prueba = Shift(ID=turno_id, TipoTurno="Nocturno Test")
 
-@app.post("/update")
-def actualizar_turno(
-    id: int = Form(...),
-    tipoturno: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
-    """
-    Actualiza la información de un turno existente.
-    """
-    existing_turno = controller.get_by_id(Shift, id)
-    if not existing_turno:
-        raise HTTPException(status_code=404, detail="Turno no encontrado")
-
-    turno = Shift(id=id, tipoturno=tipoturno)
-    try:
-        controller.update(turno)
-        return {"message": "Turno actualizado exitosamente.", "data": turno.to_dict()}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-@app.post("/delete")
-def eliminar_turno(
-    id: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
-    """
-    Elimina un turno existente por su ID.
-    """
-    existing_turno = controller.get_by_id(Shift, id)
-    if not existing_turno:
-        raise HTTPException(status_code=404, detail="Turno no encontrado")
-
-    try:
+    # Asegurarse de que el turno no exista antes de crearlo
+    existing_turno = controller.get_by_id(Shift, turno_id)
+    if existing_turno:
         controller.delete(existing_turno)
-        return {"message": "Turno eliminado exitosamente."}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+
+    try:
+        response = client.post("/shifts/create", data={"id": turno_id, "TipoTurno": "Nocturno Test"}, headers=headers)
+        assert response.status_code == 200
+        assert response.json()["message"] == "Turno creado exitosamente."
+    finally:
+        # Teardown: Eliminar el turno creado
+        controller.delete(turno_prueba)
+
+def test_actualizar_turno():
+    """
+    Prueba para actualizar un turno existente.
+    """
+    turno_id = 9999
+    turno_prueba = Shift(ID=turno_id, TipoTurno="Original")
+
+    # Asegurarse de que el turno no exista antes de crearlo
+    existing_turno = controller.get_by_id(Shift, turno_id)
+    if existing_turno:
+        controller.delete(existing_turno)
+
+    # Crear el turno de prueba
+    controller.add(turno_prueba)
+
+    try:
+        # Actualizar el turno
+        response = client.post("/shifts/update", data={"id": turno_id, "TipoTurno": "Vespertino Test"}, headers=headers)
+        assert response.status_code == 200
+        assert response.json()["message"] == "Turno actualizado exitosamente."
+
+        # Verificar que el turno fue actualizado
+        turno_actualizado = controller.get_by_id(Shift, turno_id)
+        assert turno_actualizado.TipoTurno == "Vespertino Test"
+    finally:
+        # Teardown: Eliminar el turno actualizado
+        controller.delete(turno_prueba)
+
+def test_eliminar_turno():
+    """
+    Prueba para eliminar un turno existente.
+    """
+    turno_id = 9999
+    turno_prueba = Shift(ID=turno_id, TipoTurno="Eliminar Test")
+    controller.add(turno_prueba)
+
+    response = client.post("/shifts/delete", data={"id": turno_id}, headers=headers)
+    assert response.status_code == 200
+    assert response.json()["message"] == "Turno eliminado exitosamente."
+

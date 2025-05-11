@@ -4,33 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Incidencia</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .detail-item { margin-bottom: 10px; }
-        .detail-item strong { display: inline-block; width: 100px; }
-    </style>
 </head>
 <body>
     <h1>Detalle de Incidencia</h1>
 
     {% if incidencia %}
-        <div class="detail-item">
-            <strong>ID:</strong> {{ incidencia.ID }}
-        </div>
-        <div class="detail-item">
-            <strong>Descripción:</strong> {{ incidencia.Descripcion }}
-        </div>
-        <div class="detail-item">
-            <strong>Tipo:</strong> {{ incidencia.Tipo }}
-        </div>
-        <div class="detail-item">
-            <strong>Estado:</strong> {{ incidencia.IDUnidad }}
-        </div>
+        <p><strong>ID:</strong> {{ incidencia.ID }}</p>
+        <p><strong>Descripción:</strong> {{ incidencia.Descripcion }}</p>
+        <p><strong>Tipo:</strong> {{ incidencia.Tipo }}</p>
+        <p><strong>ID Unidad:</strong> {{ incidencia.IDUnidad }}</p>
     {% else %}
         <p>Incidencia no encontrada.</p>
     {% endif %}
-
-    <p><a href="/incidences/consultar">Volver a Consultas</a></p>
 
 </body>
 </html>

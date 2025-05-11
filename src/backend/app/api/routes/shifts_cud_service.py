@@ -1,7 +1,5 @@
-from fastapi import Request
-
-from fastapi import APIRouter, Form, HTTPException, Security
-from backend.app.logic.universal_controller_sql import UniversalController
+from fastapi import APIRouter, Form, HTTPException, Security, Request
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.shift import Shift
 from backend.app.core.auth import get_current_user
 from starlette.responses import HTMLResponse
@@ -26,13 +24,13 @@ def actualizar_turno_form(request: Request):
 @app.post("/create")
 def crear_turno(
     id: int = Form(...),
-    tipoturno: str = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    TipoTurno: str = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Crea un turno con los datos proporcionados.
     """
-    turno = Shift(id=id, tipoturno=tipoturno)
+    turno = Shift(ID=id, TipoTurno=TipoTurno)
     try:
         controller.add(turno)
         return {"message": "Turno creado exitosamente.", "data": turno.to_dict()}
@@ -41,28 +39,30 @@ def crear_turno(
 
 @app.post("/update")
 def actualizar_turno(
-    id: int = Form(...),
-    tipoturno: str = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    id: int = Form(...),  # Asegurarse de que el campo 'id' sea obligatorio
+    TipoTurno: str = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Actualiza la información de un turno existente.
     """
+    # Verificar si el turno existe
     existing_turno = controller.get_by_id(Shift, id)
     if not existing_turno:
         raise HTTPException(status_code=404, detail="Turno no encontrado")
 
-    turno = Shift(id=id, tipoturno=tipoturno)
+    # Crear un nuevo objeto Shift con los datos actualizados
+    turno_actualizado = Shift(ID=id, TipoTurno=TipoTurno)
     try:
-        controller.update(turno)
-        return {"message": "Turno actualizado exitosamente.", "data": turno.to_dict()}
+        controller.update(turno_actualizado)
+        return {"message": "Turno actualizado exitosamente.", "data": turno_actualizado.to_dict()}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/delete")
 def eliminar_turno(
     id: int = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Elimina un turno existente por su ID.

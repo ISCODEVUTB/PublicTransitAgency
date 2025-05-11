@@ -4,25 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Incidencias</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-    </style>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Lista de Incidencias</h1>
-
-    {% if incidencias %}
-        <table>
+    <header>
+        <h1 class="main-title">Lista de Incidencias</h1>
+    </header>
+    <main>
+        {% if incidencias %}
+        <table class="styled-table">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Descripción</th>
-                    <th>Tipo</th>
-                    <th>Estado</th>
+                    <th>Fecha</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,17 +25,17 @@
                 <tr>
                     <td>{{ incidencia.ID }}</td>
                     <td>{{ incidencia.Descripcion }}</td>
-                    <td>{{ incidencia.Tipo }}</td>
-                    <td>{{ incidencia.IDUnidad }}</td>
+                    <td>{{ incidencia.Fecha }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-    {% else %}
+        {% else %}
         <p>No se encontraron incidencias.</p>
-    {% endif %}
-
-    <p><a href="/incidences/consultar">Volver a Consultas</a></p>
-
+        {% endif %}
+    </main>
+    <footer>
+        <p><a href="/" class="btn">Volver</a></p>
+    </footer>
 </body>
 </html>

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Form, HTTPException, Security
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.ticket import Ticket
 from backend.app.core.auth import get_current_user
 from starlette.responses import HTMLResponse
@@ -11,27 +11,36 @@ controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/create", response_class=HTMLResponse)
-def crear_ticket_form(request: Request):
+def crear_ticket_form(
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+):
     return templates.TemplateResponse("CrearTicket.html", {"request": request})
 
 @app.get("/delete", response_class=HTMLResponse)
-def eliminar_ticket_form(request: Request):
+def eliminar_ticket_form(
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+):
     return templates.TemplateResponse("EliminarTicket.html", {"request": request})
 
 @app.get("/update", response_class=HTMLResponse)
-def actualizar_ticket_form(request: Request):
+def actualizar_ticket_form(
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+):
     return templates.TemplateResponse("ActualizarTicket.html", {"request": request})
 
 @app.post("/create")
 def crear_ticket(
-    id: int = Form(...),
-    estadoincidencia: str = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    ID: int = Form(...),
+    EstadoIncidencia: str = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Endpoint para crear un ticket.
     """
-    ticket = Ticket(id=id, estadoincidencia=estadoincidencia)
+    ticket = Ticket(ID=ID, EstadoIncidencia=EstadoIncidencia)
     try:
         controller.add(ticket)
         return {"message": "Ticket creado exitosamente.", "data": ticket.to_dict()}
@@ -40,18 +49,18 @@ def crear_ticket(
 
 @app.post("/update")
 def actualizar_ticket(
-    id: int = Form(...),
-    estadoincidencia: str = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    ID: int = Form(...),
+    EstadoIncidencia: str = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Endpoint para actualizar un ticket existente.
     """
-    existing_ticket = controller.get_by_id(Ticket, id)
+    existing_ticket = controller.get_by_id(Ticket, ID)
     if not existing_ticket:
         raise HTTPException(status_code=404, detail="Ticket no encontrado")
 
-    updated_ticket = Ticket(id=id, estadoincidencia=estadoincidencia)
+    updated_ticket = Ticket(ID=ID, EstadoIncidencia=EstadoIncidencia)
     try:
         controller.update(updated_ticket)
         return {"message": "Ticket actualizado exitosamente.", "data": updated_ticket.to_dict()}
@@ -60,13 +69,13 @@ def actualizar_ticket(
 
 @app.post("/delete")
 def eliminar_ticket(
-    id: int = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    ID: int = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Endpoint para eliminar un ticket por su ID.
     """
-    existing_ticket = controller.get_by_id(Ticket, id)
+    existing_ticket = controller.get_by_id(Ticket, ID)
     if not existing_ticket:
         raise HTTPException(status_code=404, detail="Ticket no encontrado")
 

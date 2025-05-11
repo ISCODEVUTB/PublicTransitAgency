@@ -14,7 +14,7 @@
     <script>
         async function cargarMantenimientos() {
             try {
-                const response = await fetch('/maintainance_status/all');
+                const response = await fetch('/maintainance_status/');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -22,13 +22,13 @@
                 const listaMantenimientosDiv = document.getElementById('lista-mantenimientos');
                 listaMantenimientosDiv.innerHTML = ''; // Limpiar el mensaje de carga
 
-                if (data.data && data.data.length > 0) {
+                if (data && data.length > 0) {
                     const tabla = document.createElement('table');
                     const encabezado = tabla.createTHead();
                     const filaEncabezado = encabezado.insertRow();
 
-                    
-                    const keys = Object.keys(data.data[0]);
+
+                    const keys = Object.keys(data[0]);
                     keys.forEach(key => {
                         const th = document.createElement('th');
                         th.textContent = key;
@@ -36,7 +36,7 @@
                     });
 
                     const cuerpoTabla = tabla.createTBody();
-                    data.data.forEach(item => {
+                    data.forEach(item => {
                         const fila = cuerpoTabla.insertRow();
                         keys.forEach(key => {
                             const celda = fila.insertCell();
@@ -46,7 +46,7 @@
                         // Opcional: Añadir un enlace para ver el detalle
                         const celdaDetalle = fila.insertCell();
                         const enlaceDetalle = document.createElement('a');
-                        enlaceDetalle.href = `/maintainance_status/get?id=${item.id}`; // Asumiendo que 'id' es la clave del ID
+                        enlaceDetalle.href = `/maintainance_status/${item.id}`; // Asumiendo que 'id' es la clave del ID
                         enlaceDetalle.textContent = 'Ver Detalle';
                         celdaDetalle.appendChild(enlaceDetalle);
                     });

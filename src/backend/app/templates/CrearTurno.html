@@ -4,36 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Nuevo Turno</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Crear Nuevo Turno</h1>
-    <form action="/shift/create" method="post">
-        <div>
-            <label for="shift_id">ID del Turno:</label>
-            <input type="text" id="shift_id" name="shift_id" required>
-        </div>
-        <div>
-            <label for="unit">Unidad:</label>
-            <input type="text" id="unit" name="unit" required>
-        </div>
-        <div>
-            <label for="start_time">Hora de Inicio (YYYY-MM-DD HH:MM:SS):</label>
-            <input type="datetime-local" id="start_time" name="start_time" required>
-        </div>
-        <div>
-            <label for="end_time">Hora de Fin (YYYY-MM-DD HH:MM:SS):</label>
-            <input type="datetime-local" id="end_time" name="end_time" required>
-        </div>
-        <div>
-            <label for="driver">Conductor:</label>
-            <input type="text" id="driver" name="driver" required>
-        </div>
-        <div>
-            <label for="schedule">Horario:</label>
-            <input type="text" id="schedule" name="schedule" required>
-        </div>
-        <button type="submit">Crear Turno</button>
-    </form>
-    <p><a href="/">Volver</a></p>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold text-center">Crear Nuevo Turno</h1>
+    </header>
+    <main class="max-w-2xl mx-auto mt-8 bg-white p-6 rounded-lg shadow-md">
+        <form action="/turno/create" method="post" class="space-y-4">
+            <div>
+                <label for="nombre" class="block text-gray-700 font-medium">Nombre del Turno:</label>
+                <input type="text" id="nombre" name="nombre" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+            </div>
+            <div>
+                <label for="horario" class="block text-gray-700 font-medium">Horario:</label>
+                <input type="text" id="horario" name="horario" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Crear Turno</button>
+        </form>
+    </main>
+    <footer class="text-center mt-6">
+        <a href="/" class="text-blue-600 hover:underline">Volver</a>
+    </footer>
 </body>
 </html>

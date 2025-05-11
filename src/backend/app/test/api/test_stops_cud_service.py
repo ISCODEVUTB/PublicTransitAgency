@@ -1,47 +1,107 @@
 import pytest
 from fastapi.testclient import TestClient
-from backend.app.api.routes.shifts_query_service import app as shifts_router
-from backend.app.logic.universal_controller_sql import UniversalController
-from backend.app.models.shift import Shift
+from backend.app.api.routes.stops_cud_service import app as stops_router
+from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.models.stops import Parada
 from backend.app.core.conf import headers
 from fastapi import FastAPI
 
 app_for_test = FastAPI()
-app_for_test.include_router(shifts_router)
+app_for_test.include_router(stops_router)
 client = TestClient(app_for_test)
 controller = UniversalController()
 
-@pytest.fixture(autouse=True)
-def setup_and_teardown():
+def test_crear_parada():
     """
-    Limpia las tablas antes y después de cada prueba.
+    Prueba para crear una parada.
     """
-    controller.clear_tables()
-    yield
-    controller.clear_tables()
+    # Usar un ID muy alto para evitar conflictos con datos existentes
+    parada_id = 9999
 
-def test_listar_turnos():
+    try:
+        response = client.post("/paradas/create", data={
+            "id": parada_id,
+            "Nombre": "Parada Test",
+            "Ubicacion": "Ubicación Test"
+        }, headers=headers)
+
+        assert response.status_code == 200
+        assert response.json()["message"] == "Parada creada exitosamente."
+
+        # Verificar que la parada se creó correctamente
+        parada = controller.get_by_id(Parada, parada_id)
+        assert parada is not None
+        assert parada.Nombre == "Parada Test"
+        assert parada.Ubicacion == "Ubicación Test"
+    finally:
+        # Limpiar: eliminar la parada creada para la prueba
+        parada = controller.get_by_id(Parada, parada_id)
+        if parada:
+            controller.delete(parada)
+
+def test_actualizar_parada():
     """
-    Prueba para listar todos los turnos.
+    Prueba para actualizar una parada existente.
     """
-    controller.add(Shift(id=999, tipoturno="Diurno"))
-    response = client.get("/shifts/", headers=headers)
+    # Usar un ID muy alto para evitar conflictos con datos existentes
+    parada_id = 9999
+
+    try:
+        # Crear una parada para la prueba
+        parada = Parada(ID=parada_id, Nombre="Parada Original", Ubicacion="Ubicación Original")
+        controller.add(parada)
+
+        # Actualizar la parada
+        response = client.post("/paradas/update", data={
+            "id": parada_id,
+            "Nombre": "Parada Actualizada",
+            "Ubicacion": "Ubicación Actualizada"
+        }, headers=headers)
+
+        assert response.status_code == 200
+        assert response.json()["message"] == "Parada actualizada exitosamente."
+
+        # Verificar que la parada se actualizó correctamente
+        parada_actualizada = controller.get_by_id(Parada, parada_id)
+        assert parada_actualizada is not None
+        assert parada_actualizada.Nombre == "Parada Actualizada"
+        assert parada_actualizada.Ubicacion == "Ubicación Actualizada"
+    finally:
+        # Limpiar: eliminar la parada creada para la prueba
+        parada = controller.get_by_id(Parada, parada_id)
+        if parada:
+            controller.delete(parada)
+
+def test_eliminar_parada():
+    """
+    Prueba para eliminar una parada existente.
+    """
+    # Usar un ID muy alto para evitar conflictos con datos existentes
+    parada_id = 9999
+
+    # Crear una parada para la prueba
+    parada = Parada(ID=parada_id, Nombre="Parada Test", Ubicacion="Ubicación Test")
+    controller.add(parada)
+
+    # Eliminar la parada
+    response = client.post("/paradas/delete", data={"id": parada_id}, headers=headers)
+
     assert response.status_code == 200
-    assert "Diurno" in response.text
+    assert response.json()["message"] == "Parada eliminada exitosamente."
 
-def test_detalle_turno_existente():
-    """
-    Prueba para obtener detalles de un turno existente.
-    """
-    controller.add(Shift(id=999, tipoturno="Diurno"))
-    response = client.get("/shifts/999", headers=headers)
-    assert response.status_code == 200
-    assert "Diurno" in response.text
+    # Verificar que la parada se eliminó correctamente
+    parada_eliminada = controller.get_by_id(Parada, parada_id)
+    assert parada_eliminada is None
 
-def test_detalle_turno_no_existente():
+def test_eliminar_parada_no_existente():
     """
-    Prueba para obtener detalles de un turno inexistente.
+    Prueba para eliminar una parada que no existe.
     """
-    response = client.get("/shifts/998", headers=headers)
+    # Usar un ID muy alto que seguramente no existe
+    parada_id = 99999
+
+    # Intentar eliminar una parada que no existe
+    response = client.post("/paradas/delete", data={"id": parada_id}, headers=headers)
+
     assert response.status_code == 404
-    assert response.json()["detail"] == "Turno no encontrado"
+    assert response.json()["detail"] == "Parada no encontrada"

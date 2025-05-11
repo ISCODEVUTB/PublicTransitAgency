@@ -2,31 +2,41 @@ from typing import Optional
 from pydantic import BaseModel
 
 class Incidence(BaseModel):
-    __entity_name__ = "incidencia"  # Nombre de la tabla en la base de datos
-    id: Optional[int] = None  # Clave primaria
-    idticket: Optional[int] = None  # Clave foránea al ticket
-    description: Optional[str] = None  # Descripción de la incidencia
-    type: Optional[str] = None  # Tipo de incidencia
-    idunit: Optional[int] = None  # Clave foránea a la unidad de transporte
+    """
+    Modelo para la tabla Incidencia en SQL Server.
+
+    Campos:
+    - ID: Identificador único de la incidencia
+    - IDTicket: Clave foránea al ticket
+    - Descripcion: Descripción de la incidencia
+    - Tipo: Tipo de incidencia
+    - IDUnidad: Clave foránea a la unidad de transporte
+    """
+    __entity_name__ = "Incidencia"
+
+    ID: Optional[int] = None
+    IDTicket: Optional[int] = None
+    Descripcion: Optional[str] = None
+    Tipo: Optional[str] = None
+    IDUnidad: Optional[int] = None
 
     def to_dict(self):
-        return self.model_dump()
+        return self.dict()
 
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(**data)
+    
     @classmethod
     def get_fields(cls):
+        """
+        Define los campos de la tabla para su creación.
+        """
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "idticket": "INTEGER NOT NULL",
-            "description": "VARCHAR NOT NULL",
-            "type": "VARCHAR NOT NULL",
-            "idunit": "INTEGER NOT NULL"
+            "ID": "INTEGER PRIMARY KEY",
+            "IDTicket": "INTEGER NOT NULL",
+            "Descripcion": "VARCHAR(255) NOT NULL",
+            "Tipo": "VARCHAR(50) NOT NULL",
+            "IDUnidad": "INTEGER NOT NULL"
         }
 
-    @classmethod
-    def ensure_table_exists(cls, cursor):
-        """Verifica si la tabla existe y la crea si no existe."""
-        table = cls.__entity_name__
-        fields = cls.get_fields()
-        columns = ", ".join(f"{k} {v}" for k, v in fields.items())
-        sql = f"CREATE TABLE IF NOT EXISTS {table} ({columns})"
-        cursor.execute(sql)

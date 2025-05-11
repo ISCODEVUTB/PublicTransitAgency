@@ -1,7 +1,6 @@
-from fastapi import APIRouter, Form, HTTPException, Security
+from fastapi import APIRouter, Form, HTTPException
 from backend.app.models.schedule import Schedule
-from backend.app.logic.universal_controller_sql import UniversalController
-from backend.app.core.auth import get_current_user
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
@@ -14,7 +13,6 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 def crear_horario_form(request: Request):
     return templates.TemplateResponse("CrearHorario.html", {"request": request})
 
-
 @app.get("/update", response_class=HTMLResponse)
 def actualizar_horario_form(request: Request):
     return templates.TemplateResponse("ActualizarHorario.html", {"request": request})
@@ -26,50 +24,52 @@ def eliminar_horario_form(request: Request):
 @app.post("/create")
 def crear_horario(
     id: int = Form(...),
-    llegada: str = Form(...),
-    salida: str = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "schedules"])
+    Llegada: str = Form(...),
+    Salida: str = Form(...)
 ):
-    schedule = Schedule(id=id, llegada=llegada, salida=salida)
+    """
+    Endpoint para crear un horario.
+    """
+    schedule = Schedule(ID=id, Llegada=Llegada, Salida=Salida)
     try:
         controller.add(schedule)
-        return {
-            "message": "Horario creado exitosamente.",
-            "data": schedule.to_dict()
-        }
+        return {"message": "Horario creado exitosamente.", "data": schedule.to_dict()}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/update")
 def actualizar_horario(
     id: int = Form(...),
-    llegada: str = Form(...),
-    salida: str = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "schedules"])
+    Llegada: str = Form(...),
+    Salida: str = Form(...)
 ):
+    """
+    Endpoint para actualizar un horario existente.
+    """
+    existing_schedule = controller.get_by_id(Schedule, id)
+    if not existing_schedule:
+        raise HTTPException(status_code=404, detail="Horario no encontrado")
+
+    updated_schedule = Schedule(ID=id, Llegada=Llegada, Salida=Salida)
     try:
-        existing_schedule = controller.get_by_id(Schedule, id)
-        if not existing_schedule:
-            raise HTTPException(status_code=404, detail="Horario no encontrado")
-        updated_schedule = Schedule(id=id, llegada=llegada, salida=salida)
         controller.update(updated_schedule)
-        return {
-            "message": "Horario actualizado exitosamente.",
-            "data": updated_schedule.to_dict()
-        }
+        return {"message": "Horario actualizado exitosamente.", "data": updated_schedule.to_dict()}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/delete")
 def eliminar_horario(
-    id: int = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "schedules"])
+    id: int = Form(...)
 ):
+    """
+    Endpoint para eliminar un horario por su ID.
+    """
+    existing_schedule = controller.get_by_id(Schedule, id)
+    if not existing_schedule:
+        raise HTTPException(status_code=404, detail="Horario no encontrado")
+
     try:
-        existing_schedule = controller.get_by_id(Schedule, id)
-        if not existing_schedule:
-            raise HTTPException(status_code=404, detail="Horario no encontrado")
-        controller.delete(Schedule(id=id, llegada="", salida=""))
+        controller.delete(existing_schedule)
         return {"message": "Horario eliminado exitosamente."}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

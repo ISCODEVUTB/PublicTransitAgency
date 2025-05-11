@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request, Security
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.shift import Shift
 from backend.app.core.auth import get_current_user
 
@@ -12,7 +12,7 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/", response_class=HTMLResponse)
 def listar_turnos(
     request: Request,
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Consulta la lista de todos los turnos.
@@ -27,7 +27,7 @@ def listar_turnos(
 def detalle_turno(
     id: int,
     request: Request,
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
     """
     Consulta el detalle de un turno en específico por su ID.

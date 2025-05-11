@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Rutas</title>
+    <title>Lista de Relaciones Ruta-Parada</title>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <header>
-        <h1 class="main-title">Lista de Rutas</h1>
+        <h1 class="main-title">Lista de Relaciones Ruta-Parada</h1>
     </header>
     <main>
-        {% if routes %}
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Duración</th>
+                    <th>Ruta</th>
+                    <th>Parada</th>
+                    <th>Orden</th>
                 </tr>
             </thead>
             <tbody>
-                {% for route in routes %}
+                {% for rutaparada in rutaparadas %}
                 <tr>
-                    <td>{{ route.ID }}</td>
-                    <td>{{ route.Nombre }}</td>
-                    <td>{{ route.Duracion }}</td>
+                    <td>{{ rutaparada.IDRuta }}</td>
+                    <td>{{ rutaparada.IDParada }}</td>
+                    <td>{{ rutaparada.Orden }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">No hay relaciones registradas.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        {% else %}
-        <p>No se encontraron rutas.</p>
-        {% endif %}
     </main>
     <footer>
         <p><a href="/" class="btn">Volver</a></p>

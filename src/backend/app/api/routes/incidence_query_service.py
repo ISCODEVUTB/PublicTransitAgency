@@ -1,35 +1,35 @@
-from fastapi import APIRouter, HTTPException, Request, Security
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.incidence import Incidence
-from backend.app.core.auth import get_current_user  # Import for authentication
 
 app = APIRouter(prefix="/incidences", tags=["incidences"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/", response_class=HTMLResponse)
-def listar_incidencias(
-    request: Request,
-   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
+def listar_incidencias(request: Request):
     """
-    List all incidences. Requires authentication.
+    Lista todas las incidencias.
     """
-    incidencias = controller.read_all(Incidence)
-    return templates.TemplateResponse("ListarIncidencia.html", {"request": request, "incidencias": incidencias})
+    try:
+        incidencias = controller.read_all(Incidence)
+        return templates.TemplateResponse("ListarIncidencia.html", {"request": request, "incidencias": incidencias})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/{id}", response_class=HTMLResponse)
-def detalle_incidencia(
-    id: int,
-    request: Request,
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
+@app.get("/{ID}", response_class=HTMLResponse)
+def detalle_incidencia(ID: int, request: Request):
     """
-    Get details of a specific incidence by ID. Requires authentication.
+    Obtiene el detalle de una incidencia por su ID.
     """
-    incidencia = controller.get_by_id(Incidence, id)
-    if not incidencia:
-        raise HTTPException(status_code=404, detail="Incidencia no encontrada")
-    return templates.TemplateResponse("DetalleIncidencia.html", {"request": request, "incidencia": incidencia})
+    try:
+        incidencia = controller.get_by_id(Incidence, ID)
+        if not incidencia:
+            raise HTTPException(status_code=404, detail="Incidencia no encontrada")
+        return templates.TemplateResponse("DetalleIncidencia.html", {"request": request, "incidencia": incidencia.to_dict()})
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

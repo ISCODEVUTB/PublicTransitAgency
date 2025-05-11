@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Relación Ruta-Parada</title>
+</head>
+<body>
+    <h1>Detalle de Relación Ruta-Parada</h1>
+    {% if rutaparada %}
+    <div>
+        <p><strong>ID de la Parada:</strong> {{ rutaparada.IDParada }}</p>
+        <p><strong>ID de la Ruta:</strong> {{ rutaparada.IDRuta }}</p>
+    </div>
+    {% else %}
+    <p>No se encontró la relación Ruta-Parada.</p>
+    {% endif %}
+    <p><a href="/rutaparada">Volver a la Lista</a></p>
+</body>
+</html>

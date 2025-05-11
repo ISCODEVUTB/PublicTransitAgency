@@ -4,30 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Paradas</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Listado de Paradas</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Ubicación</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for parada in paradas %}
-            <tr>
-                <td>{{ parada.id }}</td>
-                <td>{{ parada.name }}</td> <!-- Corregido -->
-                <td>{{ parada.ubication }}</td> <!-- Corregido -->
-                <td><a href="/stops/{{ parada.id }}">Detalles</a></td>
-            </tr>
-            {% else %}
-            <tr><td colspan="4">No hay paradas registradas.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <header>
+        <h1 class="main-title">Listado de Paradas</h1>
+    </header>
+    <main>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Ubicación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for parada in paradas %}
+                <tr>
+                    <td>{{ parada.id }}</td>
+                    <td>{{ parada.name }}</td>
+                    <td>{{ parada.ubication }}</td>
+                    <td><a href="/stops/{{ parada.id }}">Detalles</a></td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4">No hay paradas registradas.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p><a href="/" class="btn">Volver</a></p>
+    </footer>
 </body>
 </html>

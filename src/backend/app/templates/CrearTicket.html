@@ -4,20 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Nuevo Ticket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Crear Nuevo Ticket</h1>
-    <form action="/ticket/create" method="post">
-        <div>
-            <label for="ID">ID del Ticket:</label>
-            <input type="text" id="ID" name="ID" required>
-        </div>
-        <div>
-            <label for="EstadoIncidencia">Estado de Incidencia:</label>
-            <input type="text" id="EstadoIncidencia" name="EstadoIncidencia" required>
-        </div>
-        <button type="submit">Crear Ticket</button>
-    </form>
-    <p><a href="/">Volver</a></p>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-purple-600 text-white p-4">
+        <h1 class="text-2xl font-bold text-center">Crear Nuevo Ticket</h1>
+    </header>
+    <main class="max-w-2xl mx-auto mt-8 bg-white p-6 rounded-lg shadow-md">
+        <form action="/ticket/create" method="post" class="space-y-4">
+            <div>
+                <label for="usuario" class="block text-gray-700 font-medium">Usuario:</label>
+                <input type="text" id="usuario" name="usuario" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+            </div>
+            <div>
+                <label for="fecha" class="block text-gray-700 font-medium">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+            </div>
+            <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">Crear Ticket</button>
+        </form>
+    </main>
+    <footer class="text-center mt-6">
+        <a href="/" class="text-purple-600 hover:underline">Volver</a>
+    </footer>
 </body>
 </html>

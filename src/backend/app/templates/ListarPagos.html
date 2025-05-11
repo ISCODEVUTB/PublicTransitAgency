@@ -4,40 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Pagos</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Lista de Pagos</h1>
-    <div id="lista-de-pagos">
-        {% if pagos %}
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Usuario</th>
-                    <th>Cantidad</th>
-                    <th>Método de Pago</th>
-                    <th>Tipo de Transporte</th>
-                    <th>ID de Tarjeta</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for pago in pagos %}
-                <tr>
-                    <td>{{ pago.id }}</td>
-                    <td>{{ pago.user }}</td>
-                    <td>{{ pago.payment_quantity }}</td>
-                    <td>{% if pago.payment_method %}Sí{% else %}No{% endif %}</td>
-                    <td>{{ pago.vehicle_type }}</td>
-                    <td>{{ pago.card_id }}</td>
-                    <td><a href="/payments/{{ pago.id }}">Ver Detalle</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p>No se encontraron pagos.</p>
-        {% endif %}
-    </div>
+    <header>
+        <h1 class="main-title">Lista de Pagos</h1>
+    </header>
+    <main>
+        <div id="lista-de-pagos">
+            {% if pagos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuario</th>
+                        <th>Cantidad</th>
+                        <th>Método de Pago</th>
+                        <th>Tipo de Transporte</th>
+                        <th>ID de Tarjeta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pago in pagos %}
+                    <tr>
+                        <td>{{ pago.id }}</td>
+                        <td>{{ pago.user }}</td>
+                        <td>{{ pago.payment_quantity }}</td>
+                        <td>{% if pago.payment_method %}Sí{% else %}No{% endif %}</td>
+                        <td>{{ pago.vehicle_type }}</td>
+                        <td>{{ pago.card_id }}</td>
+                        <td><a href="/payments/{{ pago.id }}">Ver Detalle</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No se encontraron pagos.</p>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p><a href="/" class="btn">Volver</a></p>
+    </footer>
 </body>
 </html>

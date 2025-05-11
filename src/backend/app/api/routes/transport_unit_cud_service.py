@@ -1,107 +1,78 @@
-from fastapi import APIRouter, Form, HTTPException, Request, Security
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_sql import UniversalController
+from fastapi import APIRouter, Form, HTTPException
 from backend.app.models.transport import Transport
-from backend.app.core.auth import get_current_user  # Import for authentication
+from backend.app.logic.universal_controller_sqlserver import UniversalController
+from starlette.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
 
 app = APIRouter(prefix="/transports", tags=["transports"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/create", response_class=HTMLResponse)
-def crear_unidad_form(
-    request: Request
-):
-    """
-    Render the form for creating a new transport unit. Requires authentication.
-    """
+def crear_unidad_form(request: Request):
     return templates.TemplateResponse("CrearTransport.html", {"request": request})
+
+@app.get("/update", response_class=HTMLResponse)
+def actualizar_unidad_form(request: Request):
+    return templates.TemplateResponse("ActualizarTransport.html", {"request": request})
+
+@app.get("/delete", response_class=HTMLResponse)
+def eliminar_unidad_form(request: Request):
+    return templates.TemplateResponse("EliminarTransport.html", {"request": request})
 
 @app.post("/create")
 def crear_unidad(
-    id: int = Form(...),
-    idtype: int = Form(...),
-    status: str = Form(...),
-    ubication: str = Form(...),
-    capacity: int = Form(...),
-    idruta: int = Form(...),
-
+    Ubicacion: str = Form(...),
+    Capacidad: int = Form(...),
+    IDRuta: int = Form(...),
+    IDTipo: int = Form(...)
 ):
     """
-    Create a new transport unit. Requires authentication.
+    Endpoint para crear una unidad de transporte.
     """
-    unidad = Transport(id=id, idtype=idtype, status=status, ubication=ubication, capacity=capacity, idruta=idruta)
+    transport = Transport(Ubicacion=Ubicacion, Capacidad=Capacidad, IDRuta=IDRuta, IDTipo=IDTipo)
     try:
-        controller.add(unidad)
-        return {
-            "operation": "create",
-            "success": True,
-            "data": unidad,
-            "message": "Unidad creada exitosamente."
-        }
-    except ValueError as e:
+        controller.add(transport)
+        return {"message": "Unidad de transporte creada exitosamente.", "data": transport.to_dict()}
+    except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-
-@app.get("/update", response_class=HTMLResponse)
-def actualizar_unidad_form(
-    request: Request
-):
-    """
-    Render the form for updating a transport unit. Requires authentication.
-    """
-    return templates.TemplateResponse("ActualizarTransport.html", {"request": request})
 
 @app.post("/update")
 def actualizar_unidad(
-    id: int = Form(...),
-    idtype: int = Form(...),
-    status: str = Form(...),
-    ubication: str = Form(...),
-    capacity: int = Form(...),
-    idruta: int = Form(...),
-
+    ID: int = Form(...),
+    Ubicacion: str = Form(...),
+    Capacidad: int = Form(...),
+    IDRuta: int = Form(...),
+    IDTipo: int = Form(...)
 ):
     """
-    Update an existing transport unit. Requires authentication.
+    Endpoint para actualizar una unidad de transporte existente.
     """
-    unidad = Transport(id=id, idtype=idtype, status=status, ubication=ubication, capacity=capacity, idruta=idruta)
-    try:
-        controller.update(unidad)
-        return {
-            "operation": "update",
-            "success": True,
-            "data": unidad,
-            "message": "Unidad actualizada exitosamente."
-        }
-    except ValueError as e:
+    existing_transport = controller.get_by_id(Transport, ID)
+    if not existing_transport:
         raise HTTPException(status_code=404, detail="Unidad de transporte no encontrada")
 
-@app.get("/delete", response_class=HTMLResponse)
-def eliminar_unidad_form(
-    request: Request
-
-):
-    """
-    Render the form for deleting a transport unit. Requires authentication.
-    """
-    return templates.TemplateResponse("EliminarTransport.html", {"request": request})
+    updated_transport = Transport(ID=ID, Ubicacion=Ubicacion, Capacidad=Capacidad, IDRuta=IDRuta, IDTipo=IDTipo)
+    try:
+        controller.update(updated_transport)
+        return {"message": "Unidad de transporte actualizada exitosamente.", "data": updated_transport.to_dict()}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/delete")
 def eliminar_unidad(
-    id: int = Form(...),
-
+    ID: int = Form(...)
 ):
     """
-    Delete a transport unit by ID. Requires authentication.
+    Endpoint para eliminar una unidad de transporte por su ID.
     """
-    unidad = Transport(id=id, idtype=0, status="", ubication="", capacity=0, idruta=0)
-    try:
-        controller.delete(unidad)
-        return {
-            "operation": "delete",
-            "success": True,
-            "message": "Unidad eliminada exitosamente."
-        }
-    except ValueError as e:
+    existing_transport = controller.get_by_id(Transport, ID)
+    if not existing_transport:
         raise HTTPException(status_code=404, detail="Unidad de transporte no encontrada")
+
+    try:
+        controller.delete(existing_transport)
+        return {"message": "Unidad de transporte eliminada exitosamente."}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
