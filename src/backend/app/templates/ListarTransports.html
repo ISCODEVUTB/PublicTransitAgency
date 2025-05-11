@@ -1,36 +1,40 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Transportes</title>
+    <title>Listar Unidades de Transporte</title>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <header>
-        <h1 class="main-title">Lista de Transportes</h1>
+        <h1 class="main-title">Unidades de Transporte</h1>
     </header>
     <main>
-        <table class="styled-table">
+        <table class="styled-table" border="1">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Tipo</th>
+                    <th>Ubicación</th>
                     <th>Capacidad</th>
+                    <th>ID Ruta</th>
+                    <th>ID Tipo</th>
                 </tr>
             </thead>
             <tbody>
-                {% if transports %}
-                {% for transport in transports %}
+                {% if unidades %}
+                {% for unidad in unidades %}
                 <tr>
-                    <td>{{ transport.id }}</td>
-                    <td>{{ transport.idtype }}</td>
-                    <td>{{ transport.capacity }}</td>
+                    <td>{{ unidad.ID }}</td>
+                    <td>{{ unidad.Ubicacion }}</td>
+                    <td>{{ unidad.Capacidad }}</td>
+                    <td>{{ unidad.IDRuta }}</td>
+                    <td>{{ unidad.IDTipo }}</td>
                 </tr>
                 {% endfor %}
                 {% else %}
                 <tr>
-                    <td colspan="3">No se encontraron transportes.</td>
+                    <td colspan="5">No se encontraron unidades de transporte.</td>
                 </tr>
                 {% endif %}
             </tbody>

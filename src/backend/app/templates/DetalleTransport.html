@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Transporte {{ transports[0].id if transports }}</title>
+    <title>Detalle de Unidad de Transporte</title>
     <!-- Link to the enhanced CSS file -->
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <!-- Main heading with animation effect -->
-    <h1 class="fade-in">Detalle del Transporte</h1>
+    <h1 class="fade-in">Detalle de Unidad de Transporte</h1>
 
     <!-- Navigation links with flexbox layout -->
     <div class="nav-links">
@@ -20,19 +20,18 @@
 
     <!-- Container for the main content -->
     <div class="container">
-        {% if transports %}
+        {% if unidad %}
         <!-- Detail view with styled container -->
         <div class="detail-container slide-in">
-            <p><strong>ID:</strong> {{ transports[0].id }}</p>
-            <p><strong>Tipo:</strong> {{ transports[0].idtype }}</p>
-            <p><strong>Estado:</strong> {{ transports[0].status }}</p>
-            <p><strong>Ubicación:</strong> {{ transports[0].ubication }}</p>
-            <p><strong>Capacidad:</strong> {{ transports[0].capacity }}</p>
-            <p><strong>ID Ruta:</strong> {{ transports[0].idruta }}</p>
+            <p><strong>ID:</strong> {{ unidad.ID }}</p>
+            <p><strong>Ubicación:</strong> {{ unidad.Ubicacion }}</p>
+            <p><strong>Capacidad:</strong> {{ unidad.Capacidad }}</p>
+            <p><strong>ID Ruta:</strong> {{ unidad.IDRuta }}</p>
+            <p><strong>ID Tipo:</strong> {{ unidad.IDTipo }}</p>
         </div>
         {% else %}
         <!-- Error message for when transport is not found -->
-        <p class="message error">Transporte no encontrado.</p>
+        <p class="message error">Unidad de transporte no encontrada.</p>
         {% endif %}
     </div>
 </body>

@@ -10,7 +10,7 @@ class Incidence(BaseModel):
     - IDTicket: Clave foránea al ticket
     - Descripcion: Descripción de la incidencia
     - Tipo: Tipo de incidencia
-    - IDUnidad: Clave foránea a la unidad de transporte
+    - IDUnidad: Clave foránea a la unidad de transporte (VARCHAR)
     """
     __entity_name__ = "Incidencia"
 
@@ -18,7 +18,7 @@ class Incidence(BaseModel):
     IDTicket: Optional[int] = None
     Descripcion: Optional[str] = None
     Tipo: Optional[str] = None
-    IDUnidad: Optional[int] = None
+    IDUnidad: Optional[str] = None  # Cambiado a str
 
     def to_dict(self):
         return self.dict()
@@ -37,6 +37,6 @@ class Incidence(BaseModel):
             "IDTicket": "INTEGER NOT NULL",
             "Descripcion": "VARCHAR(255) NOT NULL",
             "Tipo": "VARCHAR(50) NOT NULL",
-            "IDUnidad": "INTEGER NOT NULL"
+            "IDUnidad": "VARCHAR(50) NOT NULL"  # Cambiado a VARCHAR(50)
         }
 

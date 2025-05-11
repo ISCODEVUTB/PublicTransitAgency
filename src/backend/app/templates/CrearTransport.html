@@ -163,32 +163,18 @@
     </div>
 
     <div class="container">
-        <form action="/transports/create" method="post" class="slide-in">
-            <div class="form-group">
-                <label for="id">ID:</label>
-                <input type="text" id="id" name="id" required>
-            </div>
-            <div class="form-group">
-                <label for="idtype">Tipo:</label>
-                <input type="text" id="idtype" name="idtype" required>
-            </div>
-            <div class="form-group">
-                <label for="status">Estado:</label>
-                <input type="text" id="status" name="status" required>
-            </div>
-            <div class="form-group">
-                <label for="ubication">Ubicación:</label>
-                <input type="text" id="ubication" name="ubication" required>
-            </div>
-            <div class="form-group">
-                <label for="capacity">Capacidad:</label>
-                <input type="number" id="capacity" name="capacity" required>
-            </div>
-            <div class="form-group">
-                <label for="idruta">ID Ruta:</label>
-                <input type="number" id="idruta" name="idruta" required>
-            </div>
-            <button type="submit" class="btn">Crear Transporte</button>
+        <form method="post" action="/transport_units/create">
+            <label for="Ubicacion">Ubicación:</label>
+            <input type="text" id="Ubicacion" name="Ubicacion" required>
+            <label for="Capacidad">Capacidad:</label>
+            <input type="number" id="Capacidad" name="Capacidad" required>
+            <label for="IDRuta">ID Ruta:</label>
+            <input type="number" id="IDRuta" name="IDRuta" required>
+            <label for="IDTipo">ID Tipo:</label>
+            <input type="number" id="IDTipo" name="IDTipo" required>
+            <label for="ID">ID (opcional):</label>
+            <input type="text" id="ID" name="ID" value="EMPTY">
+            <button type="submit">Crear Unidad de Transporte</button>
         </form>
     </div>
 
