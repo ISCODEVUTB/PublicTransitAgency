@@ -9,14 +9,10 @@ controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/", response_class=HTMLResponse)
-<<<<<<< HEAD
-def listar_incidencias(request: Request):
-=======
 def listar_incidencias(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
->>>>>>> 50e6569 (changes because of rubiano)
     """
     Lista todas las incidencias.
     """
@@ -24,15 +20,11 @@ def listar_incidencias(
     return templates.TemplateResponse("ListarIncidencias.html", {"request": request, "incidencias": incidencias})
 
 @app.get("/{ID}", response_class=HTMLResponse)
-<<<<<<< HEAD
-def detalle_incidencia(ID: int, request: Request):
-=======
 def detalle_incidencia(
     ID: int,
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
+   # current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
 ):
->>>>>>> 50e6569 (changes because of rubiano)
     """
     Obtiene el detalle de una incidencia por su ID.
     """
