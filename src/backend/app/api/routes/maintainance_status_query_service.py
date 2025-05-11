@@ -12,8 +12,7 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/", response_class=HTMLResponse)
 def listar_estados(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "mantenimiento"])
-):
+    ):
     """
     Lista todos los estados de mantenimiento.
     """
@@ -27,8 +26,7 @@ def listar_estados(
 def detalle_estado(
     id: int,
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "mantenimiento"])
-):
+    ):
     """
     Obtiene el detalle de un estado de mantenimiento por su ID.
     """

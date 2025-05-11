@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Form, HTTPException, Security
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.ticket import Ticket
-from backend.app.core.auth import get_current_user
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
@@ -13,21 +12,18 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/create", response_class=HTMLResponse)
 def crear_ticket_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     return templates.TemplateResponse("CrearTicket.html", {"request": request})
 
 @app.get("/delete", response_class=HTMLResponse)
 def eliminar_ticket_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     return templates.TemplateResponse("EliminarTicket.html", {"request": request})
 
 @app.get("/update", response_class=HTMLResponse)
 def actualizar_ticket_form(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     return templates.TemplateResponse("ActualizarTicket.html", {"request": request})
 
@@ -35,7 +31,6 @@ def actualizar_ticket_form(
 def crear_ticket(
     ID: int = Form(...),
     EstadoIncidencia: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Endpoint para crear un ticket.
@@ -51,7 +46,6 @@ def crear_ticket(
 def actualizar_ticket(
     ID: int = Form(...),
     EstadoIncidencia: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Endpoint para actualizar un ticket existente.
@@ -70,7 +64,6 @@ def actualizar_ticket(
 @app.post("/delete")
 def eliminar_ticket(
     ID: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Endpoint para eliminar un ticket por su ID.
