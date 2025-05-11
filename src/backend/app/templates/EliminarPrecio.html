@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Precio</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { max-width: 500px; margin: auto; }
+        label { display: block; margin-top: 10px; }
+        input { width: 100%; padding: 8px; margin-top: 5px; }
+        button { margin-top: 20px; padding: 10px 15px; background-color: #f44336; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #d32f2f; }
+        .warning { color: #f44336; font-weight: bold; }
+    </style>
 </head>
 <body>
     <h1 style="text-align: center;">Eliminar Precio</h1>
