@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
 from backend.app.logic.universal_controller_sqlserver import UniversalController
-from backend.app.api.routes.type_movement_cud_service import app as typemovement_router  # Importa bien
+from backend.app.api.routes.type_movement_service.type_movement_cud_service import app as typemovement_router  # Importa bien
 from backend.app.core.conf import headers   
 
 # Creamos la app de prueba

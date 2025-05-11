@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
 from backend.app.logic.universal_controller_sqlserver import UniversalController
-from backend.app.api.routes.type_transport_cud_service import app as typetransport_router  # Importa bien
+from backend.app.api.routes.type_transport_service.type_transport_cud_service import app as typetransport_router  # Importa bien
 from backend.app.core.conf import headers
 
 # Creamos la app de prueba

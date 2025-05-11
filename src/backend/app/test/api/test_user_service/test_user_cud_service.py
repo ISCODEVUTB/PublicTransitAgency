@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
 from backend.app.logic.universal_controller_sqlserver import UniversalController
-from backend.app.api.routes.user_CUD_service import app as user_router  # Importa bien
+from backend.app.api.routes.user_service.user_CUD_service import app as user_router  # Importa bien
 from backend.app.core.conf import headers
 # Limpieza de base de datos antes y después de cada test
 # Creamos la app de prueba

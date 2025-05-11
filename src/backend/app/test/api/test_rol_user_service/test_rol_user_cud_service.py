@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
 from backend.app.logic.universal_controller_sqlserver import UniversalController
-from backend.app.api.routes.rol_user_cud_service import app as roluser_router  # Importa bien
+from backend.app.api.routes.rol_user_service.rol_user_cud_service import app as roluser_router  # Importa bien
 from backend.app.core.conf import headers
 # Creamos la app de prueba
 app_for_test = FastAPI()

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
 from backend.app.logic.universal_controller_sqlserver import UniversalController
-from backend.app.api.routes import asistance_cud_service  # Importamos el módulo, no solo el `app`
+from backend.app.api.routes.asistance_service import asistance_cud_service  # Importamos el módulo, no solo el `app`
 from backend.app.core.conf import headers
 from backend.app.models.asistance import AsistanceCreate, AsistanceOut
 

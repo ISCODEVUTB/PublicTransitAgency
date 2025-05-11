@@ -2,7 +2,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from backend.app.api.routes.asistance_query_service import app as asistance_router
+from backend.app.api.routes.asistance_service.asistance_query_service import app as asistance_router
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.conf import headers
 from backend.app.models.asistance import AsistanceOut

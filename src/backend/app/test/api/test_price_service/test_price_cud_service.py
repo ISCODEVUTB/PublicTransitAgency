@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
 from backend.app.logic.universal_controller_sqlserver import UniversalController
-from backend.app.api.routes.price_cud_service import app as price_router  # Importa bien
+from backend.app.api.routes.price_service.price_cud_service import app as price_router  # Importa bien
 from backend.app.core.conf import headers
 # Limpieza de base de datos antes y después de cada test
 app_for_test = FastAPI()

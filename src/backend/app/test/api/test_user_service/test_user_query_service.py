@@ -2,7 +2,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from backend.app.api.routes.user_query_service import app as user_router
+from backend.app.api.routes.user_service.user_query_service import app as user_router
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.conf import headers
 from backend.app.models.user import UserOut

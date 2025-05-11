@@ -2,7 +2,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from backend.app.api.routes.type_movement_query_service import app as typemovement_router
+from backend.app.api.routes.type_movement_service.type_movement_query_service import app as typemovement_router
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.conf import headers
 from backend.app.models.type_movement import TypeMovementOut
