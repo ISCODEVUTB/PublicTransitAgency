@@ -4,29 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Relación Ruta-Parada</title>
-    <!-- Link to the enhanced CSS file -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'danger': '#dc2626',
+                        'danger-hover': '#b91c1c',
+                        'text-label': '#374151',
+                        'link': '#3b82f6',
+                        'link-hover': '#2563eb',
+                        'form-bg': '#fff',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <!-- Main heading with animation effect -->
-    <h1 class="fade-in">Eliminar Relación Ruta-Parada</h1>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-start pt-10 pb-16 box-border relative">
+        <h1 class="text-3xl font-semibold text-danger mt-10 mb-6 text-center animate-fade-in">
+            Eliminar Relación Ruta-Parada
+        </h1>
 
-    <!-- Navigation links with flexbox layout -->
-    <div class="nav-links">
-        <a href="/">Volver</a>
+        <div class="nav-links flex justify-center mb-8 w-full">
+            <a href="/" class="text-link hover:text-link-hover font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">
+                Volver
+            </a>
+        </div>
+
+        <div class="bg-form-bg p-8 rounded-lg shadow-md w-90 max-w-md animate-slide-in">
+            <form action="/rutaparada/delete" method="post" class="space-y-4">
+                <div class="form-group">
+                    <label for="IDParada" class="block text-sm font-semibold text-text-label mb-2">
+                        ID de la Parada:
+                    </label>
+                    <input type="number" id="IDParada" name="IDParada" required
+                           class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-danger focus:border-danger">
+                </div>
+
+                <button type="submit" class="w-full bg-danger hover:bg-danger-hover text-white font-semibold py-3 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-danger focus:ring-offset-2">
+                    Eliminar
+                </button>
+            </form>
+        </div>
     </div>
 
-    <!-- Container for the main content -->
-    <div class="container">
-        <!-- Form with styled inputs -->
-        <form action="/rutaparada/delete" method="post" class="slide-in">
-            <div class="form-group">
-                <label for="IDParada">ID de la Parada:</label>
-                <input type="number" id="IDParada" name="IDParada" required>
-            </div>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-            <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
-    </div>
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-in-out;
+        }
+    </style>
 </body>
 </html>

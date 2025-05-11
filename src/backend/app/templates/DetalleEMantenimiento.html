@@ -4,56 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Estado de Mantenimiento</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#3498db', // Azul brillante para acciones
+                        'secondary': '#2c3e50', // Gris oscuro para encabezados
+                        'detail-bg': '#f4f4f4', // Fondo claro para el detalle
+                        'text-strong': '#333', // Texto fuerte
+                    },
+                },
+            },
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: #2c3e50;
-        }
-        .detail {
-            background-color: #f4f4f4;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        p {
-            margin: 8px 0;
-        }
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .back-btn:hover {
-            background-color: #2980b9;
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <div class="container">
-        <h1>Detalle del Estado de Mantenimiento</h1>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+            <h1 class="text-2xl font-bold text-secondary mb-6 text-center">
+                Detalle del Estado de Mantenimiento
+            </h1>
 
-        {% if estado %}
-        <div class="detail">
-            <p><strong>ID:</strong> {{ estado.id }}</p>
-            <p><strong>Tipo de Estado:</strong> {{ estado.TipoEstado }}</p>
+            {% if estado %}
+            <div class="bg-detail-bg rounded-md p-4 mb-4 shadow-sm">
+                <p class="text-text-strong"><strong class="font-semibold">ID:</strong> {{ estado.id }}</p>
+                <p class="text-text-strong"><strong class="font-semibold">Tipo de Estado:</strong> {{ estado.TipoEstado }}</p>
+            </div>
+            {% else %}
+            <p class="text-gray-600 text-center">No se encontraron detalles para este estado de mantenimiento.</p>
+            {% endif %}
+
+            <div class="mt-6 text-center">
+                <a href="/maintainance_status/" class="inline-block bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">
+                    Volver a la lista
+                </a>
+            </div>
         </div>
-        {% else %}
-        <p>No se encontraron detalles para este estado de mantenimiento.</p>
-        {% endif %}
-
-        <a href="/maintainance_status/" class="back-btn">Volver a la lista</a>
     </div>
 </body>
 </html>

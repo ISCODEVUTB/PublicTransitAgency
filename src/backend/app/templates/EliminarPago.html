@@ -1,15 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar Eliminación de Pago</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'danger': '#dc2626',
+                        'danger-hover': '#b91c1c',
+                        'gray-cancel': '#6b7280',
+                        'gray-cancel-hover': '#4b5563',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Confirmar Eliminación de Pago</h1>
-    <p>¿Estás seguro de que deseas eliminar el pago con ID: {{ payment.id }}?</p>
-    <form action="/payments/delete/{{ payment.id }}" method="post">
-        <button type="submit">Eliminar Pago</button>
-    </form>
-    <a href="/payments/listar">Cancelar</a>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+            <h1 class="text-2xl font-bold text-danger mb-6 text-center">
+                Confirmar Eliminación de Pago
+            </h1>
+            <p class="text-lg text-gray-700 mb-4 text-center">
+                ¿Estás seguro de que deseas eliminar el pago con ID: {{ payment.id }}?
+            </p>
+            <form action="/payments/delete/{{ payment.id }}" method="post" class="flex justify-center space-x-4">
+                <button type="submit" class="bg-danger hover:bg-danger-hover text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Eliminar Pago
+                </button>
+                <a href="/payments/listar" class="bg-gray-cancel hover:bg-gray-cancel-hover text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -4,38 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Incidencias</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#2c3e50',
+                        'gray-light': '#f9f9f9',
+                        'gray-border': '#ddd',
+                        'gray-hover': '#f5f5f5',
+                        'link-blue': '#3498db',
+                        'link-blue-hover': '#2980b9',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <header>
-        <h1 class="main-title">Lista de Incidencias</h1>
+<body class="bg-gray-100 font-inter antialiased">
+    <header class="bg-primary text-white py-4">
+        <h1 class="text-2xl font-bold text-center">Lista de Incidencias</h1>
     </header>
-    <main>
-        {% if incidencias %}
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Descripción</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for incidencia in incidencias %}
-                <tr>
-                    <td>{{ incidencia.ID }}</td>
-                    <td>{{ incidencia.Descripcion }}</td>
-                    <td>{{ incidencia.Fecha }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p>No se encontraron incidencias.</p>
-        {% endif %}
+    <main class="py-6 px-4 sm:px-6 lg:px-8">
+        <div class="overflow-x-auto">
+            {% if incidencias %}
+            <table class="min-w-full bg-white shadow-md rounded-lg">
+                <thead class="bg-gray-light">
+                    <tr>
+                        <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Descripción</th>
+                        <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for incidencia in incidencias %}
+                    <tr class="hover:bg-gray-hover transition duration-200">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ incidencia.ID }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ incidencia.Descripcion }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ incidencia.Fecha }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="text-gray-600 text-center mt-4">No se encontraron incidencias.</p>
+            {% endif %}
+        </div>
     </main>
-    <footer>
-        <p><a href="/" class="btn">Volver</a></p>
+    <footer class="py-4 text-center">
+        <p><a href="/" class="inline-block bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">Volver</a></p>
     </footer>
 </body>
 </html>

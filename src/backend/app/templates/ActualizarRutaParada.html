@@ -4,34 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Relación Ruta-Parada</title>
-    <!-- Link to the enhanced CSS file -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#3b82f6',
+                        'secondary': '#6b7280',
+                        'accent': '#22c55e',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <!-- Main heading with animation effect -->
-    <h1 class="fade-in">Actualizar Relación Ruta-Parada</h1>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h1 class="mt-6 text-center text-3xl font-extrabold text-primary">
+                Actualizar Relación Ruta-Parada
+            </h1>
+        </div>
 
-    <!-- Navigation links with flexbox layout -->
-    <div class="nav-links">
-        <a href="/">Volver</a>
-    </div>
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div class="space-y-6">
+                <form action="/rutaparada/update" method="post" class="mb-6">
+                    <div>
+                        <label for="IDParada" class="block text-sm font-medium text-secondary">
+                            ID de la Parada:
+                        </label>
+                        <div class="mt-1">
+                            <input id="IDParada" name="IDParada" type="number" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
 
-    <!-- Container for the main content -->
-    <div class="container">
-        <!-- Form with styled inputs and validation -->
-        <form action="/rutaparada/update" method="post" class="slide-in">
-            <div class="form-group">
-                <label for="IDParada">ID de la Parada:</label>
-                <input type="number" id="IDParada" name="IDParada" required>
+                    <div>
+                        <label for="IDRuta" class="block text-sm font-medium text-secondary">
+                            Nuevo ID de la Ruta:
+                        </label>
+                        <div class="mt-1">
+                            <input id="IDRuta" name="IDRuta" type="number" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Actualizar
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-6 text-center text-sm">
+                    <a href="/" class="font-medium text-primary hover:text-blue-700">
+                        Volver
+                    </a>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="IDRuta">Nuevo ID de la Ruta:</label>
-                <input type="number" id="IDRuta" name="IDRuta" required>
-            </div>
-
-            <button type="submit" class="btn">Actualizar</button>
-        </form>
+        </div>
     </div>
 </body>
 </html>

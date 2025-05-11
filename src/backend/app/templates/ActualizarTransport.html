@@ -4,34 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Transporte</title>
-    <!-- Link to the enhanced CSS file -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#1e3a8a', // Un azul más oscuro y elegante
+                        'secondary': '#4a5568', // Gris para el texto secundario
+                        'accent': '#48bb78', // Verde para acentos
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <!-- Main heading with animation effect -->
-    <h1 class="fade-in">Actualizar Transporte</h1>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h1 class="mt-6 text-center text-3xl font-extrabold text-primary">
+                Actualizar Transporte
+            </h1>
+        </div>
 
-    <!-- Navigation links with flexbox layout -->
-    <div class="nav-links">
-        <a href="/transports">Volver a la lista de transportes</a>
-    </div>
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div class="space-y-6">
+                <form method="post" action="/transport_units/update" class="mb-6">
+                    <div>
+                        <label for="ID" class="block text-sm font-medium text-secondary">
+                            ID:
+                        </label>
+                        <div class="mt-1">
+                            <input id="ID" name="ID" type="text" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
 
-    <!-- Container for the main content -->
-    <div class="container">
-        <!-- Form with styled inputs and validation -->
-        <form method="post" action="/transport_units/update">
-            <label for="ID">ID:</label>
-            <input type="text" id="ID" name="ID" required>
-            <label for="Ubicacion">Ubicación:</label>
-            <input type="text" id="Ubicacion" name="Ubicacion" required>
-            <label for="Capacidad">Capacidad:</label>
-            <input type="number" id="Capacidad" name="Capacidad" required>
-            <label for="IDRuta">ID Ruta:</label>
-            <input type="number" id="IDRuta" name="IDRuta" required>
-            <label for="IDTipo">ID Tipo:</label>
-            <input type="number" id="IDTipo" name="IDTipo" required>
-            <button type="submit">Actualizar Unidad de Transporte</button>
-        </form>
+                    <div>
+                        <label for="Ubicacion" class="block text-sm font-medium text-secondary">
+                            Ubicación:
+                        </label>
+                        <div class="mt-1">
+                            <input id="Ubicacion" name="Ubicacion" type="text" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="Capacidad" class="block text-sm font-medium text-secondary">
+                            Capacidad:
+                        </label>
+                        <div class="mt-1">
+                            <input id="Capacidad" name="Capacidad" type="number" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="IDRuta" class="block text-sm font-medium text-secondary">
+                            ID Ruta:
+                        </label>
+                        <div class="mt-1">
+                            <input id="IDRuta" name="IDRuta" type="number" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="IDTipo" class="block text-sm font-medium text-secondary">
+                            ID Tipo:
+                        </label>
+                        <div class="mt-1">
+                            <input id="IDTipo" name="IDTipo" type="number" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Actualizar Unidad de Transporte
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-6 text-center text-sm">
+                    <a href="/transports" class="font-medium text-primary hover:text-blue-700">
+                        Volver a la lista de transportes
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -1,37 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Nuevo Pago</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#38bdf8', // Un azul claro y moderno
+                        'secondary': '#64748b', // Gris azulado para texto secundario
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Crear Nuevo Pago</h1>
-    <form action="/payments/create" method="post">
-        <div>
-            <label for="user">Usuario:</label>
-            <input type="text" id="user" name="user" required>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h1 class="mt-6 text-center text-3xl font-extrabold text-primary">
+                Crear Nuevo Pago
+            </h1>
         </div>
-        <div>
-            <label for="payment_quantity">Cantidad del Pago:</label>
-            <input type="number" step="0.01" id="payment_quantity" name="payment_quantity" required>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div class="space-y-6">
+                <form action="/payments/create" method="post" class="space-y-4">
+                    <div>
+                        <label for="user" class="block text-sm font-medium text-secondary">
+                            Usuario:
+                        </label>
+                        <div class="mt-1">
+                            <input type="text" id="user" name="user" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="payment_quantity" class="block text-sm font-medium text-secondary">
+                            Cantidad del Pago:
+                        </label>
+                        <div class="mt-1">
+                            <input type="number" step="0.01" id="payment_quantity" name="payment_quantity" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="payment_method" class="block text-sm font-medium text-secondary">
+                            Método de Pago:
+                        </label>
+                        <div class="mt-1">
+                            <select id="payment_method" name="payment_method" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                                <option value="True">Tarjeta</option>
+                                <option value="False">Efectivo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="vehicle_type" class="block text-sm font-medium text-secondary">
+                            Tipo de Vehículo:
+                        </label>
+                        <div class="mt-1">
+                            <input type="number" id="vehicle_type" name="vehicle_type" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="card_id" class="block text-sm font-medium text-secondary">
+                            ID de Tarjeta:
+                        </label>
+                        <div class="mt-1">
+                            <input type="number" id="card_id" name="card_id" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Crear Pago
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-6 text-center text-sm">
+                    <a href="/payments/listar" class="font-medium text-primary hover:text-sky-700">
+                        Volver a la lista de pagos
+                    </a>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="payment_method">Método de Pago:</label>
-            <select id="payment_method" name="payment_method" required>
-                <option value="True">Tarjeta</option>
-                <option value="False">Efectivo</option>
-            </select>
-        </div>
-        <div>
-            <label for="vehicle_type">Tipo de Vehículo:</label>
-            <input type="number" id="vehicle_type" name="vehicle_type" required>
-        </div>
-        <div>
-            <label for="card_id">ID de Tarjeta:</label>
-            <input type="number" id="card_id" name="card_id" required>
-        </div>
-        <button type="submit">Crear Pago</button>
-    </form>
-    <a href="/payments/listar">Volver a la lista de pagos</a>
+    </div>
 </body>
 </html>

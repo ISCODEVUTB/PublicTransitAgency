@@ -4,20 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Ticket Existente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#6415ff',
+                        'secondary': '#4a5568',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Actualizar Ticket</h1>
-    <form action="/ticket/update" method="post">
-        <div>
-            <label for="ID">ID del Ticket a Actualizar:</label>
-            <input type="text" id="ID" name="ID" required>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h1 class="mt-6 text-center text-3xl font-extrabold text-primary">
+                Actualizar Ticket
+            </h1>
         </div>
-        <div>
-            <label for="EstadoIncidencia">Nuevo Estado de Incidencia:</label>
-            <input type="text" id="EstadoIncidencia" name="EstadoIncidencia" required>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div class="space-y-6">
+                <form action="/ticket/update" method="post" class="mb-6">
+                    <div>
+                        <label for="ID" class="block text-sm font-medium text-secondary">
+                            ID del Ticket a Actualizar:
+                        </label>
+                        <div class="mt-1">
+                            <input id="ID" name="ID" type="text" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="EstadoIncidencia" class="block text-sm font-medium text-secondary">
+                            Nuevo Estado de Incidencia:
+                        </label>
+                        <div class="mt-1">
+                            <input id="EstadoIncidencia" name="EstadoIncidencia" type="text" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Actualizar Ticket
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-6 text-center text-sm">
+                    <a href="/" class="font-medium text-primary hover:text-purple-700">
+                        Volver
+                    </a>
+                </div>
+            </div>
         </div>
-        <button type="submit">Actualizar Ticket</button>
-    </form>
-    <p><a href="/">Volver</a></p>
+    </div>
 </body>
 </html>

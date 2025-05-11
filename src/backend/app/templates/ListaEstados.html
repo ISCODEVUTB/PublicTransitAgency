@@ -4,84 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Estados de Mantenimiento</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#2c3e50',
+                        'secondary': '#3498db',
+                        'success': '#2ecc71',
+                        'gray-light': '#f2f2f2',
+                        'gray-border': '#ddd',
+                        'gray-hover': '#f5f5f5',
+                        'action-blue': '#3498db',
+                        'action-edit': '#f39c12',
+                        'action-delete': '#e74c3c',
+                        'text-white': '#fff',
+                    },
+                },
+            },
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: #2c3e50;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-        .action-btn {
-            display: inline-block;
-            margin-right: 10px;
-            padding: 5px 10px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 3px;
-        }
-        .create-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 8px 15px;
-            background-color: #2ecc71;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <div class="container">
-        <h1>Lista de Estados de Mantenimiento</h1>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen py-6 flex flex-col justify-center sm:py-12">
+        <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+            <div class="relative bg-white shadow-lg sm:rounded-3xl px-4 py-6 sm:px-8">
+                <h1 class="text-2xl font-bold text-primary text-center mb-6">
+                    Lista de Estados de Mantenimiento
+                </h1>
 
-        <a href="/maintainance_status/create" class="create-btn">Crear Nuevo Estado</a>
+                <div class="mb-4 text-right">
+                    <a href="/maintainance_status/create" class="inline-block bg-success text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
+                        Crear Nuevo Estado
+                    </a>
+                </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tipo de Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for estado in estados %}
-                <tr>
-                    <td>{{ estado.id }}</td>
-                    <td>{{ estado.TipoEstado }}</td>
-                    <td>
-                        <a href="/maintainance_status/{{ estado.id }}" class="action-btn">Ver</a>
-                        <a href="/maintainance_status/update?id={{ estado.id }}" class="action-btn">Editar</a>
-                        <a href="/maintainance_status/delete?id={{ estado.id }}" class="action-btn">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto border-collapse">
+                        <thead class="bg-gray-light">
+                            <tr>
+                                <th class="px-4 py-2 text-left font-bold">ID</th>
+                                <th class="px-4 py-2 text-left font-bold">Tipo de Estado</th>
+                                <th class="px-4 py-2 text-left font-bold">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for estado in estados %}
+                            <tr class="hover:bg-gray-hover transition duration-200">
+                                <td class="border-b border-gray-border px-4 py-2">{{ estado.id }}</td>
+                                <td class="border-b border-gray-border px-4 py-2">{{ estado.TipoEstado }}</td>
+                                <td class="border-b border-gray-border px-4 py-2">
+                                    <a href="/maintainance_status/{{ estado.id }}" class="inline-block bg-action-blue text-white font-semibold py-1 px-2 rounded-md text-xs hover:bg-blue-700 transition duration-200 mr-2">
+                                        Ver
+                                    </a>
+                                    <a href="/maintainance_status/update?id={{ estado.id }}" class="inline-block bg-action-edit text-white font-semibold py-1 px-2 rounded-md text-xs hover:bg-yellow-600 transition duration-200 mr-2">
+                                        Editar
+                                    </a>
+                                    <a href="/maintainance_status/delete?id={{ estado.id }}" class="inline-block bg-action-delete text-white font-semibold py-1 px-2 rounded-md text-xs hover:bg-red-700 transition duration-200">
+                                        Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

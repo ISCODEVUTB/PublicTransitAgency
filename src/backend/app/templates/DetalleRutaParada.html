@@ -4,17 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Relación Ruta-Parada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#2c3e50',
+                        'secondary': '#3498db',
+                        'detail-bg': '#f9f9f9',
+                        'text-strong': '#333',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Detalle de Relación Ruta-Parada</h1>
-    {% if rutaparada %}
-    <div>
-        <p><strong>ID de la Parada:</strong> {{ rutaparada.IDParada }}</p>
-        <p><strong>ID de la Ruta:</strong> {{ rutaparada.IDRuta }}</p>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+            <h1 class="text-2xl font-bold text-primary mb-6 text-center">
+                Detalle de Relación Ruta-Parada
+            </h1>
+
+            {% if rutaparada %}
+            <div class="bg-detail-bg rounded-md p-4 mb-4">
+                <p class="text-text-strong"><strong class="font-semibold">ID de la Parada:</strong> {{ rutaparada.IDParada }}</p>
+                <p class="text-text-strong"><strong class="font-semibold">ID de la Ruta:</strong> {{ rutaparada.IDRuta }}</p>
+            </div>
+            {% else %}
+            <p class="text-gray-600 text-center">No se encontró la relación Ruta-Parada.</p>
+            {% endif %}
+
+            <div class="text-center">
+                <a href="/rutaparada" class="inline-block bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">
+                    Volver a la Lista
+                </a>
+            </div>
+        </div>
     </div>
-    {% else %}
-    <p>No se encontró la relación Ruta-Parada.</p>
-    {% endif %}
-    <p><a href="/rutaparada">Volver a la Lista</a></p>
 </body>
 </html>

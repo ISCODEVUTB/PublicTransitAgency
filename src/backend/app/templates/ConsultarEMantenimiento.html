@@ -4,11 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Estados de Mantenimiento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#2563eb', // Un azul primario moderno
+                        'secondary': '#6b7280', // Gris para texto secundario
+                        'accent': '#16a34a', // Verde para acentos
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Estados de Mantenimiento</h1>
-    <div id="lista-mantenimientos">
-        <p>Cargando lista de mantenimientos...</p>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-semibold text-primary text-center mb-6">Estados de Mantenimiento</h1>
+        <div id="lista-mantenimientos" class="bg-white shadow-md rounded-lg overflow-hidden">
+            <p class="p-6 text-gray-500">Cargando lista de mantenimientos...</p>
+        </div>
     </div>
 
     <script>
@@ -24,29 +46,43 @@
 
                 if (data && data.length > 0) {
                     const tabla = document.createElement('table');
+                    tabla.className = 'min-w-full divide-y divide-gray-200';
+
                     const encabezado = tabla.createTHead();
                     const filaEncabezado = encabezado.insertRow();
-
+                    filaEncabezado.className = 'bg-gray-50';
 
                     const keys = Object.keys(data[0]);
                     keys.forEach(key => {
                         const th = document.createElement('th');
+                        th.className = 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
                         th.textContent = key;
                         filaEncabezado.appendChild(th);
                     });
 
+                    // Añadir columna de detalle
+                    const thDetalle = document.createElement('th');
+                    thDetalle.className = 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
+                    thDetalle.textContent = 'Detalle';
+                    filaEncabezado.appendChild(thDetalle);
+
                     const cuerpoTabla = tabla.createTBody();
+                    cuerpoTabla.className = 'bg-white divide-y divide-gray-200';
                     data.forEach(item => {
                         const fila = cuerpoTabla.insertRow();
+
                         keys.forEach(key => {
                             const celda = fila.insertCell();
+                            celda.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
                             celda.textContent = item[key];
                         });
 
-                        // Opcional: Añadir un enlace para ver el detalle
+                        // Añadir enlace para ver el detalle
                         const celdaDetalle = fila.insertCell();
+                        celdaDetalle.className = 'px-6 py-4 whitespace-nowrap text-right text-sm font-medium';
                         const enlaceDetalle = document.createElement('a');
-                        enlaceDetalle.href = `/maintainance_status/${item.id}`; // Asumiendo que 'id' es la clave del ID
+                        enlaceDetalle.href = `/maintainance_status/${item.id}`;
+                        enlaceDetalle.className = 'text-primary hover:text-blue-700';
                         enlaceDetalle.textContent = 'Ver Detalle';
                         celdaDetalle.appendChild(enlaceDetalle);
                     });
@@ -54,15 +90,16 @@
                     listaMantenimientosDiv.appendChild(tabla);
                 } else {
                     listaMantenimientosDiv.textContent = 'No se encontraron estados de mantenimiento.';
+                    listaMantenimientosDiv.className = 'p-6 text-gray-500';
                 }
 
             } catch (error) {
                 console.error('Error al cargar los estados de mantenimiento:', error);
                 document.getElementById('lista-mantenimientos').textContent = 'Error al cargar los estados de mantenimiento.';
+                document.getElementById('lista-mantenimientos').className = 'p-6 text-red-500';
             }
         }
 
-        // Cargar los mantenimientos al cargar la página
         window.onload = cargarMantenimientos;
     </script>
 </body>

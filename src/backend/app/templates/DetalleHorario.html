@@ -4,19 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Horario {{ horario.id }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#2c3e50', // Un color elegante para el título
+                        'secondary': '#3498db', // Un azul para los enlaces
+                        'detail-bg': '#f9f9f9', // Un fondo muy claro para el detalle
+                        'text-strong': '#333', // Para el texto importante
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Detalle del Horario</h1>
-    {% if horario %}
-    <div>
-        <p><strong>ID de Horario:</strong> {{ horario.id }}</p>
-        <p><strong>Fecha de Llegada:</strong> {{ horario.llegada }}</p>
-        <p><strong>Fecha de Salida:</strong> {{ horario.salida }}</p>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+            <h1 class="text-2xl font-bold text-primary mb-6 text-center">
+                Detalle del Horario
+            </h1>
+
+            {% if horario %}
+            <div class="bg-detail-bg rounded-md p-4 mb-4">
+                <p class="text-text-strong"><strong class="font-semibold">ID de Horario:</strong> {{ horario.id }}</p>
+                <p class="text-text-strong"><strong class="font-semibold">Fecha de Llegada:</strong> {{ horario.llegada }}</p>
+                <p class="text-text-strong"><strong class="font-semibold">Fecha de Salida:</strong> {{ horario.salida }}</p>
+            </div>
+
+            <div class="text-center space-x-4">
+                <a href="/schedules" class="inline-block bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">
+                    Volver a la Lista de Horarios
+                </a>
+                <a href="/schedules/consultar" class="inline-block bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">
+                    Volver a la Página de Consulta
+                </a>
+            </div>
+            {% else %}
+            <p class="text-gray-600 text-center">No se encontró el horario.</p>
+            {% endif %}
+        </div>
     </div>
-    <p><a href="/schedules">Volver a la Lista de Horarios</a></p>
-    <p><a href="/schedules/consultar">Volver a la Página de Consulta</a></p>
-    {% else %}
-    <p>No se encontró el horario.</p>
-    {% endif %}
 </body>
 </html>

@@ -2,16 +2,47 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Ruta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#2c3e50',
+                        'secondary': '#3498db',
+                        'detail-bg': '#f9f9f9',
+                        'text-strong': '#333',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Detalle de Ruta</h1>
-    {% if route %}
-        <p><strong>ID:</strong> {{ route.ID }}</p>
-        <p><strong>Horario:</strong> {{ route.IDHorario }}</p>
-        <p><strong>Nombre:</strong> {{ route.Nombre }}</p>
-    {% else %}
-        <p>Ruta no encontrada.</p>
-    {% endif %}
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+            <h1 class="text-2xl font-bold text-primary mb-6 text-center">
+                Detalle de Ruta
+            </h1>
+
+            {% if route %}
+            <div class="bg-detail-bg rounded-md p-4 mb-4">
+                <p class="text-text-strong"><strong class="font-semibold">ID:</strong> {{ route.ID }}</p>
+                <p class="text-text-strong"><strong class="font-semibold">Horario:</strong> {{ route.IDHorario }}</p>
+                <p class="text-text-strong"><strong class="font-semibold">Nombre:</strong> {{ route.Nombre }}</p>
+            </div>
+            {% else %}
+            <p class="text-gray-600 text-center">Ruta no encontrada.</p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

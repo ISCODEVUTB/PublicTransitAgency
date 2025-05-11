@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Paradas</title>
+<<<<<<< HEAD
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,12 +35,79 @@
         <div>
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre">
+=======
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#059669', // Un verde esmeralda atractivo
+                        'secondary': '#718096', // Gris para texto secundario
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h1 class="mt-6 text-center text-3xl font-extrabold text-primary">
+                Consulta De Paradas
+            </h1>
+>>>>>>> 392aea4 (css aplication)
         </div>
-        <div>
-            <label for="ubicacion">Ubicación:</label>
-            <input type="text" id="ubicacion" name="ubicacion">
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div class="space-y-6">
+                <div>
+                    <p class="text-center text-secondary">
+                        <a href="/stops" class="font-medium text-primary hover:text-green-700">
+                            Ver Todas Las Paradas
+                        </a>
+                    </p>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Buscar Paradas</h2>
+                    <form action="/stops/buscar" method="get" class="space-y-4">
+                        <div>
+                            <label for="nombre" class="block text-sm font-medium text-secondary">
+                                Nombre:
+                            </label>
+                            <div class="mt-1">
+                                <input type="text" id="nombre" name="nombre"
+                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="ubicacion" class="block text-sm font-medium text-secondary">
+                                Ubicación:
+                            </label>
+                            <div class="mt-1">
+                                <input type="text" id="ubicacion" name="ubicacion"
+                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                Buscar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <button type="submit">Buscar</button>
-    </form>
+    </div>
 </body>
 </html>

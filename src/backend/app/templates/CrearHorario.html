@@ -4,28 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Horario Html</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#6366f1', // Un azul violeta atractivo
+                        'secondary': '#4b5563', // Gris para texto secundario
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Crear Nuevo Horario</h1>
-    <form action="/schedule/create" method="post">
-        <div>
-            <label for="schedule_id">ID de Horario:</label>
-            <input type="text" id="schedule_id" name="schedule_id" required>
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h1 class="mt-6 text-center text-3xl font-extrabold text-primary">
+                Crear Nuevo Horario
+            </h1>
         </div>
-        <div>
-            <label for="arrival_date">Fecha de Llegada (YYYY-MM-DD HH:MM:SS):</label>
-            <input type="datetime-local" id="arrival_date" name="arrival_date" required>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div class="space-y-6">
+                <form action="/schedule/create" method="post" class="space-y-4">
+                    <div>
+                        <label for="schedule_id" class="block text-sm font-medium text-secondary">
+                            ID de Horario:
+                        </label>
+                        <div class="mt-1">
+                            <input type="text" id="schedule_id" name="schedule_id" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="arrival_date" class="block text-sm font-medium text-secondary">
+                            Fecha de Llegada (YYYY-MM-DD HH:MM:SS):
+                        </label>
+                        <div class="mt-1">
+                            <input type="datetime-local" id="arrival_date" name="arrival_date" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="departure_date" class="block text-sm font-medium text-secondary">
+                            Fecha de Salida (YYYY-MM-DD HH:MM:SS):
+                        </label>
+                        <div class="mt-1">
+                            <input type="datetime-local" id="departure_date" name="departure_date" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="route" class="block text-sm font-medium text-secondary">
+                            Ruta:
+                        </label>
+                        <div class="mt-1">
+                            <input type="text" id="route" name="route" required
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Crear Horario
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-6 text-center text-sm">
+                    <a href="/" class="font-medium text-primary hover:text-indigo-700">
+                        Volver
+                    </a>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="departure_date">Fecha de Salida (YYYY-MM-DD HH:MM:SS):</label>
-            <input type="datetime-local" id="departure_date" name="departure_date" required>
-        </div>
-        <div>
-            <label for="route">Ruta:</label>
-            <input type="text" id="route" name="route" required>
-        </div>
-        <button type="submit">Crear Horario</button>
-    </form>
-    <p><a href="/">Volver</a></p>
+    </div>
 </body>
 </html>

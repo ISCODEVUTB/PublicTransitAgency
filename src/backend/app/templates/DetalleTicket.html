@@ -3,19 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Ticket {{ ticket.id }}</title> <!-- Cambiado a `id` -->
+    <title>Detalle del Ticket {{ ticket.id }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#2c3e50',
+                        'secondary': '#3498db',
+                        'detail-bg': '#f9f9f9',
+                        'text-strong': '#333',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Detalle del Ticket</h1>
-    {% if ticket %}
-    <div>
-        <p><strong>ID del Ticket:</strong> {{ ticket.id }}</p> <!-- Cambiado a `id` -->
-        <p><strong>Estado de Incidencia:</strong> {{ ticket.estadoincidencia }}</p> <!-- Cambiado a `estadoincidencia` -->
+<body class="bg-gray-100 font-inter antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+            <h1 class="text-2xl font-bold text-primary mb-6 text-center">
+                Detalle del Ticket
+            </h1>
+
+            {% if ticket %}
+            <div class="bg-detail-bg rounded-md p-4 mb-4">
+                <p class="text-text-strong"><strong class="font-semibold">ID del Ticket:</strong> {{ ticket.id }}</p>
+                <p class="text-text-strong"><strong class="font-semibold">Estado de Incidencia:</strong> {{ ticket.estadoincidencia }}</p>
+            </div>
+
+            <div class="text-center space-x-4">
+                <a href="/tickets" class="inline-block bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">
+                    Volver a la lista de tickets
+                </a>
+                <a href="/tickets/consultar" class="inline-block bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">
+                    Volver a la página de consulta
+                </a>
+            </div>
+            {% else %}
+            <p class="text-gray-600 text-center">Ticket no encontrado.</p>
+            {% endif %}
+        </div>
     </div>
-    <p><a href="/tickets">Volver a la lista de tickets</a></p>
-    <p><a href="/tickets/consultar">Volver a la página de consulta</a></p>
-    {% else %}
-    <p>Ticket no encontrado.</p>
-    {% endif %}
 </body>
 </html>
