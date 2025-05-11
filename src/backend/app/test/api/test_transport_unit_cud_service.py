@@ -13,7 +13,7 @@ def setup_and_teardown():
     """
     Fixture para configurar y limpiar los datos de prueba.
     """
-    unidad = UnidadTransporte(Ubicacion="Depósito Central", Capacidad=50, IDRuta=1, IDTipo=1, ID="TEST_UNIT")
+    unidad = UnidadTransporte(Ubicacion="Depósito Central", Capacidad=50, IDRuta=1, IDTipo=2, ID="TEST_UNIT")
     controller.add(unidad)
     yield unidad
     controller.delete(unidad)
@@ -23,7 +23,7 @@ def test_crear_unidad_transporte():
     """
     Prueba para crear una unidad de transporte.
     """
-    unidad = UnidadTransporte(Ubicacion="Depósito Secundario", Capacidad=30, IDRuta=1, IDTipo=1, ID="NEW_UNIT")
+    unidad = UnidadTransporte(Ubicacion="Depósito Secundario", Capacidad=30, IDRuta=1, IDTipo=2, ID="NEW_UNIT")
     try:
         response = client.post("/transport_units/create", data=unidad.to_dict(), headers=headers)
         assert response.status_code == 200
