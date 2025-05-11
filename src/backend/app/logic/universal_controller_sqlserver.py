@@ -9,13 +9,8 @@ class UniversalController:
         try:
             settings = Settings()
             self.conn = pyodbc.connect(
-<<<<<<< HEAD
-                f"DRIVER={{SQL Server}};SERVER={settings.db_config['host'],1435};DATABASE={settings.db_config['dbname']};UID={settings.db_config['user']};PWD={settings.db_config['password']}"
-            )
-=======
     f"DRIVER={{SQL Server}};SERVER={settings.db_config['host']},1435;DATABASE={settings.db_config['dbname']};UID={settings.db_config['user']};PWD={settings.db_config['password']}"
 )
->>>>>>> 24254c8 (minimal changes)
             self.conn.autocommit = False  # Desactivar autocommit
             self.cursor = self.conn.cursor()
         except pyodbc.Error as e:
@@ -73,68 +68,14 @@ class UniversalController:
         table = self._get_table_name(obj)
         data = obj.to_dict()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if "id" in data:
-            data.pop("id")
-
-        columns = ', '.join(data.keys())
-        placeholders = ', '.join(['?'] * len(data))
-        values = list(data.values())
-=======
         # Eliminar el campo ID si es None (autoincremental)
         if "ID" in data and data["ID"] is None:
             del data["ID"]
->>>>>>> 24254c8 (minimal changes)
-=======
-        # Eliminar el campo ID si es None (autoincremental)
-        if "ID" in data and data["ID"] is None:
-            del data["ID"]
->>>>>>> d124fad (new controller adaptation)
 
         # Construir la consulta SQL para insertar el registro
         columns = ", ".join(data.keys())
         placeholders = ", ".join(["?" for _ in data.values()])
         sql = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
-<<<<<<< HEAD
-        try:
-<<<<<<< HEAD
-=======
-            self.cursor.execute(sql, tuple(data.values()))
-            self.conn.commit()
-            return obj
-        except Exception as e:
-            self.conn.rollback()
-            raise ValueError(f"Error al agregar el registro: {e}")
-
-    def update(self, obj: Any) -> Any:
-        """
-        Actualiza un registro en la tabla correspondiente al objeto proporcionado.
-        """
-        table = self._get_table_name(obj)
-        data = obj.to_dict()
-
-        if "ID" not in data or data["ID"] is None:
-            raise ValueError("El objeto debe tener un campo 'ID' válido para ser actualizado.")
-
-        # Construir la consulta SQL para actualizar el registro
-        columns = [f"{key} = ?" for key in data.keys() if key != "ID"]
-        sql = f"UPDATE {table} SET {', '.join(columns)} WHERE ID = ?"
-
-        try:
-            # Ejecutar la consulta con los valores correspondientes
-            values = [data[key] for key in data.keys() if key != "ID"] + [data["ID"]]
->>>>>>> 24254c8 (minimal changes)
-            self.cursor.execute(sql, values)
-            self.conn.commit()
-        except pyodbc.IntegrityError:
-            self.conn.rollback()
-            raise ValueError(f"Ya existe un objeto con la misma clave primaria en '{table}'.")
-        except pyodbc.Error as e:
-            self.conn.rollback()
-            raise RuntimeError(f"Error al insertar datos en '{table}': {e}")
-=======
->>>>>>> d124fad (new controller adaptation)
 
         try:
             self.cursor.execute(sql, tuple(data.values()))
@@ -178,12 +119,6 @@ class UniversalController:
         if "ID" not in data or data["ID"] is None:
             raise ValueError("El objeto debe tener un campo 'ID' válido para ser eliminado.")
 
-<<<<<<< HEAD
-        sql = f"DELETE FROM {table} WHERE id = ?"
-        self.cursor.execute(sql, (data["id"],))
-        self.conn.commit()
-        return True
-=======
         sql = f"DELETE FROM {table} WHERE ID = ?"
         try:
             # Ejecutar la consulta para eliminar el registro
@@ -209,4 +144,3 @@ class UniversalController:
             return [dict(zip([column[0] for column in self.cursor.description], row)) for row in rows]
         except pyodbc.Error as e:
             raise RuntimeError(f"Error al obtener registros de la unidad {unit_id}: {e}")
->>>>>>> d124fad (new controller adaptation)
