@@ -2,18 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Usuarios</title>
+    <title>Consultar Usuario</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h1 style="text-align: center;">Consulta De Usuarios</h1>
-    <h2>Buscar Usuarios</h2>
-    <form action="/user/consultar" method="get">
-        <label for="ID">ID:</label>
-        <input type="text" id="ID" name="ID">
-        <button type="submit">Buscar</button>
+    <h2 style="text-align: center;">Consultar Usuario</h2>
+    <form action="/user/usuario" method="get">
+        <label for="ID">ID del Usuario:</label>
+        <input type="text" id="ID" name="ID" required>
+        <button type="submit">Consultar</button>
     </form>
-    <p><a href="/user/users">Ver Todos Los Usuarios</a></p>
 </body>
 </html>

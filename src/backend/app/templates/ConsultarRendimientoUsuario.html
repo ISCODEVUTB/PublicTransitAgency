@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Registro de Rendimiento</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+</head>
+<body>
+    <h2 style="text-align: center;">Consultar Registro de Rendimiento por Identificacion del Usuario</h2>
+    <form action="/behavior/user" method="get">
+        <label for="iduser">Identificacion del Usuario:</label>
+        <input type="text" id="iduser" name="iduser" required>
+        <button type="submit">Consultar</button>
+    </form>
+</body>
+</html>

@@ -2,18 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Tipo de Transporte</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h1 style="text-align: center;">Consulta De Tipo de Transporte</h1>
-    <h2>Buscar Tipo de Transporte</h2>
-    <form action="/typetransport/consultar" method="get">
-            <label for="ID">ID:</label>
-            <input type="text" id="ID" name="ID">
-            <button type="submit">Buscar</button>
+    <h2 style="text-align: center;">Consultar Tipo de Transporte</h2>
+    <form action="/typetransport/tipotransporte" method="get">
+        <label for="id">ID del Tipo de Transporte:</label>
+        <input type="text" id="id" name="id" required>
+        <button type="submit">Consultar</button>
     </form>
-    <p><a href="/typetransport/typetransports">Ver Todos Los Tipo de Transporte</a></p>
 </body>
 </html>

@@ -34,6 +34,18 @@ def consultar(
     logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de asistencia")
     return templates.TemplateResponse(request,"ConsultarAsistencia.html", {"request": request})
 
+@app.get("/consultar/user", response_class=HTMLResponse)
+def consultar(
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=[
+        "system", "administrador"
+    ])
+):
+    """
+    Render the 'ConsultarPQR.html' template for the pqr consultation page.
+    """
+    logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de pqr")
+    return templates.TemplateResponse(request,"ConsultarAsistenciaUsuario.html", {"request": request})
 
 @app.get("/asistencias")
 async def get_asistencias(
@@ -48,10 +60,10 @@ async def get_asistencias(
     return asistencias
 
 #asistance by id asistance
-@app.get("/{id}", response_class=HTMLResponse)
+@app.get("/find", response_class=HTMLResponse)
 def asistencia_by_id(
     request: Request,
-    id: int = Path(...),
+    id: int = Query(...),
     current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
@@ -78,10 +90,10 @@ def asistencia_by_id(
     return templates.TemplateResponse(request,"asistencia.html", context)
 
 #asistance by user id
-@app.get("/user/{iduser}", response_class=HTMLResponse)
+@app.get("/user", response_class=HTMLResponse)
 def asistencia_by_user(
     request: Request,
-    iduser: int = Path(...),
+    iduser: int = Query(...),
     current_user: dict = Security(get_current_user, scopes=["system", "administrador","conductor","tecnico","supervisor"])
 ):
     """

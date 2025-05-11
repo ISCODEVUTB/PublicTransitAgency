@@ -42,10 +42,10 @@ async def get_users(
     return usuarios
 
 
-@app.get("/{id}", response_class=HTMLResponse)
+@app.get("/usuario", response_class=HTMLResponse)
 def usuario(
     request: Request,
-    id: int= Path(...),
+    id: int= Query(...),
     current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
 ):
     """
@@ -57,11 +57,9 @@ def usuario(
 
     if unit_usuario:
         logger.info(f"[GET /user] Usuario encontrados: {unit_usuario.ID}")
-        return JSONResponse(content=unit_usuario.model_dump(), status_code=200)
 
     else:
         logger.warning(f"[GET /user] No se encontró usuario con id={id}")
-        #return JSONResponse(content="Usuario no encontrado", status_code=404)"""
     
     context = {
         "request": request,
@@ -69,8 +67,11 @@ def usuario(
         "Identificacion": unit_usuario.Identificacion if unit_usuario else "None",
         "Nombre": unit_usuario.Nombre if unit_usuario else "None",
         "Apellido": unit_usuario.Apellido if unit_usuario else "None",
+        "Correo": unit_usuario.Correo if unit_usuario else "None",
+        "Contrasena": unit_usuario.Contrasena if unit_usuario else "None",
         "IDRolUsuario": unit_usuario.IDRolUsuario if unit_usuario else "None",
-        "IDTurno": unit_usuario.IDTurno if unit_usuario else "None"
+        "IDTurno": unit_usuario.IDTurno if unit_usuario else "None",
+        "IDTarjeta": unit_usuario.IDTarjeta if unit_usuario else "None",
     }
 
     return templates.TemplateResponse(request,"usuario.html", context)

@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Consultar Tarifa</title>
+    <title>Consultar Tipo de Usuario</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h2 style="text-align: center;">Consultar Tarifa</h2>
-    <form action="/price/precio" method="get">
-        <label for="ID">ID de la Tarifa:</label>
+    <h2 style="text-align: center;">Consultar Tipo de Usuario</h2>
+    <form action="/roluser/tipousuario" method="get">
+        <label for="ID">ID del Tipo de Usuario:</label>
         <input type="text" id="ID" name="ID" required>
         <button type="submit">Consultar</button>
     </form>

@@ -47,10 +47,10 @@ async def get_roluser(
     return rolusers
 
 
-@app.get("/{ID}", response_class=HTMLResponse)
+@app.get("/tipousuario", response_class=HTMLResponse)
 def roluser(
     request: Request,
-    ID: int,
+    ID: int = Query(...),
     current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
@@ -62,8 +62,14 @@ def roluser(
 
     if unit_roluser:
         logger.info(f"[GET /roluser] Tipo de Usuario encontrado: {unit_roluser.ID}, {unit_roluser.Rol}")
-        return JSONResponse(content=unit_roluser.model_dump(), status_code=200)
 
     else:
         logger.warning(f"[GET /roluser] No se encontró tipo de usuario con id={ID}")
-        return JSONResponse(content="Tipo de Usuario no encontrado", status_code=404)
+
+    context = {
+        "request": request,
+        "id": unit_roluser.ID if unit_roluser else "None",
+        "type": unit_roluser.Rol if unit_roluser else "None"
+    }
+
+    return templates.TemplateResponse(request,"roluser.html", context)

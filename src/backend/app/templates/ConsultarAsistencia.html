@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Consultar Tipo de Movimiento</title>
+    <title>Consultar Registro de Asistencia</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h2 style="text-align: center;">Consultar Tipo de Movimiento</h2>
-    <form action="/typemovement/tipomovimiento" method="get">
-        <label for="id">ID del Tipo de Movimiento:</label>
+    <h2 style="text-align: center;">Consultar Registro de Asistencia</h2>
+    <form action="/asistance/find" method="get">
+        <label for="id">ID del Registro de Asistencia:</label>
         <input type="text" id="id" name="id" required>
         <button type="submit">Consultar</button>
     </form>

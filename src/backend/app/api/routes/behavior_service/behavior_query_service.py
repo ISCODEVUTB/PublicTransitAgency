@@ -34,6 +34,20 @@ def consultar(
     logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de rendimiento")
     return templates.TemplateResponse(request,"ConsultarRendimiento.html", {"request": request})
 
+@app.get("/consultar/user", response_class=HTMLResponse)
+def consultar(
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=[
+        "system", "administrador"
+    ])
+):
+    """
+    Render the 'ConsultarPQR.html' template for the pqr consultation page.
+    """
+    logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de pqr")
+    return templates.TemplateResponse(request,"ConsultarRendimientoUsuario.html", {"request": request})
+
+
 
 @app.get("/rendimientos")
 async def get_rendimientos(
@@ -48,10 +62,10 @@ async def get_rendimientos(
     return rendimientos
 
 #behavior by id behavior
-@app.get("/{id}", response_class=HTMLResponse)
+@app.get("/rendimiento", response_class=HTMLResponse)
 def rendimiento_by_id(
     request: Request,
-    id: int =Path(...),
+    id: int =Query(...),
     current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
@@ -79,10 +93,10 @@ def rendimiento_by_id(
     return templates.TemplateResponse(request,"rendimiento.html", context)
 
 #behavior by user id
-@app.get("/user/{iduser}", response_class=HTMLResponse)
+@app.get("/user", response_class=HTMLResponse)
 def rendimiento_by_user(
     request: Request,
-    iduser: int = Path(...),
+    iduser: int = Query(...),
     current_user: dict = Security(get_current_user, scopes=["system", "administrador","supervisor"])
 ):
     """
@@ -93,18 +107,15 @@ def rendimiento_by_user(
     unit_rendimiento = controller.get_by_column(BehaviorOut, column_name="iduser", value = iduser)
 
     if unit_rendimiento:
-        logger.info(f"[GET /rendimiento] Rendimiento encontrada: {unit_rendimiento.id}, iduser: {unit_rendimiento.iduser}")
+        # Si hay varias asistencias, iterar sobre ellas
+        context = {
+            "request": request,
+            "asistencias": unit_rendimiento,  # Lista de asistencias
+        }
     else:
-        logger.warning(f"[GET /rendimiento] No se encontró rendimiento con iduser={iduser}")
-
-    context = {
-        "request": request,
-        "id": unit_rendimiento.id if unit_rendimiento else "None",
-        "iduser": unit_rendimiento.iduser if unit_rendimiento else "None",
-        "cantidadrutas": unit_rendimiento.cantidadrutas if unit_rendimiento else "None",
-        "horastrabajadas": unit_rendimiento.horastrabajadas if unit_rendimiento else "None",
-        "observaciones":unit_rendimiento.observaciones if unit_rendimiento else "None",
-        "fecha": unit_rendimiento.fecha if unit_rendimiento else "None",
-    }
-
-    return templates.TemplateResponse(request,"rendimiento.html", context)
+        logger.warning(f"[GET /asistencia] No se encontraron asistencias con iduser={iduser}")
+        context = {
+            "request": request,
+            "rendimientos": []  # Si no se encontraron asistencias, pasar una lista vacía
+        }
+    return templates.TemplateResponse(request,"rendimientos.html", context)

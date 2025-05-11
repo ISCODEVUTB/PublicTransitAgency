@@ -2,18 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Movimientos</title>
+    <title>Consultar Movimiento</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h1 style="text-align: center;">Consulta De Movimientos</h1>
-    <h2>Buscar Movimientos</h2>
-        <form action="/movement/consultar" method="get">
-                <label for="nombre">ID:</label>
-                <input type="text" id="nombre" name="nombre">
-            <button type="submit">Buscar</button>
-        </form>
-        <p><a href="/movement">Ver Todos Los Movimientos</a></p>
+    <h2 style="text-align: center;">Consultar Movimiento</h2>
+    <form action="/movement/movimiento" method="get">
+        <label for="ID">ID del Movimiento:</label>
+        <input type="text" id="ID" name="ID" required>
+        <button type="submit">Consultar</button>
+    </form>
 </body>
 </html>
