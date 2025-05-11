@@ -6,8 +6,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 from backend.app.models.user import UserCreate, UserOut
-from backend.app.logic.universal_controller_sql import UniversalController
-#from backend.app.core.auth import get_current_user
+from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.core.auth import get_current_user
 
 # Configuración de logging
 #logger = logging.getLogger(__name__)
@@ -48,31 +48,33 @@ async def create_user(
     Correo: str = Form(...),
     Contrasena: str = Form(...),
     IDRolUsuario: int = Form(...),
-    IDTurno: int = Form(...)
+    IDTurno: int = Form(...),
+    IDTarjeta: int = Form(...)
 ):
 
     try:
         # Verificar si el usuario ya existe
-        existing_user = controller.get_by_id(UserOut, ID)  
+        existing_user = controller.get_by_column(UserOut, "Identificacion", Identificacion)  
         if existing_user:
             raise HTTPException(400, detail="El usuario ya existe con la misma identificación.")
 
         # Crear usuario
-        new_user = UserCreate(ID=ID, Identificacion=Identificacion, Nombre=Nombre, Apellido=Apellido,
-                              Correo=Correo, Contrasena=Contrasena, IDRolUsuario=IDRolUsuario, IDTurno=IDTurno)
-        #logger.info(f"Intentando insertar usuario con datos: {new_user.model_dump()}")
-        controller.add(new_user)
-        #logger.info(f"Usuario insertado con ID: {new_user.ID}")  # Verifica si el ID se asigna
-        #logger.info(f"[POST /create] Usuario creado exitosamente con identificación {Identificacion}")
-        return {
-            "operation": "create",
-            "success": True,
-            "data": UserOut(ID=new_user.ID, Identificacion=new_user.Identificacion, Nombre=new_user.Nombre,
-                            Apellido=new_user.Apellido,Correo=new_user.Correo,Contrasena=new_user.Contrasena,
-                            IDRolUsuario=new_user.IDRolUsuario,IDTurno=new_user.IDTurno).model_dump(),
-            "message": "User created successfully."
-        }
-        
+        if existing_user is None or not existing_user:
+            new_user = UserCreate(ID=ID, Identificacion=Identificacion, Nombre=Nombre, Apellido=Apellido,
+                                Correo=Correo, Contrasena=Contrasena, IDRolUsuario=IDRolUsuario, IDTurno=IDTurno,IDTarjeta=IDTarjeta)
+            logger.info(f"Intentando insertar usuario con datos: {new_user.model_dump()}")
+            controller.add(new_user)
+            logger.info(f"Usuario insertado con ID: {new_user.ID}")  # Verifica si el ID se asigna
+            logger.info(f"[POST /create] Usuario creado exitosamente con identificación {Identificacion}")
+            return {
+                "operation": "create",
+                "success": True,
+                "data": UserOut(ID=new_user.ID, Identificacion=new_user.Identificacion, Nombre=new_user.Nombre,
+                                Apellido=new_user.Apellido,Correo=new_user.Correo,Contrasena=new_user.Contrasena,
+                                IDRolUsuario=new_user.IDRolUsuario,IDTurno=new_user.IDTurno, IDTarjeta=new_user.IDTarjeta).model_dump(),
+                "message": "User created successfully."
+            }
+            
     except ValueError as e:
         #logger.warning(f"[POST /create] Error de validación: {str(e)}")
         raise HTTPException(400, detail=str(e))
@@ -90,16 +92,17 @@ async def update_user(
     Correo: str = Form(...),
     Contrasena: str = Form(...),
     IDRolUsuario: int = Form(...),
-    IDTurno: int = Form(...)
+    IDTurno: int = Form(...),
+    IDTarjeta: int = Form(...)
 ):
     try:
-        existing = controller.get_by_id(UserOut, ID)
-        if existing is None:
-            #logger.warning(f"[POST /update] Usuario no encontrada: ID={ID}")
+        existing = controller.get_by_column(UserOut,"ID",ID)
+        if existing is None or not existing:
+            logger.warning(f"[POST /update] Usuario no encontrada: id={ID}")
             raise HTTPException(404, detail="User not found")
 
         updated_user = UserOut(ID=ID, Identificacion=Identificacion, Nombre=Nombre, Apellido=Apellido,
-                       Correo=Correo, Contrasena=Contrasena, IDRolUsuario=IDRolUsuario, IDTurno=IDTurno)
+                       Correo=Correo, Contrasena=Contrasena, IDRolUsuario=IDRolUsuario, IDTurno=IDTurno, IDTarjeta =IDTarjeta)
         controller.update(updated_user)
         #logger.info(f"[POST /update] Usuario actualizada exitosamente: {updated_user}")
         return {
@@ -107,7 +110,8 @@ async def update_user(
             "success": True,
             "data": UserOut(ID=ID, Identificacion=updated_user.Identificacion, Nombre=updated_user.Nombre,
                             Apellido=updated_user.Apellido,Correo=updated_user.Correo,Contrasena=updated_user.Contrasena,
-                            IDRolUsuario=updated_user.IDRolUsuario,IDTurno=updated_user.IDTurno).model_dump(),
+                            IDRolUsuario=updated_user.IDRolUsuario,IDTurno=updated_user.IDTurno,
+                              IDTarjeta=updated_user.IDTarjeta).model_dump(),
             "message": f"User {ID} updated successfully."
         }
     except ValueError as e:
@@ -121,14 +125,14 @@ async def delete_user(
     ID: int = Form(...)
 ):
     try:
-        existing = controller.get_by_id(UserOut, ID)
-        if not existing:
-            #logger.warning(f"[POST /delete] Usuario no encontrado en la base de datos: ID={ID}")
+        existing = controller.get_by_column(UserOut,"ID",ID)
+        if not existing or existing is None:
+            logger.warning(f"[POST /delete] Usuario no encontrado en la base de datos: id={ID}")
             raise HTTPException(404, detail="User not found")
 
-        #logger.info(f"[POST /delete] Eliminando usuario con ID={ID}")
+        logger.info(f"[POST /delete] Eliminando usuario con id={ID}")
         controller.delete(existing) 
-        #logger.info(f"[POST /delete] Usuario eliminada exitosamente: ID={ID}")
+        logger.info(f"[POST /delete] Usuario eliminada exitosamente: id={ID}")
         return {
             "operation": "delete",
             "success": True,

@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 
 #from backend.app.core.auth import get_current_user
 from backend.app.models.price import PriceOut
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 
 # Configuración del logger
 #logger = logging.getLogger(__name__)
@@ -61,8 +61,8 @@ def price(
     #logger.info(f"[GET /price] Usuario: {current_user['user_id']} - Consultando precio con id={id}")
     unit_price= controller.get_by_id(PriceOut, id)
 
-    """if unit_price:
-        #logger.info(f"[GET /price] Precio encontrado: {unit_price.id}, {unit_price.unidadtransportype},{unit_price.amount}")
+    if unit_price:
+        logger.info(f"[GET /price] Precio encontrado: {unit_price.ID}, {unit_price.IDTipoTransporte},{unit_price.Monto}")
         return JSONResponse(content=unit_price.model_dump(), status_code=200)
 
     else:

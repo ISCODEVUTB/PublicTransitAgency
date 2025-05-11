@@ -1,15 +1,10 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
-from backend.app.logic.universal_controller_postgres import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.api.routes.type_transport_cud_service import app as typetransport_router  # Importa bien
 from backend.app.core.conf import headers
-# Limpieza de base de datos antes y después de cada test
-def setup_function():
-    UniversalController().clear_tables()
 
-def teardown_function():
-    UniversalController().clear_tables()
 # Creamos la app de prueba
 app_for_test = FastAPI()
 app_for_test.include_router(typetransport_router)
@@ -19,13 +14,10 @@ app_for_test.mount("/static", StaticFiles(directory="src/frontend/static"), name
 client = TestClient(app_for_test)
 
 def test_create_transport():
-    response = client.post("/typetransport/create", data={"id":1,"type":"bus"},headers=headers)
+    response = client.post("/typetransport/create", data={"id":1,"type":"aaaaa"},headers=headers)
     assert response.status_code == 200
 
 def test_update_transport_existing():
-    # Crear el registro primero
-    client.post("/typetransport/create", data={"id":2,"type":"prueba"},headers=headers)
-    
     # Luego actualizarlo
     response = client.post("/typetransport/update", data={"id":2,"type":"railway"},headers=headers)
     assert response.status_code == 200
@@ -36,10 +28,7 @@ def test_update_transport_not_found():
     assert response.json()["detail"] == "TypeTransport not found"
 
 def test_delete_transport_existing():
-    # Crear el registro primero
-    client.post("/typetransport/create", data={"id":44,"type":"train"},headers=headers)
-    # Luego eliminarlo
-    response = client.post("/typetransport/delete", data={"id": 44},headers=headers)
+    response = client.post("/typetransport/delete", data={"id": 1},headers=headers)
     assert response.status_code == 200
 
 def test_delete_transport_not_found():

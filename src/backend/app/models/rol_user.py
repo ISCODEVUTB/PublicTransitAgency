@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 
 class RolUserCreate(BaseModel):
-    __entity_name__ =  "rolusuario"  # <- Aquí se define el nombre general de la entidad
-    id: int
-    type: str
+    __entity_name__ =  "RolUsuario"  # <- Aquí se define el nombre general de la entidad
+    ID: int
+    Rol: str
 
     def to_dict(self):
         return self.model_dump()
@@ -11,11 +11,11 @@ class RolUserCreate(BaseModel):
     @classmethod
     def get_fields(cls) -> dict:
         return {
-            "id": "INTEGER PRIMARY KEY",
-            "type": "varchar(20)",
+            "ID": "INTEGER PRIMARY KEY",
+            "Rol": "varchar(20)",
         }
 class RolUserOut(RolUserCreate):
-    __entity_name__ = "rolusuario"  # <- También aquí, porque se usa para lectura
+    __entity_name__ = "RolUsuario"  # <- También aquí, porque se usa para lectura
     @classmethod
     def from_dict(cls, data: dict):
         return cls(**data)

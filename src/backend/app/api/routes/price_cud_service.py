@@ -6,8 +6,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 from backend.app.models.price import PriceCreate, PriceOut
-from backend.app.logic.universal_controller_sql import UniversalController
-#from backend.app.core.auth import get_current_user
+from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.core.auth import get_current_user
 
 # Configuración de logging
 #logger = logging.getLogger(__name__)
@@ -51,24 +51,24 @@ def index_delete(
 async def create_price(
     ID: int = Form(...),
     IDTipoTransporte:int= Form(...),
-    Monto:float=Form(...)
-    #current_movement: dict = Security(get_current_user, scopes=["system", "administrador"])
+    Monto:float=Form(...),
+    current_movement: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     #logger.info(f"[POST /create] Precio: {current_movement['user_id']} - Intentando crear precio con ID: {ID}")
 
     try:
         # Verificar si el precio ya existe
-        existing_movement = controller.get_by_id(PriceOut, ID)  
+        existing_movement = controller.get_by_column(PriceOut, "ID", ID)  
         if existing_movement:
-            #logger.warning(f"[POST /create] Error de validación: El precio ya existe con identificación {ID}")
+            logger.warning(f"[POST /create] Error de validación: El precio ya existe con identificación {ID}")
             raise HTTPException(400, detail="El precio ya existe con la misma identificación.")
 
         # Crear precio
         new_price = PriceCreate(ID=ID, IDTipoTransporte=IDTipoTransporte, Monto=Monto)
-        #logger.info(f"Intentando insertar precio con datos: {new_price.model_dump()}")
+        logger.info(f"Intentando insertar precio con datos: {new_price.model_dump()}")
         controller.add(new_price)
-        #logger.info(f"Precio insertado con ID: {new_price.ID}")  # Verifica si el ID se asigna
-        #logger.info(f"[POST /create] Precio creado exitosamente con identificación {ID}")
+        logger.info(f"Precio insertado con ID: {new_price.ID}")  # Verifica si el ID se asigna
+        logger.info(f"[POST /create] Precio creado exitosamente con identificación {ID}")
         return {
             "operation": "create",
             "success": True,
@@ -88,14 +88,14 @@ async def create_price(
 async def update_price(
     ID: int = Form(...),
     IDTipoTransporte:int=Form(...),
-    Monto:float=Form(...)
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    Monto:float=Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /update] Precio: {current_user['user_id']} - Actualizando precio ID={ID}")
+    logger.info(f"[POST /update] Precio: {current_user['user_id']} - Actualizando precio id={ID}")
     try:
         existing = controller.get_by_id(PriceOut, ID)
         if existing is None:
-            #logger.warning(f"[POST /update] Precio no encontrada: ID={ID}")
+            logger.warning(f"[POST /update] Precio no encontrada: id={ID}")
             raise HTTPException(404, detail="Price not found")
 
         updated_price = PriceOut(ID=ID, IDTipoTransporte=IDTipoTransporte, Monto=Monto)
@@ -115,19 +115,19 @@ async def update_price(
 
 @app.post("/delete")
 async def delete_price(
-    ID: int = Form(...)
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    ID: int = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /delete] Precio: {current_user['user_id']} - Eliminando precio ID={ID}")
+    logger.info(f"[POST /delete] Precio: {current_user['user_id']} - Eliminando precio id={ID}")
     try:
         existing = controller.get_by_id(PriceOut, ID)
         if not existing:
-            #logger.warning(f"[POST /delete] Precio no encontrado en la base de datos: ID={ID}")
+            logger.warning(f"[POST /delete] Precio no encontrado en la base de datos: id={ID}")
             raise HTTPException(404, detail="Price not found")
 
         #logger.info(f"[POST /delete] Eliminando precio con ID={ID}")
         controller.delete(existing) 
-        #logger.info(f"[POST /delete] Precio eliminada exitosamente: ID={ID}")
+        logger.info(f"[POST /delete] Precio eliminada exitosamente: id={ID}")
         return {
             "operation": "delete",
             "success": True,

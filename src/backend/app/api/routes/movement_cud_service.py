@@ -6,8 +6,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 from backend.app.models.movement import MovementCreate, MovementOut
-from backend.app.logic.universal_controller_sql import UniversalController
-#from backend.app.core.auth import get_current_user
+from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.core.auth import get_current_user
 
 # Configuración de logging
 #logger = logging.getLogger(__name__)
@@ -50,24 +50,24 @@ def index_delete(
 async def create_movement(
     ID: int = Form(...),
     IDTipoMovimiento:int= Form(...),
-    Monto:float=Form(...)
-    #current_movement: dict = Security(get_current_user, scopes=["system", "administrador"])
+    Monto:float=Form(...),
+    current_movement: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /create] Movimiento: {current_movement['user_id']} - Intentando crear movimiento con ID: {ID}")
+    logger.info(f"[POST /create] Movimiento: {current_movement['user_id']} - Intentando crear movimiento con id: {ID}")
 
     try:
         # Verificar si el movimiento ya existe
-        existing_movement = controller.get_by_id(MovementOut, ID)  
+        existing_movement = controller.get_by_column(MovementOut, "ID", ID)  
         if existing_movement:
-            #logger.warning(f"[POST /create] Error de validación: El movimiento ya existe con identificación {ID}")
+            logger.warning(f"[POST /create] Error de validación: El movimiento ya existe con identificación {ID}")
             raise HTTPException(400, detail="El movimiento ya existe con la misma identificación.")
 
         # Crear movimiento
         new_movement = MovementCreate(ID=ID, IDTipoMovimiento=IDTipoMovimiento, Monto=Monto)
-        #logger.info(f"Intentando insertar movimiento con datos: {new_movement.model_dump()}")
+        logger.info(f"Intentando insertar movimiento con datos: {new_movement.model_dump()}")
         controller.add(new_movement)
-        #logger.info(f"Movimiento insertado con ID: {new_movement.ID}")  # Verifica si el ID se asigna
-        #logger.info(f"[POST /create] Movimiento creado exitosamente con identificación {ID}")
+        logger.info(f"Movimiento insertado con ID: {new_movement.ID}")  # Verifica si el ID se asigna
+        logger.info(f"[POST /create] Movimiento creado exitosamente con identificación {ID}")
         return {
             "operation": "create",
             "success": True,
@@ -87,14 +87,14 @@ async def create_movement(
 async def update_movement(
     ID: int = Form(...),
     IDTipoMovimiento:int=Form(...),
-    Monto:float=Form(...)
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    Monto:float=Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /update] Movimiento: {current_user['user_id']} - Actualizando movimiento ID={ID}")
+    logger.info(f"[POST /update] Movimiento: {current_user['user_id']} - Actualizando movimiento id={ID}")
     try:
         existing = controller.get_by_id(MovementOut, ID)
         if existing is None:
-            #logger.warning(f"[POST /update] Movimiento no encontrada: ID={ID}")
+            logger.warning(f"[POST /update] Movimiento no encontrada: id={ID}")
             raise HTTPException(404, detail="Movement not found")
 
         updated_movement = MovementOut(ID=ID, IDTipoMovimiento=IDTipoMovimiento, Monto=Monto)
@@ -114,19 +114,19 @@ async def update_movement(
 
 @app.post("/delete")
 async def delete_movement(
-    ID: int = Form(...)
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    ID: int = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /delete] Movimiento: {current_user['user_id']} - Eliminando movimiento ID={ID}")
+    logger.info(f"[POST /delete] Movimiento: {current_user['user_id']} - Eliminando movimiento id={ID}")
     try:
         existing = controller.get_by_id(MovementOut, ID)
         if not existing:
-            #logger.warning(f"[POST /delete] Movimiento no encontrado en la base de datos: ID={ID}")
+            logger.warning(f"[POST /delete] Movimiento no encontrado en la base de datos: id={ID}")
             raise HTTPException(404, detail="Movement not found")
 
         #logger.info(f"[POST /delete] Eliminando movimiento con ID={ID}")
         controller.delete(existing) 
-        #logger.info(f"[POST /delete] Movimiento eliminada exitosamente: ID={ID}")
+        logger.info(f"[POST /delete] Movimiento eliminada exitosamente: id={ID}")
         return {
             "operation": "delete",
             "success": True,

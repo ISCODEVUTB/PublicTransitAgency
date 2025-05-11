@@ -2,7 +2,7 @@
 # # This file contains the query service for the Movement model using FastAPI.
 # # It includes routes for retrieving all movements and fetching a specific movement by ID.
 import logging
-from fastapi import FastAPI, HTTPException, APIRouter, Form, Request, status, Query, Security
+from fastapi import FastAPI, HTTPException, APIRouter, Form, Request, status, Query, Security, Path
 from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -11,7 +11,7 @@ import uvicorn
 
 #from backend.app.core.auth import get_current_user
 from backend.app.models.movement import MovementOut
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 
 # Configuración del logger
 logger = logging.getLogger(__name__)
@@ -45,31 +45,21 @@ async def get_all():
     return movimientos
 
 # Route to view a specific user by its ID and render the 'movement.html' template
-@app.get("movement/{id}", response_class=HTMLResponse)
+@app.get("/{ID}", response_class=HTMLResponse)
 def get_by_id(
     request: Request,
-    id: int
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-):
+    ID: int,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])):
     """
     Fetches a price by its ID and renders its details on 'movimiento.html'.
     If no price is found, returns 'None' for the details.
     """
-    #logger.info(f"[GET /movement] Usuario: {current_user['user_id']} - Consultando movimiento con id={id}")
-    result = controller.get_by_id(MovementOut, id)
+    logger.info(f"[GET /movement] Usuario: {current_user['user_id']} - Consultando movimiento con id={ID}")
+    result = controller.get_by_id(MovementOut, ID)
 
-    """if result:
-        #logger.info(f"[GET /movement] Movimiento encontrada: {result.id}, Tipo: {result.idtype}, Monto: {result.amount}")
-        #return JSONResponse(content=result.model_dump(), status_code=200)
+    if result:
+        logger.info(f"[GET /movement] Movimiento encontrada: {result.ID}, Tipo: {result.IDTipoMovimiento}, Monto: {result.Monto}")
+        return JSONResponse(content=result.model_dump(), status_code=200)
     else:
-        logger.warning(f"[GET /movement] No se encontró movimiento con id={id}")
-        #return JSONResponse(content="Movimiento no encontrado", status_code=404)"""
-    
-    context = {
-        "request": request,
-        "ID": result.ID if result else "None",
-        "IDTipoMovimiento": result.IDTipoMovimiento if result else "None",
-        "Monto": result.Monto if result else "None",
-    }
-
-    return templates.TemplateResponse(request,"movimiento.html", context)
+        logger.warning(f"[GET /movement] No se encontró movimiento con id={ID}")
+        return JSONResponse(content="Movimiento no encontrado", status_code=404)

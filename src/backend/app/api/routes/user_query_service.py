@@ -1,12 +1,12 @@
 #import logging
 import json
-from fastapi import Request, Query, APIRouter, Security
+from fastapi import Request, Query, APIRouter, Security, Path
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 
 #from backend.app.core.auth import get_current_user
 from backend.app.models.user import UserOut
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 
 # Configuración del logger
 #logger = logging.getLogger(__name__)
@@ -45,8 +45,8 @@ async def get_users(
 @app.get("/{id}", response_class=HTMLResponse)
 def usuario(
     request: Request,
-    id: int
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
+    id: int= Path(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
 ):
     """
     Retrieve a user by its ID and render the 'usuario.html' template with its details.
@@ -55,10 +55,9 @@ def usuario(
     #logger.info(f"[GET /user] Usuario: {current_user['user_id']} - Consultando usuario con id={id}")
     unit_usuario= controller.get_by_id(UserOut, id)
 
-    """if unit_usuario:
-        logger.info(f"[GET /user] Usuario encontrados: {unit_usuario.ID}, {unit_usuario.Identificacion},{unit_usuario.Nombre},{unit_usuario.Apellido},{unit_usuario.Correo},{unit_usuario.Contrasena},{unit_usuario.IDRolUsuario},{unit_usuario.IDTurno}")
-        #return JSONResponse(content=unit_usuario.model_dump(), status_code=200)
-    
+    if unit_usuario:
+        logger.info(f"[GET /user] Usuario encontrados: {unit_usuario.ID}")
+        return JSONResponse(content=unit_usuario.model_dump(), status_code=200)
 
     else:
         logger.warning(f"[GET /user] No se encontró usuario con id={id}")

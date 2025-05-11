@@ -8,8 +8,8 @@ class UserCreate(BaseModel):
     Correo: str
     Contrasena: str
     IDRolUsuario: int
-    IDTurno:int
-    #IDTarjeta: int
+    IDTurno: int
+    IDTarjeta: int
 
     def to_dict(self):
         return self.model_dump()
@@ -24,7 +24,8 @@ class UserCreate(BaseModel):
             "Correo": "VARCHAR(100)",
             "Contrasena": "VARCHAR(100)",
             "IDRolUsuario": "INTEGER",
-            "IDTurno": "INTEGER"
+            "IDTurno": "INTEGER",
+            "IDTarjeta": "INTEGER",
         }
 class UserOut(UserCreate):
     __entity_name__ = "Usuario"  # <- También aquí, porque se usa para lectura

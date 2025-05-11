@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 
 #from backend.app.core.auth import get_current_user
 from backend.app.models.type_transport import TypeTransportOut
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 
 # Configuración del logger
 #logger = logging.getLogger(__name__)
