@@ -24,7 +24,8 @@ async def maintenance_token_info(request: Request, token_info= get_current_user)
 
 @app.get("/crear", response_class=HTMLResponse)
 def crear_mantenimiento(
-    request: Request
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Route to display the maintenance creation form.
@@ -34,7 +35,8 @@ def crear_mantenimiento(
 
 @app.get("/eliminar", response_class=HTMLResponse)
 def eliminar_mantenimiento(
-    request: Request
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
     
 ):
     """
@@ -45,7 +47,8 @@ def eliminar_mantenimiento(
 
 @app.get("/actualizar", response_class=HTMLResponse)
 def actualizar_mantenimiento(
-    request: Request
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
     
 ):
     """
@@ -60,7 +63,8 @@ async def add(
     id_status: int = Form(...),
     type: str = Form(...),
     fecha: datetime = Form(...),
-    id_unit: int = Form(...)
+    id_unit: int = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
     
 ):
     """
@@ -91,7 +95,8 @@ async def update(
     id_status: int = Form(...),
     type: str = Form(...),
     fecha: datetime = Form(...),
-    id_unit: int = Form(...)
+    id_unit: int = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
     
 ):
     """
@@ -123,7 +128,11 @@ async def update(
 
 
 @app.post("/delete")
-async def delete_maintenance(id: int = Form(...)):
+async def delete_maintenance(
+    id: int = Form(...),
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    
+):
     """
     Route to delete an existing maintenance record by its ID.
     """

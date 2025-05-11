@@ -16,9 +16,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 
 @app.get("/maintainancements", response_model=list[dict])
-def read_all(
-    
-):
+def read_all():
     """
     Returns all maintenance records.
 

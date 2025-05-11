@@ -43,16 +43,17 @@ def test_get_tarjetas():
     controller.add(TypeCardCreate(id=2, type="tipo_2"))
     controller.add(TypeCardCreate(id=3, type="tipo_3"))
     controller.add(TypeCardCreate(id=4, type="tipo_4"))
-    controller.add(Shift(id=1, tipoturno="No Aplica"))
+    controller.add(Shift(ID=1, TipoTurno="No Aplica"))
     controller.add(UserCreate(
-        id=1,
-        identification=11022311,
-        name="Kenan",
-        lastname="Jarrus",
-        email="msjedi@yoda.com",
-        password="hera",
-        idtype_user=1,
-        idturn=1
+        ID=1,
+        Identificacion=11022311,
+        Nombre="Kenan",
+        Apellido="Jarrus",
+        Correo="msjedi@yoda.com",
+        Contrasena="hera",
+        IDRolUsuario=1,
+        IDTurno=1,
+        IDTarjeta=1
     ))
 
     controller.add(CardCreate(id=3, iduser=1, idtype=3, balance=0.0))
@@ -72,16 +73,17 @@ def test_get_tarjetas():
 def test_get_tarjeta_existing():
     # Cargar datos necesarios
     controller.add(TypeCardCreate(id=3, type="tipo_3"))
-    controller.add(Shift(id=1, tipoturno="No Aplica"))
+    controller.add(Shift(ID=1, TipoTurno="No Aplica"))
     controller.add(UserCreate(
-        id=1,
-        identification=11022311,
-        name="Kenan",
-        lastname="Jarrus",
-        email="msjedi@yoda.com",
-        password="hera",
-        idtype_user=1,
-        idturn=1
+        ID=1,
+        Identificacion=11022311,
+        Nombre="Kenan",
+        Apellido="Jarrus",
+        Correo="msjedi@yoda.com",
+        Contrasena="hera",
+        IDRolUsuario=1,
+        IDTurno=1,
+        IDTarjeta=1
     ))
     controller.add(CardCreate(id=3, iduser=1, idtype=3, balance=0.0))
 

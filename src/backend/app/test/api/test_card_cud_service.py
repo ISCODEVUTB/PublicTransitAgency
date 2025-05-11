@@ -31,16 +31,17 @@ client = TestClient(app_for_test)
 
 def test_create_card():
     test_controller.add(TypeCardCreate(id=1, type="Estandar"))
-    test_controller.add(Shift(id=1, tipoturno="No Aplica"))
+    test_controller.add(Shift(ID=1, TipoTurno="No Aplica"))
     test_controller.add(UserCreate(
-        id=1,
-        identification=11022311,
-        name="Kenan",
-        lastname="Jarrus",
-        email="msjedi@yoda.com",
-        password="hera",
-        idtype_user=1,
-        idturn=1
+        ID=1,
+        Identificacion=11022311,
+        Nombre="Kenan",
+        Apellido="Jarrus",
+        Correo="msjedi@yoda.com",
+        Contrasena="hera",
+        IDRolUsuario=1,
+        IDTurno=1,
+        IDTarjeta=1
     ))
     response = client.post("/card/create", data={"id": 15, "iduser": 1, "idtype": 1}, headers=headers)
     assert response.status_code == 200
@@ -49,16 +50,17 @@ def test_create_card():
 
 def test_update_card_existing():
     test_controller.add(TypeCardCreate(id=1, type="Estandar"))
-    test_controller.add(Shift(id=1, tipoturno="No Aplica"))
+    test_controller.add(Shift(ID=1, TipoTurno="No Aplica"))
     test_controller.add(UserCreate(
-        id=1,
-        identification=11022311,
-        name="Kenan",
-        lastname="Jarrus",
-        email="msjedi@yoda.com",
-        password="hera",
-        idtype_user=1,
-        idturn=1
+        ID=1,
+        Identificacion=11022311,
+        Nombre="Kenan",
+        Apellido="Jarrus",
+        Correo="msjedi@yoda.com",
+        Contrasena="hera",
+        IDRolUsuario=1,
+        IDTurno=1,
+        IDTarjeta=1
     ))
     test_controller.add(CardCreate(id=20, iduser=1, idtype=1, balance=10))
 
@@ -73,16 +75,17 @@ def test_update_card_not_found():
 
 def test_delete_card_existing():
     test_controller.add(TypeCardCreate(id=1, type="Estandar"))
-    test_controller.add(Shift(id=1, tipoturno="No Aplica"))
+    test_controller.add(Shift(ID=1, TipoTurno="No Aplica"))
     test_controller.add(UserCreate(
-        id=1,
-        identification=11022311,
-        name="Kenan",
-        lastname="Jarrus",
-        email="msjedi@yoda.com",
-        password="hera",
-        idtype_user=1,
-        idturn=1
+        ID=1,
+        Identificacion=11022311,
+        Nombre="Kenan",
+        Apellido="Jarrus",
+        Correo="msjedi@yoda.com",
+        Contrasena="hera",
+        IDRolUsuario=1,
+        IDTurno=1,
+        IDTarjeta=1
     ))
     test_controller.add(CardCreate(id=30, iduser=1, idtype=1, balance=0))
 
