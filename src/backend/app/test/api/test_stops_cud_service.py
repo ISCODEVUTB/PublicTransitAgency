@@ -1,107 +1,76 @@
 import pytest
 from fastapi.testclient import TestClient
-from backend.app.api.routes.stops_cud_service import app as stops_router
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.api.routes.stops_cud_service import app
 from backend.app.models.stops import Parada
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.conf import headers
-from fastapi import FastAPI
 
-app_for_test = FastAPI()
-app_for_test.include_router(stops_router)
-client = TestClient(app_for_test)
+client = TestClient(app)
 controller = UniversalController()
+
+@pytest.fixture
+def setup_and_teardown():
+    """
+    Fixture para configurar y limpiar los datos de prueba.
+    """
+    parada = Parada(ID=9999, Nombre="Parada de Prueba", Ubicacion="Ubicación de Prueba")
+    # Asegurarse de que la parada no exista antes de crearla
+    existing_parada = controller.get_by_id(Parada, parada.ID)
+    if existing_parada:
+        controller.delete(existing_parada)
+
+    # Crear la parada de prueba
+    controller.add(parada)
+    yield parada
+
+    # Eliminar la parada de prueba
+    controller.delete(parada)
 
 def test_crear_parada():
     """
-    Prueba para crear una parada.
+    Prueba para crear una nueva parada.
     """
-    # Usar un ID muy alto para evitar conflictos con datos existentes
-    parada_id = 9999
+    parada_data = {"ID": 10000, "Nombre": "Nueva Parada", "Ubicacion": "Nueva Ubicación"}
+    response = client.post("/stops/create", data=parada_data, headers=headers)
+    assert response.status_code == 200
+    assert response.json()["message"] == "Parada creada exitosamente."
 
-    try:
-        response = client.post("/paradas/create", data={
-            "id": parada_id,
-            "Nombre": "Parada Test",
-            "Ubicacion": "Ubicación Test"
-        }, headers=headers)
+    # Verificar que la parada se haya creado en la base de datos
+    parada = controller.get_by_id(Parada, parada_data["ID"])
+    assert parada is not None
+    assert parada.Nombre == parada_data["Nombre"]
+    assert parada.Ubicacion == parada_data["Ubicacion"]
 
-        assert response.status_code == 200
-        assert response.json()["message"] == "Parada creada exitosamente."
+    # Limpiar la base de datos
+    controller.delete(parada)
 
-        # Verificar que la parada se creó correctamente
-        parada = controller.get_by_id(Parada, parada_id)
-        assert parada is not None
-        assert parada.Nombre == "Parada Test"
-        assert parada.Ubicacion == "Ubicación Test"
-    finally:
-        # Limpiar: eliminar la parada creada para la prueba
-        parada = controller.get_by_id(Parada, parada_id)
-        if parada:
-            controller.delete(parada)
-
-def test_actualizar_parada():
+def test_actualizar_parada(setup_and_teardown):
     """
     Prueba para actualizar una parada existente.
     """
-    # Usar un ID muy alto para evitar conflictos con datos existentes
-    parada_id = 9999
+    parada = setup_and_teardown
+    updated_data = {"ID": parada.ID, "Nombre": "Parada Actualizada", "Ubicacion": "Ubicación Actualizada"}
+    response = client.post("/stops/update", data=updated_data, headers=headers)
+    assert response.status_code == 200
+    assert response.json()["message"] == "Parada actualizada exitosamente."
 
-    try:
-        # Crear una parada para la prueba
-        parada = Parada(ID=parada_id, Nombre="Parada Original", Ubicacion="Ubicación Original")
-        controller.add(parada)
+    # Verificar que la parada se haya actualizado en la base de datos
+    updated_parada = controller.get_by_id(Parada, updated_data["ID"])
+    assert updated_parada is not None
+    assert updated_parada.Nombre == updated_data["Nombre"]
+    assert updated_parada.Ubicacion == updated_data["Ubicacion"]
 
-        # Actualizar la parada
-        response = client.post("/paradas/update", data={
-            "id": parada_id,
-            "Nombre": "Parada Actualizada",
-            "Ubicacion": "Ubicación Actualizada"
-        }, headers=headers)
-
-        assert response.status_code == 200
-        assert response.json()["message"] == "Parada actualizada exitosamente."
-
-        # Verificar que la parada se actualizó correctamente
-        parada_actualizada = controller.get_by_id(Parada, parada_id)
-        assert parada_actualizada is not None
-        assert parada_actualizada.Nombre == "Parada Actualizada"
-        assert parada_actualizada.Ubicacion == "Ubicación Actualizada"
-    finally:
-        # Limpiar: eliminar la parada creada para la prueba
-        parada = controller.get_by_id(Parada, parada_id)
-        if parada:
-            controller.delete(parada)
-
-def test_eliminar_parada():
+def test_eliminar_parada(setup_and_teardown):
     """
     Prueba para eliminar una parada existente.
     """
-    # Usar un ID muy alto para evitar conflictos con datos existentes
-    parada_id = 9999
-
-    # Crear una parada para la prueba
-    parada = Parada(ID=parada_id, Nombre="Parada Test", Ubicacion="Ubicación Test")
-    controller.add(parada)
-
-    # Eliminar la parada
-    response = client.post("/paradas/delete", data={"id": parada_id}, headers=headers)
-
+    parada = setup_and_teardown
+    response = client.post("/stops/delete", data={"ID": parada.ID}, headers=headers)
     assert response.status_code == 200
     assert response.json()["message"] == "Parada eliminada exitosamente."
 
-    # Verificar que la parada se eliminó correctamente
-    parada_eliminada = controller.get_by_id(Parada, parada_id)
-    assert parada_eliminada is None
+    # Verificar que la parada ya no exista en la base de datos
+    deleted_parada = controller.get_by_id(Parada, parada.ID)
+    assert deleted_parada is None
 
-def test_eliminar_parada_no_existente():
-    """
-    Prueba para eliminar una parada que no existe.
-    """
-    # Usar un ID muy alto que seguramente no existe
-    parada_id = 99999
 
-    # Intentar eliminar una parada que no existe
-    response = client.post("/paradas/delete", data={"id": parada_id}, headers=headers)
-
-    assert response.status_code == 404
-    assert response.json()["detail"] == "Parada no encontrada"

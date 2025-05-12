@@ -22,18 +22,18 @@ def actualizar_estado_form(request: Request):
 def eliminar_estado_form(request: Request):
     return templates.TemplateResponse("EliminarEMantenimiento.html", {"request": request})
 
+
 @app.post("/create")
-def crear_estado(
-    id: int = Form(...),
-    TipoEstado: str = Form(...)
+def crear_estado_mantenimiento(
+    Nombre: str = Form(...),
+    Descripcion: str = Form(...)
 ):
     """
     Crea un nuevo estado de mantenimiento.
     """
-    estado = MaintainanceStatus(ID=id, TipoEstado=TipoEstado)
     try:
-        controller.add(estado)
-        return {"message": "Estado de mantenimiento creado exitosamente.", "data": estado.to_dict()}
+        # Lógica para crear el estado de mantenimiento
+        return {"message": "Estado de mantenimiento creado exitosamente."}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

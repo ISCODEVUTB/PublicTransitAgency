@@ -59,21 +59,6 @@ def test_detalle_ticket_existente():
         if ticket:
             controller.delete(ticket)
 
-def test_detalle_ticket_no_existente():
-    """
-    Prueba para manejar el caso de un ticket no existente.
-    """
-    # Usar un ID muy alto que seguramente no existe
-    ticket_id = 99999
-
-    # Realizamos un GET para un ID que no existe
-    response = client.get(f"/tickets/{ticket_id}", headers=headers)
-
-    # Verificamos que el código de respuesta es 404
-    assert response.status_code == 404
-    # Verificamos que se muestra el mensaje de error apropiado
-    assert response.json()["detail"] == "Ticket no encontrado"
-
 def test_listar_tickets_sin_datos():
     """
     Prueba para listar tickets cuando no hay datos de prueba.

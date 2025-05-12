@@ -1,7 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
 
-
 class Parada(BaseModel):
     __entity_name__ = "Parada"  
 
