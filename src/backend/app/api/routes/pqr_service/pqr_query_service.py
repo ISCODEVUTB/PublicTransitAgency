@@ -107,16 +107,15 @@ def pqr_by_user(
 
     if unit_pqr:
         logger.info(f"[GET /pqr] PQR encontrada: {unit_pqr.id}, iduser: {unit_pqr.iduser}")
+        context = {
+            "request": request,
+            "pqrs": unit_pqr,  # Lista de asistencias
+        }
     else:
         logger.warning(f"[GET /pqr] No se encontró pqr con iduser={iduser}")
+        context = {
+            "request": request,
+            "pqrs_list": []  # Si no se encontraron asistencias, pasar una lista vacía
+        }
 
-    context = {
-        "request": request,
-        "id": unit_pqr.id if unit_pqr else "None",
-        "iduser": unit_pqr.iduser if unit_pqr else "None",
-        "type": unit_pqr.type if unit_pqr else "None",
-        "description": unit_pqr.description if unit_pqr else "None",
-        "codigogenerado":unit_pqr.codigogenerado if unit_pqr else "None",
-        "fecha": unit_pqr.fecha if unit_pqr else "None",
-    }
-    return templates.TemplateResponse(request,"pqr.html", context)
+    return templates.TemplateResponse(request,"pqrs.html", context)

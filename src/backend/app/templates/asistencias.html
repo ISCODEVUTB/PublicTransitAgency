@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Regsitros de Asistencias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 1em;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Listado de Registros de Asistencias</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Identificacion del Usuario</th>
+                <th>Hora Inicial</th>
+                <th>Hora Final</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asistance in asistencia_list %}
+            <tr>
+                <td>{{ asistance.iduser }}</td>
+                <td>{{ asistance.horainicio }}</td>
+                <td>{{ asistance.horafinal }}</td>
+                <td>{{ asistance.fecha }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

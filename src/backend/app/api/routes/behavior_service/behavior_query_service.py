@@ -116,6 +116,6 @@ def rendimiento_by_user(
         logger.warning(f"[GET /asistencia] No se encontraron asistencias con iduser={iduser}")
         context = {
             "request": request,
-            "rendimientos": []  # Si no se encontraron asistencias, pasar una lista vacía
+            "rendimientos_list": []  # Si no se encontraron asistencias, pasar una lista vacía
         }
     return templates.TemplateResponse(request,"rendimientos.html", context)

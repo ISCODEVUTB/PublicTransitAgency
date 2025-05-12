@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Registros de Rendimiento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 1em;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Listado de Registros de Rendimiento</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Id de Reporte</th>
+                <th>Identificacion de Usuario</th>
+                <th>Cantidad de Rutas Cubiertas</th>
+                <th>Horas Trabajadas</th>
+                <th>>Observaciones</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rendimiento in rendimientos_list %}
+            <tr>
+                <td>{{ rendimiento.id }}</td>
+                <td>{{ rendimiento.iduser }}</td>
+                <td>{{ rendimiento.cantidadrutas }}</td>
+                <td>{{ rendimiento.horastrabajadas }}</td>
+                <td>{{ rendimiento.observaciones }}</td>
+                <td>{{ rendimiento.fecha }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

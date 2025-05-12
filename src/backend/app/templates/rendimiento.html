@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de Registro de Rendimiento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        .behavior-container {
+            background-color: #ffffff;
+            max-width: 500px;
+            margin: auto;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .behavior-container h2 {
+            color: #333;
+        }
+        .behavior-detail {
+            margin: 1em 0;
+            font-size: 1.1em;
+        }
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="behavior-container">
+        <h2>Registro de Rendimiento</h2>
+        <div class="behavior-detail">
+            <span class="label">Id de Reporte:</span> {{ id }}
+        </div>
+        <div class="behavior-detail">
+            <span class="label">Identificacion de Usuario:</span> {{ iduser }}
+        </div>
+        <div class="behavior-detail">
+            <span class="label">Cantidad de Rutas Cubiertas:</span> ${{ cantidadrutas }}
+        </div>
+        <div class="behavior-detail">
+            <span class="label">Horas Trabajadas:</span> ${{ horastrabajadas }}
+        </div>
+        <div class="behavior-detail">
+            <span class="label">Observaciones:</span> ${{observaciones}}
+        </div>
+        <div class="behavior-detail">
+            <span class="label">Fecha de Emision:</span> ${{ fecha}}
+        </div>      
+    </div>
+</body>
+</html>

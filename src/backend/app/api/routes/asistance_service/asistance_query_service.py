@@ -113,7 +113,7 @@ def asistencia_by_user(
         logger.warning(f"[GET /asistencia] No se encontraron asistencias con iduser={iduser}")
         context = {
             "request": request,
-            "asistencias": []  # Si no se encontraron asistencias, pasar una lista vacía
+            "asistencia_list": []  # Si no se encontraron asistencias, pasar una lista vacía
         }
 
     return templates.TemplateResponse("asistencias.html", context)

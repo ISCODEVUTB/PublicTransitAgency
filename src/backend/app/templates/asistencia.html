@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de Registro de Asistencia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        .asistance-container {
+            background-color: #ffffff;
+            max-width: 400px;
+            margin: auto;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .asistance-container h2 {
+            color: #333;
+        }
+        .asistance-detail {
+            margin: 1em 0;
+            font-size: 1.1em;
+        }
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="asistance-container">
+        <h2>Registro de Asistencia</h2>
+        <div class="asistance-detail">
+            <span class="label">Identificacion de Usuario:</span> {{ iduser }}
+        </div>
+        <div class="asistance-detail">
+            <span class="label">Hora Inicial:</span> ${{ horainicio }}
+        </div>
+        <div class="asistance-detail">
+            <span class="label">Hora Final:</span> ${{ horafinal }}
+        </div>
+        <div class="asistance-detail">
+            <span class="label">Fecha de Emision:</span> ${{ fecha}}
+        </div>      
+    </div>
+</body>
+</html>
