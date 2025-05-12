@@ -1,4 +1,4 @@
-#import logging
+import logging
 from fastapi import (
     Form, HTTPException, APIRouter, Request, Security, FastAPI
 )
@@ -10,8 +10,8 @@ from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 
 # Configuración de logging
-#logger = logging.getLogger(__name__)
-#logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 app = APIRouter(prefix="/movement", tags=["movement"])
 controller = UniversalController()
@@ -19,30 +19,30 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/crear", response_class=HTMLResponse)
 def index_create(
-    request: Request
-    #current_user: dict = Security(
-        #get_current_user,
-        #scopes=["system", "administrador"])
+    request: Request,
+    current_user: dict = Security(
+        get_current_user,
+        scopes=["system", "administrador"])
 ):
-    #logger.info(f"[GET /crear] Movimiento: {current_user['user_id']} - Mostrando formulario de creación de movimiento")
+    logger.info(f"[GET /crear] Movimiento: {current_user['user_id']} - Mostrando formulario de creación de movimiento")
     return templates.TemplateResponse("CrearMovimiento.html", {"request": request})
 
 
 @app.get("/actualizar", response_class=HTMLResponse)
 def index_update(
-    request: Request
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[GET /actualizar] Movimiento: {current_user['user_id']} - Mostrando formulario de actualización de movimiento")
+    logger.info(f"[GET /actualizar] Movimiento: {current_user['user_id']} - Mostrando formulario de actualización de movimiento")
     return templates.TemplateResponse("ActualizarMovimiento.html", {"request": request})
 
 
 @app.get("/eliminar", response_class=HTMLResponse)
 def index_delete(
-    request: Request
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[GET /eliminar] Movimiento: {current_user['user_id']} - Mostrando formulario de eliminación de movimiento")
+    logger.info(f"[GET /eliminar] Movimiento: {current_user['user_id']} - Mostrando formulario de eliminación de movimiento")
     return templates.TemplateResponse("EliminarMovimiento.html", {"request": request})
 
 
@@ -76,10 +76,10 @@ async def create_movement(
         }
         
     except ValueError as e:
-        #logger.warning(f"[POST /create] Error de validación: {str(e)}")
+        logger.warning(f"[POST /create] Error de validación: {str(e)}")
         raise HTTPException(400, detail=str(e))
     except Exception as e:
-        #logger.error(f"[POST /create] Error interno: {str(e)}")
+        logger.error(f"[POST /create] Error interno: {str(e)}")
         raise HTTPException(500, detail=f"Internal server error: {str(e)}") 
 
 
@@ -99,7 +99,7 @@ async def update_movement(
 
         updated_movement = MovementOut(ID=ID, IDTipoMovimiento=IDTipoMovimiento, Monto=Monto)
         controller.update(updated_movement)
-        #logger.info(f"[POST /update] Movimiento actualizada exitosamente: {updated_movement}")
+        logger.info(f"[POST /update] Movimiento actualizada exitosamente: {updated_movement}")
         return {
             "operation": "update",
             "success": True,
@@ -107,7 +107,7 @@ async def update_movement(
             "message": f"Movement {ID} updated successfully."
         }
     except ValueError as e:
-        #logger.warning(f"[POST /update] Error de validación: {str(e)}")
+        logger.warning(f"[POST /update] Error de validación: {str(e)}")
         raise HTTPException(400, detail=str(e))
 
 
@@ -124,7 +124,7 @@ async def delete_movement(
             logger.warning(f"[POST /delete] Movimiento no encontrado en la base de datos: id={ID}")
             raise HTTPException(404, detail="Movement not found")
 
-        #logger.info(f"[POST /delete] Eliminando movimiento con ID={ID}")
+        logger.info(f"[POST /delete] Eliminando movimiento con ID={ID}")
         controller.delete(existing) 
         logger.info(f"[POST /delete] Movimiento eliminada exitosamente: id={ID}")
         return {
@@ -135,5 +135,5 @@ async def delete_movement(
     except HTTPException as e:
         raise e
     except Exception as e:
-        #logger.error(f"[POST /delete] Error interno: {str(e)}")
+        logger.error(f"[POST /delete] Error interno: {str(e)}")
         raise HTTPException(500, detail=f"Internal server error: {str(e)}")

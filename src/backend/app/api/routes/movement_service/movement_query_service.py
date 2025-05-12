@@ -12,6 +12,7 @@ import uvicorn
 #from backend.app.core.auth import get_current_user
 from backend.app.models.movement import MovementOut
 from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.core.auth import get_current_user
 
 # Configuración del logger
 logger = logging.getLogger(__name__)

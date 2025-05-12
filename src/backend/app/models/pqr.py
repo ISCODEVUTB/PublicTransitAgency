@@ -5,7 +5,7 @@ class PQRCreate(BaseModel):
     id: int
     type: str
     description: str
-    fecha: datetime.date
+    fecha: str
     identificationuser: int
 
     def to_dict(self):

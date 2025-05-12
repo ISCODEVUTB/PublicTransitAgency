@@ -1,16 +1,16 @@
-#import logging
+import logging
 import json
 from fastapi import Request, Query, APIRouter, Security
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 
-#from backend.app.core.auth import get_current_user
+from backend.app.core.auth import get_current_user
 from backend.app.models.price import PriceOut
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 
 # Configuración del logger
-#logger = logging.getLogger(__name__)
-#logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 # Create the router for user-related endpoints
 app = APIRouter(prefix="/price", tags=["price"])
@@ -24,27 +24,27 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/consultar", response_class=HTMLResponse)
 def consultar(
-    request: Request
-    #current_user: dict = Security(get_current_user, scopes=[
-        #"system", "administrador"])
+    request: Request,
+    current_user: dict = Security(get_current_user, scopes=[
+        "system", "administrador"])
 ):
     """
     Render the 'ConsultarPrecio.html' template for the user consultation page.
     """
-    #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de precio")
+    logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de precio")
     return templates.TemplateResponse("ConsultarPrecio.html", {"request": request})
 
 
 @app.get("/prices")
 async def get_price(
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve and return all prices records from the database.
     """
-    #logger.info(f"[GET /prices] Usuario: {current_user['user_id']} - Consultando todas los precios.")
+    logger.info(f"[GET /prices] Usuario: {current_user['user_id']} - Consultando todas los precios.")
     prices = controller.read_all(PriceOut)
-    #logger.info(f"[GET /prices] Número de precios encontrados: {len(prices)}")
+    logger.info(f"[GET /prices] Número de precios encontrados: {len(prices)}")
     return prices
 
 
@@ -58,7 +58,7 @@ def price(
     Retrieve a user by its ID and render the 'price.html' template with its details.
     If the user is not found, display 'None' for all fields.
     """
-    #logger.info(f"[GET /price] Usuario: {current_user['user_id']} - Consultando precio con id={id}")
+    logger.info(f"[GET /price] Usuario: {current_user['user_id']} - Consultando precio con id={id}")
     unit_price= controller.get_by_id(PriceOut, id)
 
     if unit_price:

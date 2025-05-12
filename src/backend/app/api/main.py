@@ -4,8 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.app.core.config import settings
 from backend.app.core.middlewares import add_middlewares
 from backend.app.api.routes import (
-    card_cud_service,
-    card_query_service,
     incidence_cud_service,
     maintainance_status_query_service,
     login_service,
@@ -25,6 +23,8 @@ from backend.app.api.routes import (
     schedule_cud_service,
     schedule_query_service,
     routes_query_service,
+    reporte,
+    planificador,
 )
 from backend.app.api.routes.card_service import (card_cud_service,card_query_service)
 from backend.app.api.routes.maintainance_service import (maintance_cud_service,maintance_query_service)

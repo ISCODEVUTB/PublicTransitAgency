@@ -10,8 +10,8 @@ from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 
 # Configuración de logging
-#logger = logging.getLogger(__name__)
-#logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 app = APIRouter(prefix="/user", tags=["user"])
 controller = UniversalController()
@@ -76,10 +76,10 @@ async def create_user(
             }
             
     except ValueError as e:
-        #logger.warning(f"[POST /create] Error de validación: {str(e)}")
+        logger.warning(f"[POST /create] Error de validación: {str(e)}")
         raise HTTPException(400, detail=str(e))
     except Exception as e:
-        #logger.error(f"[POST /create] Error interno: {str(e)}")
+        logger.error(f"[POST /create] Error interno: {str(e)}")
         raise HTTPException(500, detail=f"Internal server error: {str(e)}")
 
 
@@ -104,7 +104,7 @@ async def update_user(
         updated_user = UserOut(ID=ID, Identificacion=Identificacion, Nombre=Nombre, Apellido=Apellido,
                        Correo=Correo, Contrasena=Contrasena, IDRolUsuario=IDRolUsuario, IDTurno=IDTurno, IDTarjeta =IDTarjeta)
         controller.update(updated_user)
-        #logger.info(f"[POST /update] Usuario actualizada exitosamente: {updated_user}")
+        Logger.info(f"[POST /update] Usuario actualizada exitosamente: {updated_user}")
         return {
             "operation": "update",
             "success": True,
@@ -115,7 +115,7 @@ async def update_user(
             "message": f"User {ID} updated successfully."
         }
     except ValueError as e:
-        #logger.warning(f"[POST /update] Error de validación: {str(e)}")
+        logger.warning(f"[POST /update] Error de validación: {str(e)}")
         raise HTTPException(400, detail=str(e))
 
 
@@ -141,5 +141,5 @@ async def delete_user(
     except HTTPException as e:
         raise e
     except Exception as e:
-        #logger.error(f"[POST /delete] Error interno: {str(e)}")
+        logger.error(f"[POST /delete] Error interno: {str(e)}")
         raise HTTPException(500, detail=f"Internal server error: {str(e)}")
