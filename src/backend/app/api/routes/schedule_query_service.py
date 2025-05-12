@@ -11,10 +11,13 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/", response_class=HTMLResponse)
 def listar_horarios(request: Request):
     """
-    Lista todos los horarios.
+    Lista todos los horarios y los renderiza en una plantilla HTML.
     """
-    horarios = controller.read_all(Schedule)
-    return templates.TemplateResponse("ListarHorarios.html", {"request": request, "horarios": horarios})
+    try:
+        horarios = controller.read_all(Schedule)
+        return templates.TemplateResponse("ListarHorarios.html", {"request": request, "horarios": horarios})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al listar los horarios: {str(e)}")
 
 @app.get("/{id}", response_class=HTMLResponse)
 def obtener_detalle_horario(id: int, request: Request):

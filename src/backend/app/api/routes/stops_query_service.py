@@ -9,14 +9,9 @@ controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/", response_class=HTMLResponse)
-<<<<<<< HEAD
-def listar_paradas(request: Request):
-=======
 def listar_paradas(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "planificador", "operador"])
 ):
->>>>>>> a8980fb (Corrections on test)
     """
     Lista todas las paradas.
     """
@@ -24,15 +19,10 @@ def listar_paradas(
     return templates.TemplateResponse("ListarParadas.html", {"request": request, "paradas": paradas})
 
 @app.get("/{id}", response_class=HTMLResponse)
-<<<<<<< HEAD
-def detalle_parada(id: int, request: Request):
-=======
 def obtener_detalle_parada(
     id: int,
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "planificador", "operador"])
 ):
->>>>>>> a8980fb (Corrections on test)
     """
     Obtiene el detalle de una parada por su ID.
     """
