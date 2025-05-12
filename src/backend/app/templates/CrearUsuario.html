@@ -33,29 +33,27 @@
           <label for="Contrasena">Contraseña:</label>
           <input type="text" id="Contrasena" name="Contrasena" required>
         </div>
+        <!-- Tipo de Usuario -->
         <div class="detail">
           <label for="IDRolUsuario">Tipo de Usuario:</label>
           <select id="IDRolUsuario" name="IDRolUsuario">
-              <option value="1">Pasajero</option>
-              <option value="2">Conductor</option>
-              <option value="3">Supervisor</option>
-              <option value="4">Mantenimiento</option>
-              <option value="5">Administrador</option>
-            </select>
+            {% for rol in roles %}
+              <option value="{{ rol.id }}">{{ rol.nombre }}</option>
+            {% endfor %}
+          </select>
         </div>
+
         <div class="detail">
           <label for="IDTurno">Turno Laboral:</label>
           <select id="IDTurno" name="IDTurno">
-              <option value="1">Turno diurno</option>
-              <option value="2">Turno nocturno</option>
-              <option value="3">Turno vespertino</option>
-              <option value="4">Turno matutino</option>
-              <option value="5">Turno fijo</option>
-              <option value="6">Turno rotativo</option>
-              <option value="7">Turno mixto</option>
-              <option value="8">Turno de fin de semana</option>
-              <option value="9">Ninguno</option>
-            </select>
+            {% for turno in turnos %}
+              <option value="{{ turno.id }}">{{ turno.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="detail">
+          <label for="IDTarjeta">ID de Tarjeta:</label>
+          <input type="text" id="IDTarjeta" name="IDTarjeta" required>
         </div>
           <button type="submit">Crear Usuario</button>
       </form>

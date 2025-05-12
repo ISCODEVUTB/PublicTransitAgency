@@ -15,7 +15,6 @@
       <button class="menu-btn" onclick="location.href='/transports/create'">Actualizar Flota</button>
       <button class="menu-btn" onclick="location.href='/maintainance/crear'" >Agendar Mantenimiento</button>
       <button class="menu-btn" onclick="location.href='/routes/create'">Asignar Ruta Vehículo</button>
-      <button class="menu-btn" onclick="location.href='/administador/otros'">Otros</button>
       <div class="sublist-title">Gestión CRUD</div>
 
       <!-- CRUD: Rutas -->
@@ -67,7 +66,7 @@
         <button class="crud-toggle">▶ Supervisores</button>
         <div class="crud-options">
           <button class="crud-btn" onclick="location.href='/user/crear'">➕ Añadir Usuario</button>
-          <button class="crud-btn" onclick="location.href='/user/users'">📄 Leer Usuarios</button>
+          <button class="crud-btn" onclick="location.href='/user/consultar'">📄 Leer Usuarios</button>
           <button class="crud-btn" onclick="location.href='/user/actualizar'">🖊️ Actualizar Usuario</button>
           <button class="crud-btn" onclick="location.href='/user/eliminar'">🗑️ Eliminar Usuario</button>
         </div>
@@ -92,6 +91,16 @@
               <button class="crud-btn"onclick="location.href='/price/eliminar'">🗑️ Eliminar Tarifa</button>
             </div>
           </div>
+                    <!-- CRUD: TipoTransporte, TipoMovimientos, TipoUsuarios-->
+          <div class="crud-section">
+            <button class="crud-toggle">▶ Otros</button>
+            <div class="crud-options">
+              <button class="crud-btn"onclick="location.href='/roluser/consultar'">📄 Extraer Tipo de Usuario </button>
+              <button class="crud-btn"onclick="location.href='/typemovement/consultar'">📄 Extraer Tipo de Movimiento</button>
+              <button class="crud-btn"onclick="location.href='/typetransport/consultar'">📄 Extraer Servicios de Transporte</button>
+            </div>
+          </div>
+          
     </aside>
 
     <!-- Contenido principal -->
@@ -118,45 +127,6 @@
           <p>{{total_supervisors}}</p>
         </div>
       </div>
-
-      <div class="main-content">     
-      <div class="dashboard">
-                 <!-- CRUD: Tipo Usuario -->
-          <div class="dashboard-card">
-
-          <button class="crud-toggle" style="color: black; text-align: center;">▶ Tipo de Usuarios</button>
-          <div class="crud-options">
-            <button class="crud-btn"onclick="location.href='/roluser/crear'">➕ Añadir Tipo de Usuario</button>
-            <button class="crud-btn"onclick="location.href='/roluser/consultar'">📄 Extraer Tipo de Usuarios</button>
-            <button class="crud-btn"onclick="location.href='/roluser/actualizar'">🖊️ Actualizar Tipo de Usuario</button>
-            <button class="crud-btn"onclick="location.href='/roluser/eliminar'">🗑️ Eliminar Tipo de Usuario</button>
-          </div>
-        </div>
-
-        <!-- CRUD: Tipo Movimientos -->
-        <div class="dashboard-card">
-          <button class="crud-toggle" style="color: black; text-align: center;">▶ Tipo de Movimientos</button>
-          <div class="crud-options">
-            <button class="crud-btn" onclick="location.href='/typemovement/crear'">➕ Añadir Tipo de Movimiento</button>
-            <button class="crud-btn" onclick="location.href='/typemovement/consultar'">📄 Extraer Tipo de Movimiento</button>
-            <button class="crud-btn" onclick="location.href='/typemovement/actualizar'">🖊️ Actualizar Tipo de Movimiento</button>
-            <button class="crud-btn" onclick="location.href='/typemovement/eliminar'">🗑️ Eliminar Tipo de Movimiento</button>
-          </div>
-        </div>
-
-        <!-- CRUD: Tipo Transporte -->
-        <div class="dashboard-card">
-          <button class="crud-toggle" style="color: black; text-align: center;">▶ Servicios de Transporte</button>
-          <div class="crud-options">
-            <button class="crud-btn" onclick="location.href='/typetransport/crear'">➕ Añadir Servicio de Transporte</button>
-            <button class="crud-btn" onclick="location.href='/typetransport/consultar'">📄 Extraer Servicio de Transporte</button>
-            <button class="crud-btn" onclick="location.href='/typetransport/actualizar'">🖊️ Actualizar Servicio de Transporte</button>
-            <button class="crud-btn" onclick="location.href='/typetransport/eliminar'">🗑️ Eliminar Servicio de Transporte</button>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
     </main>
   </div>
 

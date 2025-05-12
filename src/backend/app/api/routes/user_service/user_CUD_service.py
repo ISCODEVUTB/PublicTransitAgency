@@ -6,6 +6,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 from backend.app.models.user import UserCreate, UserOut
+from backend.app.models.rol_user import RolUserOut
+from backend.app.models.shift import Shift
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 
@@ -20,9 +22,11 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/crear", response_class=HTMLResponse)
 def index_create(
-    request: Request
+    request: Request,
+    roles = controller.read_all(RolUserOut),
+    turnos = controller.read_all(Shift)
 ):
-    return templates.TemplateResponse("CrearUsuario.html", {"request": request})
+    return templates.TemplateResponse("CrearUsuario.html", {"request": request, "roles":roles, "turnos":turnos})
 
 
 @app.get("/actualizar", response_class=HTMLResponse)
@@ -104,7 +108,7 @@ async def update_user(
         updated_user = UserOut(ID=ID, Identificacion=Identificacion, Nombre=Nombre, Apellido=Apellido,
                        Correo=Correo, Contrasena=Contrasena, IDRolUsuario=IDRolUsuario, IDTurno=IDTurno, IDTarjeta =IDTarjeta)
         controller.update(updated_user)
-        Logger.info(f"[POST /update] Usuario actualizada exitosamente: {updated_user}")
+        logger.info(f"[POST /update] Usuario actualizada exitosamente: {updated_user}")
         return {
             "operation": "update",
             "success": True,

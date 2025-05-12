@@ -51,12 +51,21 @@ class UniversalController:
         self._ensure_table_exists(obj)
         table = self._get_table_name(obj)
         self.cursor.execute(f"SELECT * FROM {table}")
-        return [dict(zip([column[0] for column in self.cursor.description], row)) for row in self.cursor.fetchall()]
+        return [dict(zip([column[0] for  column in self.cursor.description], row)) for row in self.cursor.fetchall()]
 
     def get_by_id(self, cls: Any, id_value: Any) -> Any | None:
         table = cls.__entity_name__
         sql = f"SELECT * FROM {table} WHERE id = ?"
         self.cursor.execute(sql, (id_value,))
+        row = self.cursor.fetchone()
+
+        return cls.from_dict(dict(zip([column[0] for column in self.cursor.description], row))) if row else None
+
+    def get_by_column(self, cls: Any, column_name: str, value: Any) -> Any | None:
+        table = cls.__entity_name__
+        sql = f"SELECT * FROM {table} WHERE {column_name} = ?"
+
+        self.cursor.execute(sql, (value,))
         row = self.cursor.fetchone()
 
         return cls.from_dict(dict(zip([column[0] for column in self.cursor.description], row))) if row else None
