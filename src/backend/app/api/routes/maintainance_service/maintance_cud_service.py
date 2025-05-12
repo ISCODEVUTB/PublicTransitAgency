@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from datetime import datetime
 from backend.app.models.maintainance import MaintenanceCreate, MaintenanceOut
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 
 # Initialize the controller and templates

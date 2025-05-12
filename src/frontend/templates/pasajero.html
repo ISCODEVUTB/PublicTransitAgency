@@ -23,16 +23,16 @@
             <section class="info-box">
                 <h2>Información general del pasajero</h2>
                 <div class="user-info">
-                    <p><strong>Nombre:</strong> {{ user.username or 'No disponible' }}</p>
-                    <p><strong>ID:</strong> {{ id or 'No disponible' }}</p>
-                    <p><strong>Correo:</strong> {{ user.email or 'No disponible' }}</p>
-                    <p><strong>Teléfono:</strong> {{ user.tel or 'No disponible' }}</p>
+                    <p><strong>Nombre:</strong> {{ user.Nombre or 'No disponible' }}</p>
+                    <p><strong>ID:</strong> {{ user.ID or 'No disponible' }}</p>
+                    <p><strong>Correo:</strong> {{ user.Correo or 'No disponible' }}</p>
+                    <p><strong>Identificacion:</strong> {{ user.Identificacion or 'No disponible' }}</p>
                     <p><strong>Tipo de tarjeta:</strong> {{ type_card or 'No disponible' }}</p>
                     <p><strong>Saldo disponible:</strong> ${{ user.saldo or '0.00' }}</p>
-                    <p><strong>Último viaje:</strong> {{ultimo_uso_tarjeta}}</p>
+                    <p><strong>Último viaje:</strong> {{ultimo_uso_tarjeta or 'No Registrado'}}</p>
                 </div>
             </section>
-        </main>
+        </main> 
     </div>
 </body>
 </html>

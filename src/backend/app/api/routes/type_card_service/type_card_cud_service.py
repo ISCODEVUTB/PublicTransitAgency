@@ -3,7 +3,7 @@ from fastapi import APIRouter, Form, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from backend.app.models.type_card import TypeCardOut, TypeCardCreate
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 from fastapi import Security
 

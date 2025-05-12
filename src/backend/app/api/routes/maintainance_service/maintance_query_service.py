@@ -1,6 +1,6 @@
 import logging
 from fastapi import APIRouter, HTTPException, Security
-from backend.app.logic.universal_controller_sql import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 from backend.app.models.maintainance import MaintenanceOut
 
