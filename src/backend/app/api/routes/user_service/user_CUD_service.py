@@ -135,13 +135,10 @@ async def delete_user(
             raise HTTPException(404, detail="User not found")
 
         logger.info(f"[POST /delete] Eliminando usuario con id={ID}")
-        controller.delete(existing) 
-        logger.info(f"[POST /delete] Usuario eliminada exitosamente: id={ID}")
-        return {
-            "operation": "delete",
-            "success": True,
-            "message": f"User {ID} deleted successfully."
-        }
+        controller.delete(existing)
+        return templates.TemplateResponse("DeleteConfirmation.html", {
+            "request": None, "ID": ID, "message": f"User {ID} deleted successfully."
+        })
     except HTTPException as e:
         raise e
     except Exception as e:

@@ -34,12 +34,26 @@ def consultar(
 
 @app.get("/users")
 async def get_users(
+    request:Request
 ):
     """
     Retrieve and return all user records from the database.
     """
     usuarios = controller.read_all(UserOut)
-    return usuarios
+    if usuarios:
+        # Si hay varias asistencias, iterar sobre ellas
+        context = {
+            "request": request,
+            "usuarios": usuarios,  # Lista de asistencias
+        }
+    else:
+        logger.warning(f"[GET /users] No se encontraron usuarios registrados")
+        context = {
+            "request": request,
+            "usuarios": []  # Si no se encontraron usuarios
+        }
+
+    return templates.TemplateResponse("usuarios.html", context)
 
 
 @app.get("/usuario", response_class=HTMLResponse)

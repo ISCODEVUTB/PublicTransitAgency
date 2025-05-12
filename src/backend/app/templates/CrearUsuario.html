@@ -7,45 +7,45 @@
 </head>
 <body>
     <h2 style="text-align: center;">Crear Usuario</h2>
-    <div class="container">
-      <form action="/user/create" method="post">
+    <form styles=""action="/user/create" method="post">
+    <div class="container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; height: 500px;">
         <div class="detail">
           <label for="ID">ID:</label>
-          <input type="number" id="ID" name="ID" required>
+          <input style="border-color: black;" type="number" id="ID" name="ID" required>
         </div>
         <div class="detail">
           <label for="Identificacion">Identificacion:</label>
-          <input type="number" id="Identificacion" name="Identificacion" required>
+          <input style="border-color: black;" type="number" id="Identificacion" name="Identificacion" required>
         </div>
         <div class="detail">
           <label for="Nombre">Nombre:</label>
-          <input type="text" id="Nombre" name="Nombre" required>
+          <input style="border-color: black;" type="text" id="Nombre" name="Nombre" required>
         </div>
         <div class="detail">
           <label for="Apellido">Apellido:</label>
-          <input type="text" id="Apellido" name="Apellido" required>
+          <input style="border-color: black;" type="text" id="Apellido" name="Apellido" required>
         </div>
         <div class="detail">
           <label for="Correo">Correo:</label>
-          <input type="text" id="Correo" name="Correo" required>
+          <input style="border-color: black;" type="text" id="Correo" name="Correo" required>
         </div>
         <div class="detail">
           <label for="Contrasena">Contraseña:</label>
-          <input type="text" id="Contrasena" name="Contrasena" required>
+          <input style="border-color: black;" type="text" id="Contrasena" name="Contrasena" required>
         </div>
         <!-- Tipo de Usuario -->
         <div class="detail">
           <label for="IDRolUsuario">Tipo de Usuario:</label>
-          <select id="IDRolUsuario" name="IDRolUsuario">
+          <select style="border-color: black;"  id="IDRolUsuario" name="IDRolUsuario">
             {% for rol in roles %}
               <option value="{{ rol.id }}">{{ rol.nombre }}</option>
             {% endfor %}
           </select>
         </div>
-
+        <!-- Tipo de Turno -->
         <div class="detail">
           <label for="IDTurno">Turno Laboral:</label>
-          <select id="IDTurno" name="IDTurno">
+          <select style="border-color: black;" id="IDTurno" name="IDTurno">
             {% for turno in turnos %}
               <option value="{{ turno.id }}">{{ turno.nombre }}</option>
             {% endfor %}
@@ -53,10 +53,13 @@
         </div>
         <div class="detail">
           <label for="IDTarjeta">ID de Tarjeta:</label>
-          <input type="text" id="IDTarjeta" name="IDTarjeta" required>
-        </div>
-          <button type="submit">Crear Usuario</button>
+          <input style="border-color: black;" type="text" id="IDTarjeta" name="IDTarjeta" required>
+        </div> 
+       </div>
+      <button style="padding: 5px; margin-left: 40px; border-color: black;" onclick = "location.href='/login/user/administrador'">Volver a la Pagina Principal</button>
+      <button style="padding: 5px; margin-left: 170px; border-color: black;" type="submit">Crear Usuario</button>
       </form>
-  </div>
+      
+
 </body>
 </html>
