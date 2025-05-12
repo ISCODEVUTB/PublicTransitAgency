@@ -8,10 +8,7 @@ from backend.app.core.conf import headers
 client = TestClient(app)
 controller = UniversalController()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d4828dc (incidence and transport fix)
+
 @pytest.fixture
 def setup_and_teardown():
     """
@@ -22,10 +19,6 @@ def setup_and_teardown():
     yield unidad
     controller.delete(unidad)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d4828dc (incidence and transport fix)
 def test_crear_unidad_transporte():
     """
     Prueba para crear una unidad de transporte.
@@ -56,16 +49,4 @@ def test_eliminar_unidad_transporte(setup_and_teardown):
     response = client.post("/transport_units/delete", data={"ID": unidad.ID}, headers=headers)
     assert response.status_code == 200
     assert response.json()["message"] == "Unidad de transporte eliminada exitosamente."
-<<<<<<< HEAD
-=======
-# def test_eliminar_unidad_transporte(setup_and_teardown):
-#     """
-#     Prueba para eliminar una unidad de transporte existente.
-#     """
-#     unidad = setup_and_teardown
-#     response = client.post("/transport_units/delete", data={"ID": unidad.ID}, headers=headers)
-#     assert response.status_code == 200
-#     assert response.json()["message"] == "Unidad de transporte eliminada exitosamente."
->>>>>>> a8980fb (Corrections on test)
-=======
->>>>>>> d4828dc (incidence and transport fix)
+
