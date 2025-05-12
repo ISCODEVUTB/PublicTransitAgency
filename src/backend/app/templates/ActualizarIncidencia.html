@@ -24,146 +24,44 @@
             },
         }
     </script>
+    <style>
+        body {
+            background-color: #ffcccc; /* Fondo rojo claro */
+        }
+    </style>
 </head>
 <body class="bg-gray-100 font-inter antialiased">
     <div class="container mx-auto p-8">
         <h1 class="text-3xl font-semibold text-primary text-center mb-6">Actualizar Incidencia</h1>
-        <form id="update-incidence-form" class="bg-white shadow-md rounded-lg p-6 space-y-4">
+        <form action="/incidences/update" method="post" class="bg-white shadow-md rounded-lg p-6 space-y-4">
             <div>
-                <label for="IncidenciaID" class="block text-secondary text-sm font-bold mb-2">ID de Incidencia:</label>
-                <input type="number" id="IncidenciaID" name="IncidenciaID" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline" readonly>
-                <div id="incidenciaid-error" class="text-red-500 text-xs italic hidden"></div>
+                <label for="ID" class="block text-secondary text-sm font-bold mb-2">ID de la Incidencia:</label>
+                <input type="number" id="ID" name="ID" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div>
+                <label for="IDTicket" class="block text-secondary text-sm font-bold mb-2">ID del Ticket:</label>
+                <input type="number" id="IDTicket" name="IDTicket" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
             </div>
             <div>
                 <label for="Descripcion" class="block text-secondary text-sm font-bold mb-2">Descripción:</label>
                 <textarea id="Descripcion" name="Descripcion" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline"></textarea>
-                <div id="descripcion-error" class="text-red-500 text-xs italic hidden"></div>
             </div>
             <div>
-                <label for="Tipo" class="block text-secondary text-sm font-bold mb-2">Tipo (Opcional):</label>
-                <input type="text" id="Tipo" name="Tipo" class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
+                <label for="Tipo" class="block text-secondary text-sm font-bold mb-2">Tipo:</label>
+                <select id="Tipo" name="Tipo" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="Error">Error</option>
+                    <option value="Advertencia">Advertencia</option>
+                    <option value="Información">Información</option>
+                </select>
             </div>
             <div>
-                <label for="TicketID" class="block text-secondary text-sm font-bold mb-2">Ticket ID:</label>
-                <input type="number" id="TicketID" name="TicketID" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
-                <div id="ticketid-error" class="text-red-500 text-xs italic hidden"></div>
+                <label for="IDUnidad" class="block text-secondary text-sm font-bold mb-2">ID de la Unidad:</label>
+                <input type="text" id="IDUnidad" name="IDUnidad" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
             </div>
             <button type="submit" class="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Actualizar Incidencia</button>
         </form>
-        <div id="message-container" class="mt-6 text-center font-semibold"></div>
+        <br>
+        <a href="/incidences/" class="text-primary hover:underline">Volver a la lista de incidencias</a>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const updateForm = document.getElementById('update-incidence-form');
-            const messageContainer = document.getElementById('message-container');
-            const incidenciaIDInput = document.getElementById('IncidenciaID');
-            const descripcionInput = document.getElementById('Descripcion');
-            const ticketIDInput = document.getElementById('TicketID');
-            const incidenciaIDError = document.getElementById('incidenciaid-error');
-            const descripcionError = document.getElementById('descripcion-error');
-            const ticketIDError = document.getElementById('ticketid-error');
-
-            function displayError(element, message) {
-                element.textContent = message;
-                element.classList.remove('hidden');
-            }
-
-            function clearError(element) {
-                element.textContent = '';
-                element.classList.add('hidden');
-            }
-
-            updateForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                let hasErrors = false;
-
-                clearError(incidenciaIDError);
-                clearError(descripcionError);
-                clearError(ticketIDError);
-
-                if (incidenciaIDInput.value.trim() === '') {
-                    displayError(incidenciaIDError, 'El ID de Incidencia es obligatorio');
-                    hasErrors = true;
-                } else if (isNaN(incidenciaIDInput.value)) {
-                    displayError(incidenciaIDError, 'El ID de Incidencia debe ser un número');
-                    hasErrors = true;
-                }
-
-                if (descripcionInput.value.trim() === '') {
-                    displayError(descripcionError, 'La descripción es obligatoria');
-                    hasErrors = true;
-                }
-
-                if (ticketIDInput.value.trim() === '') {
-                    displayError(ticketIDError, 'El Ticket ID es obligatorio');
-                    hasErrors = true;
-                } else if (isNaN(ticketIDInput.value)) {
-                    displayError(ticketIDError, 'El Ticket ID debe ser un número');
-                    hasErrors = true;
-                }
-
-                if (hasErrors) {
-                    return;
-                }
-
-                const formData = new FormData(this);
-                messageContainer.textContent = 'Enviando...';
-                messageContainer.classList.remove('text-red-500', 'text-green-500');
-                messageContainer.classList.add('text-gray-600');
-
-                fetch('/incidence/update', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(err => { throw new Error(err.detail || 'Error al actualizar la incidencia'); });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    messageContainer.textContent = data.message;
-                    messageContainer.classList.remove('text-gray-600', 'text-red-500');
-                    messageContainer.classList.add('text-green-500');
-                    updateForm.reset();
-                })
-                .catch(error => {
-                    messageContainer.textContent = error.message;
-                    messageContainer.classList.remove('text-gray-600', 'text-green-500');
-                    messageContainer.classList.add('text-red-500');
-                });
-            });
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const incidenceId = urlParams.get('id');
-
-            if (incidenceId) {
-                fetch(`/incidence/incidencia/${incidenceId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(err => { throw new Error(err.detail || 'Error al obtener la incidencia'); });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data) {
-                        incidenciaIDInput.value = data.IncidenciaID;
-                        descripcionInput.value = data.Descripcion;
-                        document.getElementById('Tipo').value = data.Tipo || '';
-                        ticketIDInput.value = data.TicketID;
-                    } else {
-                        alert('No se encontró ninguna incidencia con ese ID.');
-                        window.location.href = '/incidence/consultar';
-                    }
-                })
-                .catch(error => {
-                    alert(error.message);
-                });
-            } else {
-                alert('Por favor, proporcione un ID de incidencia para actualizar.');
-                window.location.href = '/incidence/consultar';
-            }
-        });
-    </script>
 </body>
 </html>

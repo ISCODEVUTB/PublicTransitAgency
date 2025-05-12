@@ -1,24 +1,30 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.incidence import Incidence
 
+# Configuración del router y las plantillas
 app = APIRouter(prefix="/incidences", tags=["incidences"])
 controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/", response_class=HTMLResponse)
-def listar_incidencias(
-    request: Request,
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "supervisor"])
-):
+def listar_incidencias(request: Request):
     """
-    Lista todas las incidencias.
+    Lista todas las incidencias y las renderiza en una plantilla HTML.
     """
-    incidencias = controller.read_all(Incidence)
-    return templates.TemplateResponse("ListarIncidencias.html", {"request": request, "incidencias": incidencias})
-
+    try:
+        # Obtener todas las incidencias desde la base de datos
+        incidencias = controller.read_all(Incidence)
+        return templates.TemplateResponse("ListarIncidencia.html", {"request": request, "incidencias": incidencias})
+    except Exception as e:
+        # Manejar errores y devolver un mensaje en la plantilla
+        return templates.TemplateResponse(
+            "ListarIncidencia.html",
+            {"request": request, "error": f"Error al listar las incidencias: {str(e)}"}
+        )
+    
 @app.get("/{ID}", response_class=HTMLResponse)
 def detalle_incidencia(
     ID: int,
