@@ -41,9 +41,16 @@ def test_detalle_ruta_existente(setup_and_teardown):
     response = client.get(f"/routes/{route.ID}")
     assert response.status_code == 200
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d4828dc (incidence and transport fix)
     assert "Ruta de prueba" in response.text
+
+
+<<<<<<< HEAD
+>>>>>>> a8980fb (Corrections on test)
 =======
 
 
->>>>>>> a8980fb (Corrections on test)
+>>>>>>> d4828dc (incidence and transport fix)
 
