@@ -6,7 +6,7 @@ class BehaviorCreate(BaseModel):
     cantidadrutas: int
     horastrabajadas: int
     observaciones:str
-    fecha:datetime.date
+    fecha:str
     iduser:int
 
     def to_dict(self):
@@ -22,7 +22,7 @@ class BehaviorCreate(BaseModel):
             "fecha": "DATE",
             "iduser":"INTEGER"
         }
-class PQROut(BehaviorCreate):
+class BehaviorOut(BehaviorCreate):
     __entity_name__ = "rendimiento"  # <- También aquí, porque se usa para lectura
 
     @classmethod

@@ -5,7 +5,7 @@ from fastapi import (
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from backend.app.models.pqr import PQRCreate, PQROut
-from backend.app.logic.universal_controller_postgres import UniversalController
+from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 
 # Configuración de logging

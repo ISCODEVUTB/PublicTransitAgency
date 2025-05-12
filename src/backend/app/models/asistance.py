@@ -1,12 +1,12 @@
 from pydantic import BaseModel
 import datetime
 class AsistanceCreate(BaseModel):
-    __entity_name__ = "asistencia"  # <- Aquí se define el nombre general de la entidad
+    __entity_name__ = "Asistencia"  # <- Aquí se define el nombre general de la entidad
     id: int
     iduser: int
-    horainicio: datetime.time
-    horafinal:datetime.time
-    fecha: datetime.date
+    horainicio: str
+    horafinal:str
+    fecha: str
 
     def to_dict(self):
         return self.model_dump()
@@ -20,8 +20,8 @@ class AsistanceCreate(BaseModel):
             "horafinal": "TIME",
             "fecha": "DATE"
         }
-class PQROut(AsistanceCreate):
-    __entity_name__ = "asistencia"  # <- También aquí, porque se usa para lectura
+class AsistanceOut(AsistanceCreate):
+    __entity_name__ = "Asistencia"  # <- También aquí, porque se usa para lectura
 
     @classmethod
     def from_dict(cls, data: dict):
