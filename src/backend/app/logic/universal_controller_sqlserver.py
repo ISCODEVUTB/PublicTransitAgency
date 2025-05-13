@@ -275,16 +275,10 @@ class UniversalController:
     def total_usuarios(self) -> int:
         return self.total_registros('usuario')
 
-    def total_buses_activos(self) -> int:
-        return self.total_registros('unidadtransporte', "WHERE status = 'activo'")
-
-    def total_buses_inactivos(self) -> int:
-        return self.total_registros('unidadtransporte', "WHERE status = 'inactivo'")
-
     def promedio_horas_trabajadas(self) -> float:
         query = "SELECT AVG(horastrabajadas) FROM rendimiento"
         result = self._execute_query(query)
-        return result[0]['AVG(horastrabajadas)'] if result else 0.0
+        return result[0] if result else 0.0
 
     def last_card_used(self, id_card: int) -> str:
         query = """

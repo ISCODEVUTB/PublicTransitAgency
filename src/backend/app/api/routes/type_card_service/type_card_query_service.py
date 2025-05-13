@@ -5,7 +5,7 @@ from backend.app.models.type_card import TypeCardOut
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 
-# Initialize the controller for type card operations
+# Initialize the controller for Tipo card operations
 controller = UniversalController()
 
 # Create the router with prefix and tags
@@ -34,17 +34,17 @@ def read_all():
         logger.error(f"[GET /typecards/] Error occurred while fetching TypeCard records: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal server error")
     
-@app.get("/{id}")
+@app.get("/{ID}")
 
 def get_by_id(
-    id: int, 
+    ID: int, 
     
 ):
     """
     Fetches a TypeCard record by its ID.
 
     Args:
-        id (int): The ID of the TypeCard to retrieve.
+        ID (int): The ID of the TypeCard to retrieve.
         current_user (dict): The current user, validated via security.
     
     Raises:
@@ -54,16 +54,16 @@ def get_by_id(
         TypeCard record details as a dictionary.
     """
     try:
-        result = controller.get_by_id(TypeCardOut, id)
+        result = controller.get_by_id(TypeCardOut, ID)
         if not result:
-            logger.warning(f"[GET /{id}] TypeCard with ID {id} not found.")
+            logger.warning(f"[GET /{ID}] TypeCard with ID {ID} not found.")
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="TypeCard not found"
             )
-        logger.info(f"[GET /{id}] Successfully fetched TypeCard with ID {id}.")
+        logger.info(f"[GET /{ID}] Successfully fetched TypeCard with ID {ID}.")
         return result.to_dict()
     except HTTPException as e:
         raise e  # Deja pasar los HTTPException
     except Exception as e:
-        logger.error(f"[GET /{id}] Error occurred while fetching TypeCard with ID {id}: {str(e)}")
+        logger.error(f"[GET /{ID}] Error occurred while fetching TypeCard with ID {ID}: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal server error")
