@@ -14,23 +14,9 @@ def listar_incidencias(request: Request):
     """
     Lista todas las incidencias y las renderiza en una plantilla HTML.
     """
-<<<<<<< HEAD
-    try:
-        # Obtener todas las incidencias desde la base de datos
-        incidencias = controller.read_all(Incidence)
-        return templates.TemplateResponse("ListarIncidencia.html", {"request": request, "incidencias": incidencias})
-    except Exception as e:
-        # Manejar errores y devolver un mensaje en la plantilla
-        return templates.TemplateResponse(
-            "ListarIncidencia.html",
-            {"request": request, "error": f"Error al listar las incidencias: {str(e)}"}
-        )
-    
-=======
     incidencias = controller.read_all(Incidence)
     return templates.TemplateResponse("ListarIncidencia.html", {"request": request, "incidencias": incidencias})
 
->>>>>>> d4828dc (incidence and transport fix)
 @app.get("/{ID}", response_class=HTMLResponse)
 def detalle_incidencia(
     ID: int,
