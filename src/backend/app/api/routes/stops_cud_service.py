@@ -56,7 +56,7 @@ def actualizar_parada(
     if not existing_parada:
         raise HTTPException(status_code=404, detail="Parada no encontrada")
 
-    updated_parada = Parada(ID=ID, Nombre=Nombre, Ubicacion=Ubicacion)
+    updated_parada = Parada(ID=id, Nombre=Nombre, Ubicacion=Ubicacion)
     try:
         controller.update(updated_parada)
         return {"message": "Parada actualizada exitosamente.", "data": updated_parada.to_dict()}
@@ -74,7 +74,7 @@ def eliminar_parada_form(
 
 @app.post("/delete")
 def eliminar_parada(
-    ID: int = Form(...),
+    id: int = Form(...),
 ):
     """
     Endpoint para eliminar una parada por su ID.

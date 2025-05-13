@@ -7,16 +7,16 @@
 {% block content %}
 <form action="/schedules/update" method="post">
     <div>
-        <label for="ID" class="block text-sm font-medium text-gray-700">ID del Horario:</label>
-        <input id="ID" name="ID" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        <label for="id" class="block text-sm font-medium text-gray-700">id del Horario:</label>
+        <input id="id" name="id" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
     </div>
     <div class="mt-4">
-        <label for="HoraInicio" class="block text-sm font-medium text-gray-700">Hora de Inicio:</label>
-        <input id="HoraInicio" name="HoraInicio" type="time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        <label for="Llegada" class="block text-sm font-medium text-gray-700">Hora de Inicio:</label>
+        <input id="Llegada" name="Llegada" type="time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
     </div>
     <div class="mt-4">
-        <label for="HoraFin" class="block text-sm font-medium text-gray-700">Hora de Fin:</label>
-        <input id="HoraFin" name="HoraFin" type="time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        <label for="Salida" class="block text-sm font-medium text-gray-700">Hora de Fin:</label>
+        <input id="Salida" name="Salida" type="time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
     </div>
     <div class="mt-6">
         <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">

@@ -5,18 +5,14 @@
 {% block back_url %}/shifts{% endblock %}
 
 {% block content %}
-<form action="/turno/create" method="post" class="space-y-4">
+<form action="/shifts/create" method="post" class="space-y-4">
     <div>
-        <label for="ID" class="block text-sm font-medium text-gray-700">ID del Turno:</label>
-        <input type="text" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+        <label for="id" class="block text-sm font-medium text-gray-700">ID del Turno:</label>
+        <input type="text" id="id" name="id" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
     <div>
-        <label for="Nombre" class="block text-sm font-medium text-gray-700">Nombre del Turno:</label>
-        <input type="text" id="Nombre" name="Nombre" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
-    </div>
-    <div>
-        <label for="Horario" class="block text-sm font-medium text-gray-700">Horario:</label>
-        <input type="text" id="Horario" name="Horario" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+        <label for="TipoTurno" class="block text-sm font-medium text-gray-700">Nombre del Turno:</label>
+        <input type="text" id="TipoTurno" name="TipoTurno" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
     <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
         Crear Turno

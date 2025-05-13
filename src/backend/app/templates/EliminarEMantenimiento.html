@@ -2,10 +2,10 @@
 
 {% block title %}Eliminar Estado de Mantenimiento{% endblock %}
 {% block header %}Eliminar Estado de Mantenimiento{% endblock %}
-{% block back_url %}/maintenance{% endblock %}
+{% block back_url %}/maintainance_status{% endblock %}
 
 {% block content %}
-<form action="/maintenance/delete" method="post" class="space-y-4">
+<form action="/maintainance_status/delete" method="post" class="space-y-4">
     <div>
         <label for="id" class="block text-sm font-medium text-gray-700">ID del Estado a Eliminar:</label>
         <input type="number" id="id" name="id" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
@@ -15,7 +15,7 @@
     </button>
 </form>
 <div class="mt-6">
-    <a href="/maintenance" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+    <a href="/maintainance_status" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
         Volver a Listar Estados de Mantenimiento
     </a>
 </div>

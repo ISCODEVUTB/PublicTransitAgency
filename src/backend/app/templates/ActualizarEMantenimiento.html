@@ -2,17 +2,17 @@
 
 {% block title %}Actualizar Estado de Mantenimiento{% endblock %}
 {% block header %}Actualizar Estado de Mantenimiento{% endblock %}
-{% block back_url %}/maintenance{% endblock %}
+{% block back_url %}/maintainance_status{% endblock %}
 
 {% block content %}
-<form action="/maintenance/update" method="post">
+<form action="/maintainance_status/update" method="post">
     <div>
-        <label for="ID" class="block text-sm font-medium text-gray-700">ID del Mantenimiento:</label>
-        <input id="ID" name="ID" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        <label for="id" class="block text-sm font-medium text-gray-700">id del Mantenimiento:</label>
+        <input id="id" name="id" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
     </div>
     <div class="mt-4">
-        <label for="Estado" class="block text-sm font-medium text-gray-700">Estado:</label>
-        <input id="Estado" name="Estado" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        <label for="TipoEstado" class="block text-sm font-medium text-gray-700">Estado:</label>
+        <input id="TipoEstado" name="TipoEstado" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
     </div>
     <div class="mt-6">
         <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
@@ -21,7 +21,7 @@
     </div>
 </form>
 <div class="mt-6">
-    <a href="/maintenance" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+    <a href="/maintainance_status" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
         Volver a Listar Mantenimientos
     </a>
 </div>

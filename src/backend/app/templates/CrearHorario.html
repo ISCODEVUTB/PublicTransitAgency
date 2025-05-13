@@ -7,16 +7,16 @@
 {% block content %}
 <form action="/schedules/create" method="post" class="space-y-4">
     <div>
-        <label for="ID" class="block text-sm font-medium text-gray-700">ID del Horario:</label>
-        <input type="text" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+        <label for="id" class="block text-sm font-medium text-gray-700">id del Horario:</label>
+        <input type="text" id="id" name="id" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
     <div>
-        <label for="HoraInicio" class="block text-sm font-medium text-gray-700">Hora de Inicio:</label>
-        <input type="time" id="HoraInicio" name="HoraInicio" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+        <label for="Llegada" class="block text-sm font-medium text-gray-700">Hora de Inicio:</label>
+        <input type="time" id="Llegada" name="Llegada" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
     <div>
-        <label for="HoraFin" class="block text-sm font-medium text-gray-700">Hora de Fin:</label>
-        <input type="time" id="HoraFin" name="HoraFin" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+        <label for="Salida" class="block text-sm font-medium text-gray-700">Hora de Fin:</label>
+        <input type="time" id="Salida" name="Salida" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
     <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
         Crear Horario

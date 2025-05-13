@@ -2,10 +2,10 @@
 
 {% block title %}Eliminar Transporte{% endblock %}
 {% block header %}Eliminar Transporte{% endblock %}
-{% block back_url %}/transports{% endblock %}
+{% block back_url %}/trasnsport_units{% endblock %}
 
 {% block content %}
-<form action="/transports/delete" method="post" class="space-y-4">
+<form action="/transport_units/delete" method="post" class="space-y-4">
     <div>
         <label for="ID" class="block text-sm font-medium text-gray-700">ID del Transporte a Eliminar:</label>
         <input type="text" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
@@ -15,7 +15,7 @@
     </button>
 </form>
 <div class="mt-6">
-    <a href="/transports" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+    <a href="/transport_units" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
         Volver a Listar Transportes
     </a>
 </div>

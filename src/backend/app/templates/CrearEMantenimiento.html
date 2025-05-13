@@ -2,24 +2,24 @@
 
 {% block title %}Crear Nuevo Estado de Mantenimiento{% endblock %}
 {% block header %}Crear Nuevo Estado de Mantenimiento{% endblock %}
-{% block back_url %}/maintenance{% endblock %}
+{% block back_url %}/maintainance_status{% endblock %}
 
 {% block content %}
-<form action="/maintenance/create" method="post" class="space-y-4">
+<form action="/maintainance_status/create" method="post" class="space-y-4">
     <div>
         <label for="ID" class="block text-sm font-medium text-gray-700">ID del Estado:</label>
         <input type="text" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
     <div>
         <label for="Estado" class="block text-sm font-medium text-gray-700">Estado:</label>
-        <input type="text" id="Estado" name="Estado" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+        <input type="text" id="TipoEstado" name="TipoEstado" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
     <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
         Crear Estado de Mantenimiento
     </button>
 </form>
 <div class="mt-6">
-    <a href="/maintenance" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+    <a href="/maintainance_status" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
         Volver a Listar Estados de Mantenimiento
     </a>
 </div>

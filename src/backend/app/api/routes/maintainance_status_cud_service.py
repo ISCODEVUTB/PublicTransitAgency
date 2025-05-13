@@ -25,14 +25,15 @@ def eliminar_estado_form(request: Request):
 
 @app.post("/create")
 def crear_estado_mantenimiento(
-    Nombre: str = Form(...),
-    Descripcion: str = Form(...)
+    ID: str = Form(...),
+    TipoEstado: str = Form(...)
 ):
     """
     Crea un nuevo estado de mantenimiento.
     """
     try:
-        # Lógica para crear el estado de mantenimiento
+        nuevo_estado = MaintainanceStatus(ID=ID, TipoEstado=TipoEstado)
+        controller.add(nuevo_estado)  # Guarda en la base de datos
         return {"message": "Estado de mantenimiento creado exitosamente."}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
