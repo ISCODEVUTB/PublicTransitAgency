@@ -1,75 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualizar Estado de Mantenimiento</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        form {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="number"],
-        input[type="text"] {
-            width: calc(100% - 16px);
-            padding: 10px;
-            margin-top: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            margin-top: 30px;
-            padding: 12px 20px;
-            background: linear-gradient(to right, #007bff, #66a7ff);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        button:hover {
-            background: linear-gradient(to right, #0056b3, #4d86e0);
-        }
-    </style>
-</head>
-<body>
-    <form action="/maintainance_status/update" method="post">
-        <h1>Actualizar Estado de Mantenimiento</h1>
-        <label for="id">ID del estado a actualizar:</label>
-        <input type="number" id="id" name="id" required>
+{% extends "base.html" %}
 
-        <label for="TipoEstado">Nuevo Tipo de Estado:</label>
-        <input type="text" id="TipoEstado" name="TipoEstado" required>
+{% block title %}Actualizar Estado de Mantenimiento{% endblock %}
+{% block header %}Actualizar Estado de Mantenimiento{% endblock %}
+{% block back_url %}/maintenance{% endblock %}
 
-        <button type="submit">Actualizar</button>
-    </form>
-</body>
-</html>
+{% block content %}
+<form action="/maintenance/update" method="post">
+    <div>
+        <label for="ID" class="block text-sm font-medium text-gray-700">ID del Mantenimiento:</label>
+        <input id="ID" name="ID" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+    </div>
+    <div class="mt-4">
+        <label for="Estado" class="block text-sm font-medium text-gray-700">Estado:</label>
+        <input id="Estado" name="Estado" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+    </div>
+    <div class="mt-6">
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            Actualizar Estado
+        </button>
+    </div>
+</form>
+<div class="mt-6">
+    <a href="/maintenance" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+        Volver a Listar Mantenimientos
+    </a>
+</div>
+{% endblock %}

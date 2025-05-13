@@ -1,102 +1,38 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Nuevo Transporte</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#3b82f6', // Tailwind's blue-500
-                        'secondary': '#4b5563', // Tailwind's gray-600
-                        'background': '#f3f4f6', // Tailwind's gray-100
-                        'form-background': '#fff', // Tailwind's bg-white
-                        'border-color': '#d1d5db', // Tailwind's gray-300
-                        'text-bold': '#4b5563', // Tailwind's gray-600
-                        'link': '#3b82f6', // Tailwind's blue-500 for links
-                        'link-hover': '#2563eb', // Tailwind's blue-700 for link hover
-                    },
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-background font-inter min-h-screen flex flex-col items-center justify-start pt-10 pb-16 box-border relative">
-    <h1 class="text-3xl font-semibold text-secondary mt-10 mb-6 text-center animate-fade-in">
-        Crear Nuevo Transporte
-    </h1>
+{% extends "base.html" %}
 
-    <div class="flex justify-center mb-8 w-full">
-        <a href="/transports" class="text-link hover:text-link-hover font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">
-            Volver a la lista de transportes
-        </a>
+{% block title %}Crear Nuevo Transporte{% endblock %}
+{% block header %}Crear Nuevo Transporte{% endblock %}
+{% block back_url %}/transports{% endblock %}
+
+{% block content %}
+<form method="post" action="/transport_units/create" class="space-y-4">
+    <div>
+        <label for="ID" class="block text-sm font-medium text-gray-700">ID del Transporte:</label>
+        <input type="text" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
-
-    <div class="bg-form-background p-8 rounded-lg shadow-md w-90 max-w-xl animate-slide-in">
-        <form method="post" action="/transport_units/create" class="space-y-4">
-            <div>
-                <label for="Ubicacion" class="block text-sm font-semibold text-secondary mb-2">Ubicación:</label>
-                <input type="text" id="Ubicacion" name="Ubicacion" required class="w-full px-4 py-3 rounded-md border border-border-color focus:outline-none focus:ring-primary focus:border-primary">
-            </div>
-            <div>
-                <label for="Capacidad" class="block text-sm font-semibold text-secondary mb-2">Capacidad:</label>
-                <input type="number" id="Capacidad" name="Capacidad" required class="w-full px-4 py-3 rounded-md border border-border-color focus:outline-none focus:ring-primary focus:border-primary">
-            </div>
-            <div>
-                <label for="IDRuta" class="block text-sm font-semibold text-secondary mb-2">ID Ruta:</label>
-                <input type="number" id="IDRuta" name="IDRuta" required class="w-full px-4 py-3 rounded-md border border-border-color focus:outline-none focus:ring-primary focus:border-primary">
-            </div>
-            <div>
-                <label for="IDTipo" class="block text-sm font-semibold text-secondary mb-2">ID Tipo:</label>
-                <input type="number" id="IDTipo" name="IDTipo" required class="w-full px-4 py-3 rounded-md border border-border-color focus:outline-none focus:ring-primary focus:border-primary">
-            </div>
-            <div>
-                <label for="ID" class="block text-sm font-semibold text-secondary mb-2">ID (opcional):</label>
-                <input type="text" id="ID" name="ID" value="EMPTY" class="w-full px-4 py-3 rounded-md border border-border-color focus:outline-none focus:ring-primary focus:border-primary">
-            </div>
-            <button type="submit" class="w-full bg-primary hover:bg-primary-700 text-white font-semibold py-3 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                Crear Unidad de Transporte
-            </button>
-        </form>
+    <div>
+        <label for="Ubicacion" class="block text-sm font-medium text-gray-700">Ubicación:</label>
+        <input type="text" id="Ubicacion" name="Ubicacion" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
-
-    <footer class="bg-gray-200 text-secondary py-3 text-center w-full absolute bottom-0 left-0 box-border">
-        <p>© 2024 Sistema de Gestión de Transportes. Todos los derechos reservados.</p>
-    </footer>
-
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .animate-slide-in {
-            animation: slideIn 0.5s ease-in-out;
-        }
-    </style>
-</body>
-</html>
+    <div>
+        <label for="Capacidad" class="block text-sm font-medium text-gray-700">Capacidad:</label>
+        <input type="number" id="Capacidad" name="Capacidad" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+    </div>
+    <div>
+        <label for="IDRuta" class="block text-sm font-medium text-gray-700">ID Ruta:</label>
+        <input type="number" id="IDRuta" name="IDRuta" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+    </div>
+    <div>
+        <label for="IDTipo" class="block text-sm font-medium text-gray-700">ID Tipo:</label>
+        <input type="number" id="IDTipo" name="IDTipo" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+    </div>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+        Crear Transporte
+    </button>
+</form>
+<div class="mt-6">
+    <a href="/transports" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+        Volver a Listar Transportes
+    </a>
+</div>
+{% endblock %}

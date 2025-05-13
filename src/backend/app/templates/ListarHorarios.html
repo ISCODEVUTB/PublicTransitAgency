@@ -1,46 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Horarios</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 font-inter antialiased">
-    <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-2xl font-bold text-center">Lista de Horarios</h1>
-    </header>
-    <main class="max-w-4xl mx-auto mt-8 bg-white p-6 rounded-lg shadow-md">
-        {% if horarios %}
-        <table class="table-auto w-full border-collapse border border-gray-300">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
-                    <th class="border border-gray-300 px-4 py-2 text-left">Fecha de Llegada</th>
-                    <th class="border border-gray-300 px-4 py-2 text-left">Fecha de Salida</th>
-                    <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for horario in horarios %}
-                <tr class="hover:bg-gray-100">
-                    <td class="border border-gray-300 px-4 py-2">{{ horario.ID }}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{ horario.Llegada }}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{ horario.Salida }}</td>
-                    <td class="border border-gray-300 px-4 py-2">
-                        <a href="/schedules/{{ horario.id }}" class="text-blue-600 hover:underline">Ver Detalle</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p class="text-gray-600 text-center">No hay horarios registrados.</p>
-        {% endif %}
-    </main>
-    <footer class="text-center mt-6">
-        <a href="/" class="text-blue-600 hover:underline">Volver al inicio</a>
-    </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Listar Horarios{% endblock %}
+{% block header %}Lista de Horarios{% endblock %}
+{% block back_url %}/schedules{% endblock %}
+
+{% block content %}
+<table class="table-auto w-full border-collapse border border-gray-300">
+    <thead>
+        <tr class="bg-gray-200">
+            <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Hora de Inicio</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Hora de Fin</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for horario in horarios %}
+        <tr class="hover:bg-gray-100">
+            <td class="border border-gray-300 px-4 py-2">{{ horario.ID }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ horario.HoraInicio }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ horario.HoraFin }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

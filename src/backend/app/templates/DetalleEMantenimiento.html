@@ -1,53 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Estado de Mantenimiento</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#3498db', // Azul brillante para acciones
-                        'secondary': '#2c3e50', // Gris oscuro para encabezados
-                        'detail-bg': '#f4f4f4', // Fondo claro para el detalle
-                        'text-strong': '#333', // Texto fuerte
-                    },
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-gray-100 font-inter antialiased">
-    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
-        <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
-            <h1 class="text-2xl font-bold text-secondary mb-6 text-center">
-                Detalle del Estado de Mantenimiento
-            </h1>
+{% extends "base.html" %}
 
-            {% if estado %}
-            <div class="bg-detail-bg rounded-md p-4 mb-4 shadow-sm">
-                <p class="text-text-strong"><strong class="font-semibold">ID:</strong> {{ estado.id }}</p>
-                <p class="text-text-strong"><strong class="font-semibold">Tipo de Estado:</strong> {{ estado.TipoEstado }}</p>
-            </div>
-            {% else %}
-            <p class="text-gray-600 text-center">No se encontraron detalles para este estado de mantenimiento.</p>
-            {% endif %}
+{% block title %}Detalle del Estado de Mantenimiento{% endblock %}
+{% block header %}Detalle del Estado de Mantenimiento{% endblock %}
+{% block back_url %}/maintainance_status{% endblock %}
 
-            <div class="mt-6 text-center">
-                <a href="/maintainance_status/" class="inline-block bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">
-                    Volver a la lista
-                </a>
-            </div>
-        </div>
+{% block content %}
+{% if estado %}
+<div class="space-y-4">
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">ID:</h2>
+        <p class="text-gray-600">{{ estado.id }}</p>
     </div>
-</body>
-</html>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">Tipo de Estado:</h2>
+        <p class="text-gray-600">{{ estado.TipoEstado }}</p>
+    </div>
+</div>
+{% else %}
+<p class="text-red-500 text-center">No se encontraron detalles para este estado de mantenimiento.</p>
+{% endif %}
+{% endblock %}

@@ -22,7 +22,7 @@ def listar_estados(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/{id}", response_class=HTMLResponse)
+@app.get("/{id:int}", response_class=HTMLResponse)
 def detalle_estado(
     id: int,
     request: Request,

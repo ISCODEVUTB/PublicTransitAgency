@@ -1,28 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminar Incidencia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 font-inter">
-    <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-semibold text-red-600 text-center mb-6">Eliminar Incidencia</h1>
-        <form id="delete-incidence-form" action="/incidences/delete" method="post" class="bg-white shadow-md rounded-lg p-6 space-y-4">
-            <div>
-                <label for="IncidenciaID" class="block text-gray-700 text-sm font-bold mb-2">ID de Incidencia:</label>
-                <input type="number" id="IncidenciaID" name="ID" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="text-center">
-                <p class="text-gray-700">¿Estás seguro de que deseas eliminar esta incidencia?</p>
-            </div>
-            <div class="flex justify-center space-x-4">
-                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Sí, Eliminar</button>
-                <a href="/incidences/" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">No, Cancelar</a>
-            </div>
-        </form>
+{% extends "base.html" %}
+
+{% block title %}Eliminar Incidencia{% endblock %}
+{% block header %}Eliminar Incidencia{% endblock %}
+{% block back_url %}/incidences{% endblock %}
+
+{% block content %}
+<form action="/incidences/delete" method="post" class="space-y-4">
+    <div>
+        <label for="ID" class="block text-sm font-medium text-gray-700">ID de la Incidencia a Eliminar:</label>
+        <input type="number" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
-</body>
-</html>
+    <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
+        Eliminar Incidencia
+    </button>
+</form>
+<div class="mt-6">
+    <a href="/incidences" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+        Volver a Listar Incidencias
+    </a>
+</div>
+{% endblock %}

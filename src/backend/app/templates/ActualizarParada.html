@@ -1,93 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualizar Parada Existente</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 40px;
-            background-color: #f3f6f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        form {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-        }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        div {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="number"],
-        input[type="text"] {
-            width: calc(100% - 16px);
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            padding: 12px 15px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-            display: block;
-            margin-top: 20px;
-            text-align: center;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <form action="/paradas/update" method="post">
-        <h1>Actualizar Parada</h1>
-        <div>
-            <label for="id">ID de la Parada a Actualizar:</label>
-            <input type="number" id="id" name="id" required>
-        </div>
-        <div>
-            <label for="Nombre">Nuevo Nombre de la Parada:</label>
-            <input type="text" id="Nombre" name="Nombre" required>
-        </div>
-        <div>
-            <label for="Ubicacion">Nueva Ubicación de la Parada:</label>
-            <input type="text" id="Ubicacion" name="Ubicacion" required>
-        </div>
-        <button type="submit">Actualizar Parada</button>
-    </form>
-    <p><a href="/paradas/">Volver a la lista de paradas</a></p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Actualizar Parada{% endblock %}
+{% block header %}Actualizar Parada{% endblock %}
+{% block back_url %}/stops{% endblock %}
+
+{% block content %}
+<form action="/stops/update" method="post">
+    <div>
+        <label for="ID" class="block text-sm font-medium text-gray-700">ID de la Parada:</label>
+        <input id="ID" name="ID" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+    </div>
+    <div class="mt-4">
+        <label for="Nombre" class="block text-sm font-medium text-gray-700">Nombre de la Parada:</label>
+        <input id="Nombre" name="Nombre" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+    </div>
+    <div class="mt-6">
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            Actualizar Parada
+        </button>
+    </div>
+</form>
+<div class="mt-6">
+    <a href="/stops" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+        Volver a Listar Paradas
+    </a>
+</div>
+{% endblock %}

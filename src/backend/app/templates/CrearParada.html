@@ -1,85 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Nueva Parada</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#16a34a', // Un verde vibrante para crear
-                        'secondary': '#4a5568', // Gris para texto secundario
-                    },
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-gray-100 font-inter antialiased">
-    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-md">
-            <h1 class="mt-6 text-center text-3xl font-extrabold text-primary">
-                Crear Nueva Parada
-            </h1>
-        </div>
+{% extends "base.html" %}
 
-        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <div class="space-y-6">
-                <form action="/paradas/create" method="post" class="space-y-4">
-                    <div>
-                        <label for="id" class="block text-sm font-medium text-secondary">
-                            ID de la Parada:
-                        </label>
-                        <div class="mt-1">
-                            <input type="number" id="id" name="id" required
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                        </div>
-                    </div>
+{% block title %}Crear Nueva Parada{% endblock %}
+{% block header %}Crear Nueva Parada{% endblock %}
+{% block back_url %}/stops{% endblock %}
 
-                    <div>
-                        <label for="Nombre" class="block text-sm font-medium text-secondary">
-                            Nombre de la Parada:
-                        </label>
-                        <div class="mt-1">
-                            <input type="text" id="Nombre" name="Nombre" required
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="Ubicacion" class="block text-sm font-medium text-secondary">
-                            Ubicación de la Parada:
-                        </label>
-                        <div class="mt-1">
-                            <input type="text" id="Ubicacion" name="Ubicacion" required
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                        </div>
-                    </div>
-
-                    <div>
-                        <button type="submit"
-                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                            Crear Parada
-                        </button>
-                    </div>
-                </form>
-
-                <div class="mt-6 text-center text-sm">
-                    <a href="/paradas/" class="font-medium text-primary hover:text-green-700">
-                        Volver a la lista de paradas
-                    </a>
-                </div>
-            </div>
-        </div>
+{% block content %}
+<form action="/stops/create" method="post" class="space-y-4">
+    <div>
+        <label for="ID" class="block text-sm font-medium text-gray-700">ID de la Parada:</label>
+        <input type="text" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
-</body>
-</html>
+    <div>
+        <label for="Nombre" class="block text-sm font-medium text-gray-700">Nombre de la Parada:</label>
+        <input type="text" id="Nombre" name="Nombre" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+    </div>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+        Crear Parada
+    </button>
+</form>
+<div class="mt-6">
+    <a href="/stops" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+        Volver a Listar Paradas
+    </a>
+</div>
+{% endblock %}

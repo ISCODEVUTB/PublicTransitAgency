@@ -1,65 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Turnos</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#2c3e50',
-                        'gray-light': '#f9f9f9',
-                        'gray-border': '#ddd',
-                        'gray-hover': '#f5f5f5',
-                        'link-blue': '#3498db',
-                        'link-blue-hover': '#2980b9',
-                    },
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-gray-100 font-inter antialiased">
-    <header class="bg-primary text-white py-4">
-        <h1 class="text-2xl font-bold text-center">Listado de Turnos</h1>
-    </header>
-    <main class="py-6 px-4 sm:px-6 lg:px-8">
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white shadow-md rounded-lg">
-                <thead class="bg-gray-light">
-                    <tr>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Nombre</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Horario</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    {% if turnos %}
-                        {% for turno in turnos %}
-                        <tr class="hover:bg-gray-hover transition duration-200">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ turno.ID }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">{{ turno.Nombre }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ turno.Horario }}</td>
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">No hay turnos registrados.</td></tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-    </main>
-    <footer class="py-4 text-center">
-        <p><a href="/" class="inline-block bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">Volver</a></p>
-    </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Listar Turnos{% endblock %}
+{% block header %}Lista de Turnos{% endblock %}
+{% block back_url %}/shifts{% endblock %}
+
+{% block content %}
+<table class="table-auto w-full border-collapse border border-gray-300">
+    <thead>
+        <tr class="bg-gray-200">
+            <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Horario</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for turno in turnos %}
+        <tr class="hover:bg-gray-100">
+            <td class="border border-gray-300 px-4 py-2">{{ turno.ID }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ turno.Nombre }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ turno.Horario }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
