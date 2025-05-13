@@ -1,60 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Nueva Ruta</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#3b82f6', // Azul primario
-                        'secondary': '#4b5563', // Gris secundario
-                        'background': '#f3f4f6', // Gris claro de fondo
-                        'form-background': '#fff', // Blanco para el formulario
-                        'border-color': '#d1d5db', // Gris claro para bordes
-                        'text-bold': '#4b5563', // Gris oscuro para texto importante
-                    },
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-background font-inter min-h-screen flex flex-col items-center justify-start pt-10 pb-16 box-border relative">
-    <h1 class="text-2xl md:text-3xl font-semibold text-primary mb-6 text-center">
-        Crear Nueva Ruta
-    </h1>
-    <form action="/routes/create" method="post" class="bg-form-background p-6 rounded-md shadow-md max-w-md w-full">
-        <div class="mb-4">
-            <label for="id" class="block text-sm font-bold text-text-bold mb-2">ID de Ruta:</label>
-            <input type="number" id="id" name="id" required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-border-color">
-        </div>
-        <div class="mb-4">
-            <label for="idhorario" class="block text-sm font-bold text-text-bold mb-2">ID de Horario:</label>
-            <input type="number" id="idhorario" name="idhorario" required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-border-color">
-        </div>
-        <div class="mb-4">
-            <label for="name" class="block text-sm font-bold text-text-bold mb-2">Nombre de la Ruta:</label>
-            <input type="text" id="name" name="name" required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-border-color">
-        </div>
-        <button type="submit" class="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full mt-4">
-            Crear Ruta
-        </button>
-    </form>
-    <p class="mt-4"><a href="/routes/" class="text-primary hover:underline font-medium">Volver a la lista de rutas</a></p>
-    <footer class="bg-gray-200 text-gray-700 py-3 text-center w-full absolute bottom-0 left-0 box-border">
-        <p>© 2024 Sistema de Gestión de Transportes. Todos los derechos reservados.</p>
-    </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Crear Nueva Ruta{% endblock %}
+{% block header %}Crear Nueva Ruta{% endblock %}
+{% block back_url %}/routes{% endblock %}
+
+{% block content %}
+<form action="/routes/create" method="post" class="space-y-4">
+    <div>
+        <label for="ID" class="block text-sm font-medium text-gray-700">ID de la Ruta:</label>
+        <input type="text" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+    </div>
+    <div>
+        <label for="Nombre" class="block text-sm font-medium text-gray-700">Nombre de la Ruta:</label>
+        <input type="text" id="Nombre" name="Nombre" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
+    </div>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+        Crear Ruta
+    </button>
+</form>
+<div class="mt-6">
+    <a href="/routes" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+        Volver a Listar Rutas
+    </a>
+</div>
+{% endblock %}

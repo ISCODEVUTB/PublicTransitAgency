@@ -1,125 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminar Transporte</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'danger': '#dc2626',
-                        'danger-hover': '#b91c1c',
-                        'text-label': '#374151',
-                        'link': '#3b82f6',
-                        'link-hover': '#2563eb',
-                        'form-bg': '#fff',
-                        'error-bg': '#fef2f2',
-                        'error-text': '#ef4444',
-                    },
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-gray-100 font-inter antialiased">
-    <div class="min-h-screen flex flex-col items-center justify-start pt-10 pb-16 box-border relative">
-        <h1 class="text-3xl font-semibold text-danger mt-10 mb-6 text-center animate-fade-in">
-            Eliminar Transporte
-        </h1>
+{% extends "base.html" %}
 
-<<<<<<< HEAD
-    <!-- Navigation links with flexbox layout -->
-    <div class="nav-links">
-        <a href="/transport_units/">Volver a la lista de transportes</a>
+{% block title %}Eliminar Transporte{% endblock %}
+{% block header %}Eliminar Transporte{% endblock %}
+{% block back_url %}/transports{% endblock %}
+
+{% block content %}
+<form action="/transports/delete" method="post" class="space-y-4">
+    <div>
+        <label for="ID" class="block text-sm font-medium text-gray-700">ID del Transporte a Eliminar:</label>
+        <input type="text" id="ID" name="ID" required class="w-full border border-gray-300 rounded-lg p-2 mt-1">
     </div>
-
-    <!-- Container for the main content -->
-    <div class="container">
-        <!-- Form with styled inputs and warning message -->
-        <form action="/transport_units/delete" method="post" class="slide-in">
-            <div class="form-group">
-                <label for="id">ID del Transporte a Eliminar:</label>
-                <input type="text" id="id" name="id" required>
-            </div>
-=======
-        <div class="nav-links flex justify-center mb-8 w-full">
-            <a href="/transports" class="text-link hover:text-link-hover font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">
-                Volver a la lista de transportes
-            </a>
-        </div>
-
-        <div class="bg-form-bg p-8 rounded-lg shadow-md w-90 max-w-md animate-slide-in">
-            <form action="/transports/delete" method="post" class="space-y-4">
-                <div class="form-group">
-                    <label for="id" class="block text-sm font-semibold text-text-label mb-2">
-                        ID del Transporte a Eliminar:
-                    </label>
-                    <input type="text" id="id" name="id" required
-                           class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-danger focus:border-danger">
-                </div>
-
-                <div class="bg-error-bg text-error-text p-4 rounded-md">
-                    <strong>¡Advertencia!</strong> Esta acción no se puede deshacer. Asegúrese de que desea eliminar este transporte.
-                </div>
-
-                <button type="submit" class="w-full bg-danger hover:bg-danger-hover text-white font-semibold py-3 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-danger focus:ring-offset-2">
-                    Eliminar Transporte
-                </button>
-            </form>
-
-            <form method="post" action="/transport_units/delete" class="mt-8 space-y-4">
-                <h2 class="text-xl font-semibold text-danger text-center">Eliminar Unidad de Transporte</h2>
-                <div class="form-group">
-                    <label for="ID" class="block text-sm font-semibold text-text-label mb-2">ID:</label>
-                    <input type="text" id="ID" name="ID" required
-                           class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-danger focus:border-danger">
-                </div>
-                <button type="submit" class="w-full bg-danger hover:bg-danger-hover text-white font-semibold py-3 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-danger focus:ring-offset-2">
-                    Eliminar Unidad de Transporte
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
->>>>>>> 392aea4 (css aplication)
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-<<<<<<< HEAD
-            <button type="submit" class="btn btn-danger">Eliminar Transporte</button>
-        </form>
-=======
-        .animate-fade-in {
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .animate-slide-in {
-            animation: slideIn 0.5s ease-in-out;
-        }
-    </style>
-</body>
-</html>
->>>>>>> 392aea4 (css aplication)
+    <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
+        Eliminar Transporte
+    </button>
+</form>
+<div class="mt-6">
+    <a href="/transports" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+        Volver a Listar Transportes
+    </a>
+</div>
+{% endblock %}

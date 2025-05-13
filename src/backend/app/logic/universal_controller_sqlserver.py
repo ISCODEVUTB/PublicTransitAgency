@@ -296,3 +296,33 @@ class UniversalController:
         """
         result = self._execute_query(query, (id_card,))
         return result[0] if result else None
+
+    def get_ruta_parada(self, id_ruta: int = None, id_parada: int = None) -> list[dict]:
+        """
+        Obtiene las relaciones Ruta-Parada según el ID de Ruta, ID de Parada o todos los registros.
+        """
+        sql = "SELECT rp.IDRuta, rp.IDParada, r.Nombre AS NombreRuta, p.Nombre AS NombreParada " \
+              "FROM RutaParada rp " \
+              "JOIN Ruta r ON rp.IDRuta = r.ID " \
+              "JOIN Parada p ON rp.IDParada = p.ID"
+
+        conditions = []
+        params = []
+
+        if id_ruta:
+            conditions.append("rp.IDRuta = ?")
+            params.append(id_ruta)
+        if id_parada:
+            conditions.append("rp.IDParada = ?")
+            params.append(id_parada)
+
+        if conditions:
+            sql += " WHERE " + " AND ".join(conditions)
+
+        try:
+            self.cursor.execute(sql, tuple(params))
+            rows = self.cursor.fetchall()
+            # Convertir cada fila en un diccionario utilizando los nombres de las columnas
+            return [dict(zip([column[0] for column in self.cursor.description], row)) for row in rows]
+        except pyodbc.Error as e:
+            raise RuntimeError(f"Error al obtener registros de Ruta-Parada: {e}")

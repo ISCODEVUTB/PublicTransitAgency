@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Ticket</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 font-sans">
-    <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-2xl font-bold text-center">Detalle del Ticket</h1>
-    </header>
-    <main class="max-w-2xl mx-auto mt-8 bg-white p-6 rounded-lg shadow-md">
-        {% if ticket %}
-        <div class="space-y-4">
-            <div>
-                <h2 class="text-lg font-semibold text-gray-700">ID del Ticket:</h2>
-                <p class="text-gray-600">{{ ticket.ID }}</p>
-            </div>
-            <div>
-                <h2 class="text-lg font-semibold text-gray-700">Estado de la Incidencia:</h2>
-                <p class="text-gray-600">{{ ticket.EstadoIncidencia }}</p>
-            </div>
-        </div>
-        {% else %}
-        <p class="text-red-500 text-center">No se encontró información para este ticket.</p>
-        {% endif %}
-    </main>
-    <footer class="text-center mt-6">
-        <a href="/tickets/" class="text-blue-600 hover:underline">Volver a la lista de tickets</a>
-    </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Detalle del Ticket{% endblock %}
+{% block header %}Detalle del Ticket{% endblock %}
+{% block back_url %}/tickets{% endblock %}
+
+{% block content %}
+{% if ticket %}
+<div class="space-y-4">
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">ID del Ticket:</h2>
+        <p class="text-gray-600">{{ ticket.ID }}</p>
+    </div>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">Estado de la Incidencia:</h2>
+        <p class="text-gray-600">{{ ticket.EstadoIncidencia }}</p>
+    </div>
+</div>
+{% else %}
+<p class="text-red-500 text-center">No se encontró información para este ticket.</p>
+{% endif %}
+{% endblock %}

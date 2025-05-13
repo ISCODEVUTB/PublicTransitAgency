@@ -1,49 +1,30 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Incidencia</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#1e3a8a',
-                        'secondary': '#374151',
-                        'detail-bg': '#f9f9f9',
-                        'text-strong': '#333',
-                    },
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-gray-100 font-inter antialiased">
-    <div class="min-h-screen flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
-        <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
-            <h1 class="text-2xl font-bold text-primary mb-6 text-center">
-                Detalle de Incidencia
-            </h1>
+{% extends "base.html" %}
 
-            {% if incidencia %}
-            <div class="bg-detail-bg rounded-md p-4 mb-4">
-                <p class="text-text-strong"><strong class="font-semibold">ID:</strong> {{ incidencia.ID }}</p>
-                <p class="text-text-strong"><strong class="font-semibold">Descripción:</strong> {{ incidencia.Descripcion }}</p>
-                <p class="text-text-strong"><strong class="font-semibold">Tipo:</strong> {{ incidencia.Tipo }}</p>
-                <p class="text-text-strong"><strong class="font-semibold">ID Unidad:</strong> {{ incidencia.IDUnidad }}</p>
-            </div>
-            {% else %}
-            <p class="text-gray-600 text-center">Incidencia no encontrada.</p>
-            {% endif %}
-        </div>
+{% block title %}Detalle de Incidencia{% endblock %}
+{% block header %}Detalle de Incidencia{% endblock %}
+{% block back_url %}/incidences{% endblock %}
+
+{% block content %}
+{% if incidencia %}
+<div class="space-y-4">
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">ID:</h2>
+        <p class="text-gray-600">{{ incidencia.ID }}</p>
     </div>
-</body>
-</html>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">Descripción:</h2>
+        <p class="text-gray-600">{{ incidencia.Descripcion }}</p>
+    </div>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">Tipo:</h2>
+        <p class="text-gray-600">{{ incidencia.Tipo }}</p>
+    </div>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">ID Unidad:</h2>
+        <p class="text-gray-600">{{ incidencia.IDUnidad }}</p>
+    </div>
+</div>
+{% else %}
+<p class="text-red-500 text-center">Incidencia no encontrada.</p>
+{% endif %}
+{% endblock %}

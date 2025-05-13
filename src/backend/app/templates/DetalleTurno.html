@@ -1,21 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Turno</title>
-</head>
-<body>
-    <h1>Detalle del Turno</h1>
-    {% if turno %}
+{% extends "base.html" %}
+
+{% block title %}Detalle del Turno{% endblock %}
+{% block header %}Detalle del Turno{% endblock %}
+{% block back_url %}/shifts{% endblock %}
+
+{% block content %}
+{% if turno %}
+<div class="space-y-4">
     <div>
-        <p><strong>ID del Turno:</strong> {{ turno.ID }}</p>
-        <p><strong>Tipo de Turno:</strong> {{ turno.TipoTurno }}</p>
+        <h2 class="text-lg font-semibold text-gray-700">ID del Turno:</h2>
+        <p class="text-gray-600">{{ turno.ID }}</p>
     </div>
-    {% else %}
-    <p>No se encontró el turno.</p>
-    {% endif %}
-    <p><a href="/shifts">Volver al Listado</a></p>
-    <p><a href="/">Volver a la Principal</a></p>
-</body>
-</html>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">Tipo de Turno:</h2>
+        <p class="text-gray-600">{{ turno.TipoTurno }}</p>
+    </div>
+</div>
+{% else %}
+<p class="text-red-500 text-center">No se encontró el turno.</p>
+{% endif %}
+{% endblock %}

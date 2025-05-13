@@ -1,67 +1,32 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualizar Incidencia</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#3b82f6',
-                        'secondary': '#6b7280',
-                        'accent': '#22c55e',
-                    },
-                },
-            },
-        }
-    </script>
-    <style>
-        body {
-            background-color: #ffcccc; /* Fondo rojo claro */
-        }
-    </style>
-</head>
-<body class="bg-gray-100 font-inter antialiased">
-    <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-semibold text-primary text-center mb-6">Actualizar Incidencia</h1>
-        <form action="/incidences/update" method="post" class="bg-white shadow-md rounded-lg p-6 space-y-4">
-            <div>
-                <label for="ID" class="block text-secondary text-sm font-bold mb-2">ID de la Incidencia:</label>
-                <input type="number" id="ID" name="ID" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div>
-                <label for="IDTicket" class="block text-secondary text-sm font-bold mb-2">ID del Ticket:</label>
-                <input type="number" id="IDTicket" name="IDTicket" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div>
-                <label for="Descripcion" class="block text-secondary text-sm font-bold mb-2">Descripción:</label>
-                <textarea id="Descripcion" name="Descripcion" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline"></textarea>
-            </div>
-            <div>
-                <label for="Tipo" class="block text-secondary text-sm font-bold mb-2">Tipo:</label>
-                <select id="Tipo" name="Tipo" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="Error">Error</option>
-                    <option value="Advertencia">Advertencia</option>
-                    <option value="Información">Información</option>
-                </select>
-            </div>
-            <div>
-                <label for="IDUnidad" class="block text-secondary text-sm font-bold mb-2">ID de la Unidad:</label>
-                <input type="text" id="IDUnidad" name="IDUnidad" required class="shadow appearance-none border rounded w-full py-2 px-3 text-secondary leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <button type="submit" class="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Actualizar Incidencia</button>
-        </form>
-        <br>
-        <a href="/incidences/" class="text-primary hover:underline">Volver a la lista de incidencias</a>
+{% extends "base.html" %}
+
+{% block title %}Actualizar Incidencia{% endblock %}
+{% block header %}Actualizar Incidencia{% endblock %}
+{% block back_url %}/incidences{% endblock %}
+
+{% block content %}
+<form action="/incidences/update" method="post">
+    <div>
+        <label for="ID" class="block text-sm font-medium text-gray-700">ID de la Incidencia:</label>
+        <input id="ID" name="ID" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
     </div>
-</body>
-</html>
+    <div class="mt-4">
+        <label for="Descripcion" class="block text-sm font-medium text-gray-700">Descripción:</label>
+        <textarea id="Descripcion" name="Descripcion" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+    </div>
+    <div class="mt-4">
+        <label for="Tipo" class="block text-sm font-medium text-gray-700">Tipo:</label>
+        <input id="Tipo" name="Tipo" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+    </div>
+    <div class="mt-6">
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            Actualizar Incidencia
+        </button>
+    </div>
+</form>
+<div class="mt-6">
+    <a href="/incidences" class="w-full inline-block text-center bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+        Volver a Listar Incidencias
+    </a>
+</div>
+{% endblock %}

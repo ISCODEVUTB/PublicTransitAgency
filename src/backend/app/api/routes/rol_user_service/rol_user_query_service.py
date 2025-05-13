@@ -24,24 +24,21 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/consultar", response_class=HTMLResponse)
 def consultar(
-    request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    request: Request
 ):
     """
     Render the 'ConsultarRolUsuario.html' template for the user consultation page.
     """
-    logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de tipo de usuario")
-    return templates.TemplateResponse("ConsultarRolUsuario.html", {"request": request})
+    return templates.TemplateResponse("ConsultarRolUser.html", {"request": request})
 
 
 @app.get("/rolusers")
 async def get_roluser(
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve and return all rolusers records from the database.
     """
-    logger.info(f"[GET /rolusers] Usuario: {current_user['user_id']} - Consultando todas los tipos de usuarios.")
+    #logger.info(f"[GET /rolusers] Usuario: {current_user['user_id']} - Consultando todas los tipos de usuarios.")
     rolusers = controller.read_all(RolUserOut)
     logger.info(f"[GET /rolusers] Número de tipo de usuarios encontrados: {len(rolusers)}")
     return rolusers
@@ -51,13 +48,13 @@ async def get_roluser(
 def roluser(
     request: Request,
     ID: int = Query(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve a user by its ID and render the 'typetransport.html' template with its details.
     If the user is not found, display 'None' for all fields.
     """
-    logger.info(f"[GET /roluser] Usuario: {current_user['user_id']} - Consultando tipo de usuario con id={ID}")
+    #logger.info(f"[GET /roluser] Usuario: {current_user['user_id']} - Consultando tipo de usuario con id={ID}")
     unit_roluser= controller.get_by_id(RolUserOut, ID)
 
     if unit_roluser:

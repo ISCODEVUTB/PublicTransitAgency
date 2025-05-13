@@ -10,7 +10,21 @@
     <form action="/user/usuario" method="get">
         <label for="ID">ID del Usuario:</label>
         <input type="text" id="ID" name="ID" required>
-        <button type="submit">Consultar</button>
+        <button style="display: block; margin-left:250px; margin: auto; padding: 5px;margin-top: 10px;" type="submit"onclick="location.href='/user/usuario'">Consultar</button>
     </form>
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; margin-top: 25px;">
+        <div>
+            <button style="padding: 5px; margin-left: 500px;" onclick="location.href='/login/user/administrador'">
+            Regresar a la Pagina Principal
+            </button>
+        </div>
+        <div>
+            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/user/users'">
+            Ver Todos los Usuarios
+            </button>
+        </div>
+    </div>
+
+    
 </body>
 </html>

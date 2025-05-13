@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Registros de Asistencias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 1em;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <button style="padding: 5px;"  onclick = "location.href='/login/user/administrador'">Regresar a la Pagina Principal</button>
+    <h2 style="text-align: center;">Listado de Registros de Usuarios</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Identificacion del Usuario</th>
+                <th>Nombre del Usuario</th>
+                <th>Apellido del Usuario</th>
+                <th>Correo del Usuario</th>
+                <th>Contraseña del Usuario</th>
+                <th>ID del Tipo de Usuario</th>
+                <th>ID del Turno del Usuario</th>
+                <th>ID de la Tarjeta</th>
+            </tr>   
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.ID}}</td>
+                <td>{{ usuario.Identificacion}}</td>
+                <td>{{ usuario.Nombre}}</td>
+                <td>{{ usuario.Apellido}}</td>
+                <td>{{ usuario.Correo}}</td>
+                <td>{{ usuario.Contrasena}}</td>
+                <td>{{ usuario.IDRolUsuario}}</td>
+                <td>{{ usuario.IDTurno}}</td>
+                <td>{{ usuario.IDTarjeta}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,38 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Unidad de Transporte</title>
-    <!-- Link to the enhanced CSS file -->
-    <link rel="stylesheet" href="/static/css/styles.css">
-</head>
-<body>
-    <!-- Main heading with animation effect -->
-    <h1 class="fade-in">Detalle de Unidad de Transporte</h1>
+{% extends "base.html" %}
 
-    <!-- Navigation links with flexbox layout -->
-    <div class="nav-links">
-        <a href="/transports">Volver a la lista de transportes</a>
-        <a href="/transports/update">Actualizar Transporte</a>
-        <a href="/transports/delete">Eliminar Transporte</a>
-    </div>
+{% block title %}Detalle de Unidad de Transporte{% endblock %}
+{% block header %}Detalle de Unidad de Transporte{% endblock %}
+{% block back_url %}/transports{% endblock %}
 
-    <!-- Container for the main content -->
-    <div class="container">
-        {% if unidad %}
-        <!-- Detail view with styled container -->
-        <div class="detail-container slide-in">
-            <p><strong>ID:</strong> {{ unidad.ID }}</p>
-            <p><strong>Ubicación:</strong> {{ unidad.Ubicacion }}</p>
-            <p><strong>Capacidad:</strong> {{ unidad.Capacidad }}</p>
-            <p><strong>ID Ruta:</strong> {{ unidad.IDRuta }}</p>
-            <p><strong>ID Tipo:</strong> {{ unidad.IDTipo }}</p>
-        </div>
-        {% else %}
-        <!-- Error message for when transport is not found -->
-        <p class="message error">Unidad de transporte no encontrada.</p>
-        {% endif %}
+{% block content %}
+{% if unidad %}
+<div class="space-y-4">
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">ID:</h2>
+        <p class="text-gray-600">{{ unidad.ID }}</p>
     </div>
-</body>
-</html>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">Ubicación:</h2>
+        <p class="text-gray-600">{{ unidad.Ubicacion }}</p>
+    </div>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">Capacidad:</h2>
+        <p class="text-gray-600">{{ unidad.Capacidad }}</p>
+    </div>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">ID Ruta:</h2>
+        <p class="text-gray-600">{{ unidad.IDRuta }}</p>
+    </div>
+    <div>
+        <h2 class="text-lg font-semibold text-gray-700">ID Tipo:</h2>
+        <p class="text-gray-600">{{ unidad.IDTipo }}</p>
+    </div>
+</div>
+{% else %}
+<p class="text-red-500 text-center">Unidad de transporte no encontrada.</p>
+{% endif %}
+{% endblock %}
