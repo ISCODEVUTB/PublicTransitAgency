@@ -21,27 +21,27 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/crear", response_class=HTMLResponse)
 def index_create(
     request: Request,
-    current_user: dict = Security(get_current_user,
-        scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user,
+        #scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /crear] Usuario: {current_user['user_id']} - Mostrando formulario de creación de rol de usuario")
+    #logger.info(f"[GET /crear] Usuario: {current_user['user_id']} - Mostrando formulario de creación de rol de usuario")
     return templates.TemplateResponse("CrearRolUsuario.html", {"request": request})
 
 @app.get("/actualizar", response_class=HTMLResponse)
 def index_update(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /actualizar] Usuario: {current_user['user_id']} - Mostrando formulario de actualización de rol de usuario")
+    #logger.info(f"[GET /actualizar] Usuario: {current_user['user_id']} - Mostrando formulario de actualización de rol de usuario")
     return templates.TemplateResponse("ActualizarRolUsuario.html", {"request": request})
 
 
 @app.get("/eliminar", response_class=HTMLResponse)
 def index_delete(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /eliminar] Usuario: {current_user['user_id']} - Mostrando formulario de eliminación de rol de usuario")
+    #logger.info(f"[GET /eliminar] Usuario: {current_user['user_id']} - Mostrando formulario de eliminación de rol de usuario")
     return templates.TemplateResponse("EliminarRolUsuario.html", {"request": request})
 
 #
@@ -49,9 +49,9 @@ def index_delete(
 async def create_roluser(
     ID: int = Form(...),
     Rol: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /create] Usuario: {current_user['user_id']} - Intentando crear usuario de tipo {Rol}")
+    #logger.info(f"[POST /create] Usuario: {current_user['user_id']} - Intentando crear usuario de tipo {Rol}")
 
     try:
         # Verificar si el rol de usuario ya existe
@@ -85,9 +85,9 @@ async def create_roluser(
 async def update_roluser(
     ID: int = Form(...),
     Rol: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /update] Usuario: {current_user['user_id']} - Actualizando rol de usuario ID={ID}")
+    #logger.info(f"[POST /update] Usuario: {current_user['user_id']} - Actualizando rol de usuario ID={ID}")
     try:
         existing = controller.get_by_id(RolUserOut, ID)
         if existing is None:
@@ -112,23 +112,21 @@ async def update_roluser(
 @app.post("/delete")
 async def delete_roluser(
     ID: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /delete] Usuario: {current_user['user_id']} - Eliminando rol de usuario ID={ID}")
+    #logger.info(f"[POST /delete] Usuario: {current_user['user_id']} - Eliminando rol de usuario ID={ID}")
     try:
         existing = controller.get_by_id(RolUserOut, ID)
-        if not existing:
+        if not existing or existing is None:
             logger.warning(f"[POST /delete] Rol de Usuario no encontrado en la base de datos: ID={ID}")
             raise HTTPException(404, detail="RolUser not found")
 
         logger.info(f"[POST /delete] Eliminando rol de usuario con ID={ID}")
         controller.delete(existing) 
         logger.info(f"[POST /delete] Rol de Usuario eliminada exitosamente: ID={ID}")
-        return {
-            "operation": "delete",
-            "success": True,
-            "message": f"RolUser {ID} deleted successfully."
-        }
+        return templates.TemplateResponse("DeleteConfirmation.html", {
+            "request": None, "ID": ID, "message": f"User {ID} deleted successfully."
+        })
     except HTTPException as e:
         raise e
     except Exception as e:

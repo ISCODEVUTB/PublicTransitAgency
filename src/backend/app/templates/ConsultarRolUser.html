@@ -10,7 +10,29 @@
     <form action="/roluser/tipousuario" method="get">
         <label for="ID">ID del Tipo de Usuario:</label>
         <input type="text" id="ID" name="ID" required>
-        <button type="submit">Consultar</button>
+        <button style="margin-left: 250px; margin-top: 10px; padding: 5px" type="submit">Consultar</button>
     </form>
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;; margin-top: 25px;">
+        <div>
+            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/login/user/administrador'">
+            Regresar a la Pagina Principal
+            </button>
+        </div>
+        <div>
+            <button style="padding: 5px; margin-left: 50px;" onclick="location.href='/roluser/crear'">
+            Crear Nuevo Tipo de Usuario
+            </button>
+        </div>
+        <div>
+            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/roluser/actualizar'">
+            Actualizar Tipo de Usuario
+            </button>
+        </div>
+        <div>
+            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/roluser/eliminar'">
+            Eliminar Tipo de Usuario
+            </button>
+        </div>
+    </div>
 </body>
 </html>
