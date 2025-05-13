@@ -15,12 +15,12 @@
         </tr>
     </thead>
     <tbody>
-        {% for ruta_parada in ruta_paradas %}
+        {% for rutaparada in rutaparadas %}
         <tr class="hover:bg-gray-100">
-            <td class="border border-gray-300 px-4 py-2">{{ ruta_parada.IDRuta }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ ruta_parada.NombreRuta }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ ruta_parada.IDParada }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ ruta_parada.NombreParada }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ rutaparada.IDRuta }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ rutaparada.NombreRuta }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ rutaparada.IDParada }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ rutaparada.NombreParada }}</td>
         </tr>
         {% endfor %}
     </tbody>

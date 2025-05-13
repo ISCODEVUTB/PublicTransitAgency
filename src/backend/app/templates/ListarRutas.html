@@ -9,16 +9,18 @@
     <thead>
         <tr class="bg-gray-200">
             <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Horario</th>
             <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
         </tr>
     </thead>
     <tbody>
-        {% for ruta in rutas %}
+        {% for route in routes %}
         <tr class="hover:bg-gray-100">
-            <td class="border border-gray-300 px-4 py-2">{{ ruta.ID }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ ruta.Nombre }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ route.ID }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ route.IDHorario }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ route.Nombre }}</td>
         </tr>
-        {% endfor %}
+        {% endfor %} 
     </tbody>
 </table>
 {% endblock %}

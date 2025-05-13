@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Listar Transportes{% endblock %}
-{% block header %}Lista de Transportes{% endblock %}
-{% block back_url %}/transports{% endblock %}
+{% block title %}Listar unidades{% endblock %}
+{% block header %}Lista de unidades{% endblock %}
+{% block back_url %}/unidads{% endblock %}
 
 {% block content %}
 <table class="table-auto w-full border-collapse border border-gray-300">
@@ -16,13 +16,13 @@
         </tr>
     </thead>
     <tbody>
-        {% for transport in transports %}
+        {% for unidad in unidades %}
         <tr class="hover:bg-gray-100">
-            <td class="border border-gray-300 px-4 py-2">{{ transport.ID }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ transport.Ubicacion }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ transport.Capacidad }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ transport.IDRuta }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ transport.IDTipo }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ unidad.ID }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ unidad.Ubicacion }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ unidad.Capacidad }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ unidad.IDRuta }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ unidad.IDTipo }}</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -9,16 +9,14 @@
     <thead>
         <tr class="bg-gray-200">
             <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Horario</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Tipo de turno</th>
         </tr>
     </thead>
     <tbody>
         {% for turno in turnos %}
         <tr class="hover:bg-gray-100">
             <td class="border border-gray-300 px-4 py-2">{{ turno.ID }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ turno.Nombre }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ turno.Horario }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ turno.TipoTurno }}</td>
         </tr>
         {% endfor %}
     </tbody>

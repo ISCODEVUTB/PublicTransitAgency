@@ -17,8 +17,8 @@
         {% for horario in horarios %}
         <tr class="hover:bg-gray-100">
             <td class="border border-gray-300 px-4 py-2">{{ horario.ID }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ horario.HoraInicio }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ horario.HoraFin }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ horario.Llegada }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ horario.Salida }}</td>
         </tr>
         {% endfor %}
     </tbody>

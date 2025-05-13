@@ -9,16 +9,20 @@
     <thead>
         <tr class="bg-gray-200">
             <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">IDTicket</th>
             <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
             <th class="border border-gray-300 px-4 py-2 text-left">Tipo</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">IDUnidad</th>
         </tr>
     </thead>
     <tbody>
         {% for incidencia in incidencias %}
         <tr class="hover:bg-gray-100">
             <td class="border border-gray-300 px-4 py-2">{{ incidencia.ID }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ incidencia.IDTicket }}</td>
             <td class="border border-gray-300 px-4 py-2">{{ incidencia.Descripcion }}</td>
             <td class="border border-gray-300 px-4 py-2">{{ incidencia.Tipo }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ incidencia.IDUnidad }}</td>
         </tr>
         {% endfor %}
     </tbody>
