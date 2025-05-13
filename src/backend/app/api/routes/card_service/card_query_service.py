@@ -40,24 +40,24 @@ async def get_tarjetas():
 
 
 @app.get("/tarjeta", response_class=HTMLResponse)
-def tarjeta(request: Request, id: int = Query(...)):
+def tarjeta(request: Request, ID: int = Query(...)):
     """
     Retrieve a card by its ID and render the 'tarjeta.html' template with its details.
     If the card is not found, display 'None' for all fields.
     """
-    unit_tarjeta = controller.get_by_id(CardOut, id)
+    unit_tarjeta = controller.get_by_id(CardOut, ID)
 
     if unit_tarjeta:
-        logger.info(f"[GET /tarjeta] Tarjeta encontrada: {unit_tarjeta.id}, iduser: {unit_tarjeta.iduser}, idtype: {unit_tarjeta.idtype}")
+        logger.info(f"[GET /tarjeta] Tarjeta encontrada: {unit_tarjeta.ID}, IDUsuario: {unit_tarjeta.IDUsuario}, IDTipoTarjeta: {unit_tarjeta.IDTipoTarjeta}")
     else:
-        logger.warning(f"[GET /tarjeta] No se encontró tarjeta con id={id}")
+        logger.warning(f"[GET /tarjeta] No se encontró tarjeta con ID={ID}")
 
     context = {
         "request": request,
-        "id": unit_tarjeta.id if unit_tarjeta else "None",
-        "iduser": unit_tarjeta.iduser if unit_tarjeta else "None",
-        "idtype": unit_tarjeta.idtype if unit_tarjeta else "None",
-        "balance": unit_tarjeta.balance if unit_tarjeta else "None"
+        "ID": unit_tarjeta.ID if unit_tarjeta else "None",
+        "IDUsuario": unit_tarjeta.IDUsuario if unit_tarjeta else "None",
+        "IDTipoTarjeta": unit_tarjeta.IDTipoTarjeta if unit_tarjeta else "None",
+        "Saldo": unit_tarjeta.Saldo if unit_tarjeta else "None"
     }
 
     return templates.TemplateResponse(request,"tarjeta.html", context)

@@ -2,8 +2,10 @@ import pyodbc
 from backend.app.core.config import Settings
 from typing import Any
 import os
+import logging
 
-
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 class UniversalController:
     def __init__(self):
         try:
@@ -153,3 +155,144 @@ class UniversalController:
             return [dict(zip([column[0] for column in self.cursor.description], row)) for row in rows]
         except pyodbc.Error as e:
             raise RuntimeError(f"Error al obtener registros de la unidad {unit_id}: {e}")
+    def _execute_query(self, query: str, params: tuple = ()) -> list:
+        """Ejecuta una consulta SQL y retorna los resultados como una lista de diccionarios."""
+        try:
+            self.cursor.execute(query, params)
+            rows = self.cursor.fetchone()
+            return rows
+        except pyodbc.Error as e:
+            raise RuntimeError(f"Error al ejecutar la consulta: {e}")
+
+    def obtener_ruta_con_interconexion(self, ubicacion_llegada: str, ubicacion_final: str) -> dict:
+        response = {"interconexiones": []}  # Inicializar la respuesta en formato JSON
+
+        try:
+            # Obtener rutas desde la ubicación de llegada
+            query_llegada = '''
+            SELECT r.ID, r.Nombre, p.ID, p.Ubicacion
+            FROM DB_PUBLIC_TRANSIT_AGENCY.dbo.Ruta r
+            JOIN DB_PUBLIC_TRANSIT_AGENCY.dbo.RutaParada rp ON r.ID = rp.IDRuta
+            JOIN DB_PUBLIC_TRANSIT_AGENCY.dbo.Parada p ON rp.IDParada = p.ID
+            WHERE p.Ubicacion = ?;
+            '''
+            self.cursor.execute(query_llegada, (ubicacion_llegada,))
+            rutas_llegada = self.cursor.fetchall()
+
+            if not rutas_llegada:
+                return {"mensaje": "No se encontraron rutas desde la ubicación de llegada."}
+
+            for ruta_id, ruta_name, parada_id, parada_ubicacion in rutas_llegada:
+                # Obtener rutas que lleguen a la ubicación final
+                query_final = '''
+                SELECT r.ID, r.Nombre, p.ID, p.Ubicacion
+                FROM DB_PUBLIC_TRANSIT_AGENCY.dbo.Ruta r
+                JOIN DB_PUBLIC_TRANSIT_AGENCY.dbo.RutaParada rp ON r.ID = rp.IDRuta
+                JOIN DB_PUBLIC_TRANSIT_AGENCY.dbo.Parada p ON rp.IDParada = p.ID
+                WHERE p.Ubicacion = ?;
+                '''
+                self.cursor.execute(query_final, (ubicacion_final,))
+                rutas_final = self.cursor.fetchall()
+
+                if not rutas_final:
+                    return {"mensaje": "No se encontraron rutas hacia la ubicación final."}
+
+                for ruta_final_id, ruta_final_name, parada_final_id, parada_final_ubicacion in rutas_final:
+                    # Verificar interconexión entre rutas
+                    query_interconexion = '''
+                    SELECT p.ID, p.Ubicacion
+                    FROM DB_PUBLIC_TRANSIT_AGENCY.dbo.Parada p
+                    JOIN DB_PUBLIC_TRANSIT_AGENCY.dbo.RutaParada rp1 ON p.ID = rp1.IDParada
+                    JOIN DB_PUBLIC_TRANSIT_AGENCY.dbo.RutaParada rp2 ON p.ID = rp2.IDParada
+                    WHERE rp1.IDRuta = ? AND rp2.IDRuta = ?;
+                    '''
+                    self.cursor.execute(query_interconexion, (ruta_id, ruta_final_id))
+                    interconexiones = self.cursor.fetchall()
+
+                    # Procesar interconexiones encontradas
+                    if interconexiones:
+                        for inter_parada_id, inter_ubicacion in interconexiones:
+                            response["interconexiones"].append({
+                                "ruta_inicio": ruta_name,
+                                "ruta_final": ruta_final_name,
+                                "interconexion": inter_ubicacion
+                            })
+                    else:
+                        response["interconexiones"].append({
+                            "ruta_inicio": ruta_name,
+                            "ruta_final": ruta_final_name,
+                            "interconexion": "Sin interconexión directa"
+                        })
+
+            # Si no se encontró ninguna interconexión
+            if not response["interconexiones"]:
+                return {"mensaje": "No se encontraron rutas con interconexión."}
+
+        except Exception as e:
+            response = {"error": f"Error al obtener la ruta: {str(e)}"}
+            logger.error(response["error"])
+        finally:
+            self.conn.commit()  # Confirmar transacción
+
+        return response
+
+
+    # Método para obtener cualquier cuenta
+    def total_registros(self, table: str, condition: str = "") -> int:
+        """Generar la consulta total por tabla"""
+        query = f"SELECT COUNT(*) FROM {table} {condition}"
+        result = self._execute_query(query)
+        return result[0] if result else 0
+
+    # Método para obtener registros de una tabla específica
+    def total_movimientos(self) -> int:
+        return self.total_registros('movimiento')
+
+    def total_unidades(self) -> int:
+        return self.total_registros('unidadtransporte')
+
+    def total_pasajeros(self) -> int:
+        return self.total_registros('Usuario', "WHERE IDRolUsuario = 1")
+
+    def total_operarios(self) -> int:
+        return self.total_registros('usuario', "WHERE IDRolUsuario = 2")
+
+    def total_supervisores(self) -> int:
+        return self.total_registros('usuario', "WHERE IDRolUsuario = 3")
+
+    def total_mantenimiento(self) -> int:
+        return self.total_registros('mantenimiento')
+
+    def proximos_mantenimientos(self) -> int:
+        return self.total_registros('mantenimiento', "WHERE fecha < GETDATE()")
+
+    def alerta_mantenimiento_atrasados(self) -> list:
+        return self._execute_query("SELECT * FROM mantenimiento WHERE fecha < GETDATE()")
+
+    def alerta_mantenimiento_proximos(self) -> list:
+        return self._execute_query("SELECT * FROM mantenimiento WHERE fecha BETWEEN GETDATE() AND DATEADD(DAY, 7, GETDATE())")
+
+    def total_usuarios(self) -> int:
+        return self.total_registros('usuario')
+
+    def total_buses_activos(self) -> int:
+        return self.total_registros('unidadtransporte', "WHERE status = 'activo'")
+
+    def total_buses_inactivos(self) -> int:
+        return self.total_registros('unidadtransporte', "WHERE status = 'inactivo'")
+
+    def promedio_horas_trabajadas(self) -> float:
+        query = "SELECT AVG(horastrabajadas) FROM rendimiento"
+        result = self._execute_query(query)
+        return result[0]['AVG(horastrabajadas)'] if result else 0.0
+
+    def last_card_used(self, id_card: int) -> str:
+        query = """
+        SELECT TOP 1 a.TipoMovimiento, m.Monto
+        FROM Movimiento m
+        INNER JOIN TipoMovimiento a ON m.IDTipoMovimiento = a.ID
+        WHERE a.ID = ?
+        ORDER BY m.ID DESC;
+        """
+        result = self._execute_query(query, (id_card,))
+        return result[0] if result else None

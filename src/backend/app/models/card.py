@@ -3,10 +3,10 @@ from pydantic import BaseModel
 
 class CardCreate(BaseModel):
     __entity_name__ = "tarjeta"
-    id: Optional[int] = None
-    iduser: Optional[int] = None
-    idtype: Optional[int] = None
-    balance: Optional[int] = None
+    ID: Optional[int] = None
+    IDUsuario: Optional[int] = None
+    IDTipoTarjeta: Optional[int] = None
+    Saldo: Optional[int] = None
 
     def to_dict(self):
         return self.model_dump()
@@ -14,10 +14,10 @@ class CardCreate(BaseModel):
     @classmethod
     def get_fields(cls)-> dict:
         return {
-            "id": "INTEGER PRIMARY KEY",       # ID como clave primaria
-            "iduser": "INTEGER",            # iduser como entero
-            "idtype": "INTEGER",        # idtype como entero
-            "balance": "INTEGER"                   # balance como número decimal (REAL)
+            "ID": "INTEGER PRIMARY KEY",       # ID como clave primaria
+            "IDUsuario": "INTEGER",            # IDUsuario como entero
+            "IDTipoTarjeta": "INTEGER",        # IDTipoTarjeta como entero
+            "Saldo": "INTEGER"                   # Saldo como número decimal (REAL)
         }
 
 class CardOut(CardCreate):

@@ -2,10 +2,7 @@ import os
 import sqlite3
 from typing import Any
 
-# Definir la ruta a la base de datos
-PATH = os.getcwd()
-DIR_DATA = os.path.join(PATH, 'src', 'backend', 'app', 'data')
-DB_FILE = os.path.join(DIR_DATA, 'data.db')
+
 #Pasajero
 def obtener_ruta_con_interconexion(ubicacion_llegada, ubicacion_final):
     answer = ""  # Initialize answer

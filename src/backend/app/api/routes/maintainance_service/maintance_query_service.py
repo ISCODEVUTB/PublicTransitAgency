@@ -36,9 +36,9 @@ def read_all():
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-@app.get("/{id}")
+@app.get("/{ID}")
 def get_by_id(
-    id: int
+    ID: int
     
 ):
     """
@@ -46,7 +46,7 @@ def get_by_id(
     If not found, raises a 404 error.
 
     Args:
-    - id (int): The ID of the maintenance record.
+    - ID (int): The ID of the maintenance record.
     - current_user (dict): User information from authentication.
 
     Returns:
@@ -55,21 +55,21 @@ def get_by_id(
     Raises:
     - HTTPException: If the maintenance record is not found.
     """    
-    result = controller_maintenance.get_by_id(MaintenanceOut,id)
+    result = controller_maintenance.get_by_id(MaintenanceOut,ID)
     if not result:
-        logger.warning(f"[GET /{id}] Mantenimiento con ID {id} no encontrado.")
+        logger.warning(f"[GET /{ID}] Mantenimiento con ID {ID} no encontrado.")
         raise HTTPException(status_code=404, detail="Not found")
     
-    logger.info(f"[GET /{id}] Se ha encontrado el mantenimiento con ID {id}.")
+    logger.info(f"[GET /{ID}] Se ha encontrado el mantenimiento con ID {ID}.")
     return result.to_dict()
 
 
 @app.get("/unit/{unit_id}")
-def get_by_unit(id_unit: int): 
+def get_by_unit(idunidad: int): 
     try:
-        records = controller_maintenance.get_by_unit(id_unit)
-        logger.info(f"[GET /unit/{id_unit}] Se han recuperado {len(records)} registros de mantenimiento para la unidad {id_unit}.")
+        records = controller_maintenance.get_by_unit(idunidad)
+        logger.info(f"[GET /unit/{idunidad}] Se han recuperado {len(records)} registros de mantenimiento para la unidad {idunidad}.")
         return records
     except Exception as e:
-        logger.error(f"[GET /unit/{id_unit}] Error al obtener los registros de mantenimiento para la unidad {id_unit}: {str(e)}")
+        logger.error(f"[GET /unit/{idunidad}] Error al obtener los registros de mantenimiento para la unidad {idunidad}: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")

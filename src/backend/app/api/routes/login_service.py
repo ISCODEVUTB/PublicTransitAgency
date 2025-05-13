@@ -6,7 +6,6 @@ from fastapi.templating import Jinja2Templates
 from backend.app.core.auth import encode_token, settings
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.models.user import UserCreate, UserOut
-from backend.app.core.deps import total_unidades, total_pasajeros, total_operario, total_supervisor, total_mantenimiento, proximos_mantenimientos, last_card_used,get_type_card
 
 # Crear el controlador para acceder a la base de datos
 controller = UniversalController()
@@ -80,15 +79,15 @@ async def get_scope_page(request: Request, scope: str):
             "request": request,
             "user": user,
             "id": user_id,
-            "total_vehiculos": total_unidades(),
-            "total_passanger": total_pasajeros(),
-            "total_operative": total_operario(),
-            "total_supervisors": total_supervisor(),
-            "type_card": get_type_card(user_id),
-            "buses_mantenimiento": total_unidades(),
-            "registros_mantenimiento": total_mantenimiento(),
-            "proximo_mantenimiento": proximos_mantenimientos(),
-            "ultimo_uso_tarjeta": last_card_used(user_id),
+            "total_vehiculos": controller.total_unidades(),
+            "total_passanger": controller.total_pasajeros(),
+            "total_operative": controller.total_operarios(),
+            "total_supervisors": controller.total_supervisores(),
+            "type_card": controller.last_card_used(user_id),
+            "buses_mantenimiento": controller.total_unidades(),
+            "registros_mantenimiento": controller.total_mantenimiento(),
+            "proximo_mantenimiento": controller.proximos_mantenimientos(),
+            "ultimo_uso_tarjeta": controller.last_card_used(user_id),
             "nombre":"None",
             "turno":"None",
             "zona":"None"

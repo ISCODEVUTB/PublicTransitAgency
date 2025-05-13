@@ -7,8 +7,24 @@
 </head>
 <body>
     <h2 style="text-align: center;">Planificacion</h2>
-    <p>
-        {{planif}}
-    </p>
+    {% if planif and planif.get('interconexiones') %}
+        <table>
+            <tr>
+                <th>Ruta de Inicio</th>
+                <th>Interconexión</th>
+                <th>Ruta Final</th>
+            </tr>
+            {% for interconexion in planif['interconexiones'] %}
+            <tr>
+                <td>{{ interconexion.ruta_inicio }}</td>
+                <td>{{ interconexion.interconexion }}</td>
+                <td>{{ interconexion.ruta_final }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No se encontraron interconexiones.</p>
+    {% endif %}
+    <a href="http://127.0.0.1:8000/login/user/pasajero" class="back-button">Volver Atrás</a>
 </body>
 </html>

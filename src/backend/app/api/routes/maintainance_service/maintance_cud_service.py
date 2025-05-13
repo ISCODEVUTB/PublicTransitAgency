@@ -24,9 +24,7 @@ async def maintenance_token_info(request: Request, token_info= get_current_user)
 
 @app.get("/crear", response_class=HTMLResponse)
 def crear_mantenimiento(
-    request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-):
+    request: Request):
     """
     Route to display the maintenance creation form.
     """
@@ -35,9 +33,7 @@ def crear_mantenimiento(
 
 @app.get("/eliminar", response_class=HTMLResponse)
 def eliminar_mantenimiento(
-    request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    
+    request: Request    
 ):
     """
     Route to display the maintenance deletion form.
@@ -47,9 +43,7 @@ def eliminar_mantenimiento(
 
 @app.get("/actualizar", response_class=HTMLResponse)
 def actualizar_mantenimiento(
-    request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    
+    request: Request    
 ):
     """
     Route to display the maintenance update form.
@@ -59,13 +53,11 @@ def actualizar_mantenimiento(
 
 @app.post("/create")
 async def add(
-    id: int = Form(...),
+    ID: int = Form(...),
     id_status: int = Form(...),
     type: str = Form(...),
     fecha: datetime = Form(...),
-    id_unit: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    
+    idunidad: int = Form(...)    
 ):
     """
     Route to add a new maintenance record.
@@ -73,16 +65,16 @@ async def add(
     """
     
     maintenance_temp = MaintenanceCreate(
-        id=id,
+        ID=ID,
         id_status=id_status,
         type=type,
         fecha=fecha,
-        id_unit=id_unit
+        idunidad=idunidad
     )
     
     try:
         controller.add(maintenance_temp)
-        logger.info(f"[POST /create] Mantenimiento con ID {maintenance_temp.id_unit} creado con éxito.")
+        logger.info(f"[POST /create] Mantenimiento con ID {maintenance_temp.idunidad} creado con éxito.")
         return {"message": "Maintenance added successfully"}
     except Exception as e:
         logger.error(f"[POST /create] Error al crear mantenimiento: {e}")
@@ -91,37 +83,35 @@ async def add(
 
 @app.post("/update")
 async def update(
-    id: int = Form(...),
+    ID: int = Form(...),
     id_status: int = Form(...),
     type: str = Form(...),
     fecha: datetime = Form(...),
-    id_unit: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    
+    idunidad: int = Form(...)    
 ):
     """
     Route to update an existing maintenance record.
     Checks if the maintenance record exists and updates it with new data.
     """
     
-    existing_maintenance = controller.get_by_id(MaintenanceOut, id)
+    existing_maintenance = controller.get_by_id(MaintenanceOut, ID)
     
     if not existing_maintenance:
-        logger.warning(f"[POST /update] No se encontró mantenimiento con ID {id}.")
+        logger.warning(f"[POST /update] No se encontró mantenimiento con ID {ID}.")
         raise HTTPException(status_code=404, detail="Maintenance not found")
     
     maintenance_temp = MaintenanceCreate(
-        id=id,  # The ID must remain the same to update the object
+        ID=ID,  # The ID must remain the same to update the object
         id_status=id_status,
         type=type,
         fecha=fecha,
-        id_unit=id_unit
+        idunidad=idunidad
     )
     
     try:
         controller.update(maintenance_temp)
-        logger.info(f"[POST /update] Mantenimiento con ID {id} actualizado con éxito.")
-        return {"message": f"Maintenance {id} updated successfully"}
+        logger.info(f"[POST /update] Mantenimiento con ID {ID} actualizado con éxito.")
+        return {"message": f"Maintenance {ID} updated successfully"}
     except Exception as e:
         logger.error(f"[POST /update] Error al actualizar mantenimiento: {e}")
         raise HTTPException(status_code=500, detail=str(e))  # Handle any exceptions
@@ -129,23 +119,21 @@ async def update(
 
 @app.post("/delete")
 async def delete_maintenance(
-    id: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    
+    ID: int = Form(...)    
 ):
     """
     Route to delete an existing maintenance record by its ID.
     """
     
     try:
-        existing_maintenance = controller.get_by_id(MaintenanceOut, id)
+        existing_maintenance = controller.get_by_id(MaintenanceOut, ID)
         if not existing_maintenance:
-            logger.warning(f"[POST /delete] No se encontró mantenimiento con ID {id}.")
+            logger.warning(f"[POST /delete] No se encontró mantenimiento con ID {ID}.")
             raise HTTPException(status_code=404, detail="Maintenance not found")
         
         controller.delete(existing_maintenance)
-        logger.info(f"[POST /delete] Mantenimiento con ID {id} eliminado con éxito.")
-        return {"message": f"Maintenance {id} deleted successfully"}
+        logger.info(f"[POST /delete] Mantenimiento con ID {ID} eliminado con éxito.")
+        return {"message": f"Maintenance {ID} deleted successfully"}
     except HTTPException:
         raise  # Re-raises HTTPException as is
     except Exception as e:
