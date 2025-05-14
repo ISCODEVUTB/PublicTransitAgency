@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from backend.app.api.routes.routes_query_service import app
 from backend.app.models.routes import Route
 from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.core.conf import headers
 
 client = TestClient(app)
 controller = UniversalController()
@@ -40,17 +41,8 @@ def test_detalle_ruta_existente(setup_and_teardown):
     route = setup_and_teardown
     response = client.get(f"/routes/{route.ID}")
     assert response.status_code == 200
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d4828dc (incidence and transport fix)
+
     assert "Ruta de prueba" in response.text
 
 
-<<<<<<< HEAD
->>>>>>> a8980fb (Corrections on test)
-=======
-
-
->>>>>>> d4828dc (incidence and transport fix)
 
