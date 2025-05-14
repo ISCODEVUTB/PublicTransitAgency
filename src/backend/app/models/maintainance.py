@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 class MaintenanceCreate(BaseModel):
-    __entity_name__ = "mantenimiento"
+    __entity_name__ = "mantenimientoins"
     
     ID: Optional[int] = None
     id_status: Optional[int] = None
@@ -26,7 +26,7 @@ class MaintenanceCreate(BaseModel):
             "idunidad": "INTEGER",              # ID de la unidad asociada (entero)
         }
 class MaintenanceOut(MaintenanceCreate):
-    __entity_name__ = "mantenimiento"
+    __entity_name__ = "mantenimientoins"
     @classmethod
     def from_dict(cls, data: dict):
         return cls(**data)

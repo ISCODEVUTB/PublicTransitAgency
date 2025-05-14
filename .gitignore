@@ -9,3 +9,5 @@ __pycache__
 coverage.xml
 .idea
 .env
+*.pyc
+src/backend/app/models/__pycache__/user.cpython-313.pyc

@@ -1,8 +1,10 @@
 import logging
-from fastapi import APIRouter, HTTPException, Security
+from fastapi import APIRouter, HTTPException, Security,Request
+from fastapi.responses import HTMLResponse
 from backend.app.logic.universal_controller_sqlserver import UniversalController
 from backend.app.core.auth import get_current_user
 from backend.app.models.maintainance import MaintenanceOut
+from fastapi.templating import Jinja2Templates
 
 # Initialize the maintenance controller
 
@@ -13,7 +15,7 @@ controller_maintenance = UniversalController()
 # Set up logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
+templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/maintainancements", response_model=list[dict])
 def read_all():
@@ -36,7 +38,7 @@ def read_all():
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-@app.get("/{ID}")
+@app.get("id/{ID}")
 def get_by_id(
     ID: int
     
@@ -73,3 +75,20 @@ def get_by_unit(idunidad: int):
     except Exception as e:
         logger.error(f"[GET /unit/{idunidad}] Error al obtener los registros de mantenimiento para la unidad {idunidad}: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
+@app.get("/listar", response_class=HTMLResponse)
+async def listar_mantenimientos(request: Request):
+    """
+    Muestra la lista de registros de mantenimiento en formato HTML.
+    """
+    try:
+        # Obtener todos los registros de mantenimiento de la base de datos
+        mantenimientos = controller_maintenance.read_all(MaintenanceOut)
+
+        # Renderizar la plantilla HTML con los datos obtenidos
+        return templates.TemplateResponse("ListarMantenimientos.html", {
+            "request": request,
+            "mantenimientos": mantenimientos
+        })
+    except Exception as e:
+        logger.error(f"[GET /listar] Error al listar mantenimientos: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error al listar mantenimientos: {str(e)}")

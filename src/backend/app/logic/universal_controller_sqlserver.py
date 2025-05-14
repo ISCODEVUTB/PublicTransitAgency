@@ -147,7 +147,7 @@ class UniversalController:
             raise ValueError(f"Error al eliminar el registro: {e}")
     
     def get_by_unit(self, unit_id: int) -> list[dict]:
-        sql = "SELECT * FROM mantenimiento WHERE id_unit = ?"
+        sql = "SELECT * FROM mantenimientoins WHERE idunidad = ?"
         try:
             self.cursor.execute(sql, (unit_id,))
             rows = self.cursor.fetchall()
