@@ -3,7 +3,8 @@ from fastapi.testclient import TestClient
 from backend.app.api.routes.incidence_query_service import app
 from backend.app.models.incidence import Incidence
 from backend.app.logic.universal_controller_sqlserver import UniversalController
-from backend.app.api.routes.incidence_query_service import headers
+from backend.app.core.conf import headers
+
 client = TestClient(app)
 controller = UniversalController()
 
