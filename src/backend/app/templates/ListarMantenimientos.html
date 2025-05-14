@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Listar mantenimientos{% endblock %}
+{% block header %}Lista de mantenimientos{% endblock %}
+{% block back_url %}/maintainance{% endblock %}
+
+{% block content %}
+<table class="table-auto w-full border-collapse border border-gray-300">
+    <thead>
+        <tr class="bg-gray-200">
+            <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Estado</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Tipo</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Fecha</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">ID Unidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for mantenimiento in mantenimientos %}
+        <tr class="hover:bg-gray-100">
+            <td class="border border-gray-300 px-4 py-2">{{ mantenimiento.get("ID", "N/A") }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ mantenimiento.get("id_status", "N/A") }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ mantenimiento.get("type", "N/A") }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ mantenimiento.get("fecha", "N/A") }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ mantenimiento.get("idunidad", "N/A") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
