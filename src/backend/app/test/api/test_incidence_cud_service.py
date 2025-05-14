@@ -29,6 +29,15 @@ def test_crear_incidencia():
     finally:
         controller.delete(incidencia)
 
+def test_crear_incidencia_ya_existente(setup_and_teardown):
+    """
+    Prueba para intentar crear una incidencia que ya existe.
+    """
+    incidencia = setup_and_teardown
+    response = client.post("/incidences/create", data=incidencia.to_dict(), headers=headers)
+    assert response.status_code == 400
+    assert response.json()["detail"] == f"El ID {incidencia.ID} ya existe en el sistema."
+
 def test_actualizar_incidencia(setup_and_teardown):
     """
     Prueba para actualizar una incidencia existente.
@@ -52,3 +61,30 @@ def test_eliminar_incidencia(setup_and_teardown):
     response = client.post("/incidences/delete", data={"ID": incidencia.ID}, headers=headers)
     assert response.status_code == 200
     assert response.json()["message"] == "Incidencia eliminada exitosamente."
+<<<<<<< HEAD:src/backend/app/test/api/test_incidence_cud_service.py
+=======
+
+def test_renderizar_formulario_crear():
+    """
+    Prueba para verificar que el formulario de creación se renderiza correctamente.
+    """
+    response = client.get("/incidences/create", headers=headers)
+    assert response.status_code == 200
+    assert "CrearIncidencia.html" in response.text
+
+def test_renderizar_formulario_actualizar():
+    """
+    Prueba para verificar que el formulario de actualización se renderiza correctamente.
+    """
+    response = client.get("/incidences/update", headers=headers)
+    assert response.status_code == 200
+    assert "ActualizarIncidencia.html" in response.text
+
+def test_renderizar_formulario_eliminar():
+    """
+    Prueba para verificar que el formulario de eliminación se renderiza correctamente.
+    """
+    response = client.get("/incidences/delete", headers=headers)
+    assert response.status_code == 200
+    assert "EliminarIncidencia.html" in response.text
+>>>>>>> 4881543 (try with coverage):src/backend/app/tests/api/test_incidence_cud_service.py
