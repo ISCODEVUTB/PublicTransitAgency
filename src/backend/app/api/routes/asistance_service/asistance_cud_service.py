@@ -162,7 +162,7 @@ async def create_asistance(
 
 @app.post("/update")
 async def update_asistance(
-    request, Request,
+    request: Request,
     id: int = Form(...),
     iduser:int= Form(...),
     horainicio: str = Form(...),

@@ -20,18 +20,6 @@ app = APIRouter(prefix="/pqr", tags=["pqr"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 
-@app.get("/consultar", response_class=HTMLResponse)
-def consultar(
-    request: Request,
-    #current_user: dict = Security(get_current_user, scopes=[
-        #"system", "administrador", "pasajero"])
-):
-    """
-    Render the 'ConsultarPQR.html' template for the pqr consultation page.
-    """
-    #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de pqr")
-    return templates.TemplateResponse(request,"ConsultarPQR.html", {"request": request})
-
 @app.get("/consultar/administrador", response_class=HTMLResponse)
 def consultar(
     request: Request,
@@ -78,7 +66,7 @@ async def get_pqrs(
         logger.warning(f"[GET /pqrs] No se encontraron usuarios registrados")
         context = {
             "request": request,
-            "pqrs": []  # Si no se encontraron usuarios
+            "pqrs": pqrs  # Si no se encontraron usuarios
         }
     return templates.TemplateResponse("Pasajeropqrs.html", context)
 
@@ -102,7 +90,7 @@ async def get_pqrs(
         logger.warning(f"[GET /pqrs] No se encontraron usuarios registrados")
         context = {
             "request": request,
-            "pqrs": []  # Si no se encontraron usuarios
+            "pqrs": pqrs  # Si no se encontraron usuarios
         }
     return templates.TemplateResponse("Administradorpqrs.html", context)
 
@@ -160,7 +148,7 @@ def pqr_by_user(
         logger.warning(f"[GET /pqr] No se encontró pqr con iduser={iduser}")
         context = {
             "request": request,
-            "pqrs": []  # Si no se encontraron asistencias, pasar una lista vacía
+            "pqrs": unit_pqr  # Si no se encontraron asistencias, pasar una lista vacía
         }
 
     return templates.TemplateResponse(request,"pqrs.html", context)

@@ -16,43 +16,53 @@ logging.basicConfig(level=logging.INFO)
 app = APIRouter(prefix="/movement", tags=["movement"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
-@app.get("/crear", response_class=HTMLResponse)
+@app.get("/administrador/crear", response_class=HTMLResponse)
 def index_create(
     request: Request,
-    current_user: dict = Security(
-        get_current_user,
-        scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user,scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /crear] Movimiento: {current_user['user_id']} - Mostrando formulario de creación de movimiento")
-    return templates.TemplateResponse("CrearMovimiento.html", {"request": request})
+    #logger.info(f"[GET /crear] Movimiento: {current_user['user_id']} - Mostrando formulario de creación de movimiento")
+    try:
+        movements = controller.read_all(MovementOut)
+        ultimo_id = max(p["ID"] for p in movements) if movements else 0
+        nuevo_id = ultimo_id + 1
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        nuevo_id = 1  # Por defecto
+
+    return templates.TemplateResponse("CrearAdministradorMovimiento.html", {
+        "request": request,
+        "nuevo_id": nuevo_id
+    })
 
 
-@app.get("/actualizar", response_class=HTMLResponse)
+@app.get("/administrador/actualizar", response_class=HTMLResponse)
 def index_update(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /actualizar] Movimiento: {current_user['user_id']} - Mostrando formulario de actualización de movimiento")
-    return templates.TemplateResponse("ActualizarMovimiento.html", {"request": request})
+    #logger.info(f"[GET /actualizar] Movimiento: {current_user['user_id']} - Mostrando formulario de actualización de movimiento")
+    return templates.TemplateResponse("ActualizarAdministradorMovimiento.html", {"request": request})
 
 
-@app.get("/eliminar", response_class=HTMLResponse)
+@app.get("/administrador/eliminar", response_class=HTMLResponse)
 def index_delete(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /eliminar] Movimiento: {current_user['user_id']} - Mostrando formulario de eliminación de movimiento")
-    return templates.TemplateResponse("EliminarMovimiento.html", {"request": request})
+    #logger.info(f"[GET /eliminar] Movimiento: {current_user['user_id']} - Mostrando formulario de eliminación de movimiento")
+    return templates.TemplateResponse("EliminarAdministradorMovimiento.html", {"request": request})
 
 
 @app.post("/create")
 async def create_movement(
+    request:Request,
     ID: int = Form(...),
     IDTipoMovimiento:int= Form(...),
     Monto:float=Form(...),
-    current_movement: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_movement: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /create] Movimiento: {current_movement['user_id']} - Intentando crear movimiento con id: {ID}")
+    #logger.info(f"[POST /create] Movimiento: {current_movement['user_id']} - Intentando crear movimiento con id: {ID}")
 
     try:
         # Verificar si el movimiento ya existe
@@ -63,16 +73,16 @@ async def create_movement(
 
         # Crear movimiento
         new_movement = MovementCreate(ID=ID, IDTipoMovimiento=IDTipoMovimiento, Monto=Monto)
-        logger.info(f"Intentando insertar movimiento con datos: {new_movement.model_dump()}")
         controller.add(new_movement)
-        logger.info(f"Movimiento insertado con ID: {new_movement.ID}")  # Verifica si el ID se asigna
         logger.info(f"[POST /create] Movimiento creado exitosamente con identificación {ID}")
-        return {
+        context = {
+            "request":request,
             "operation": "create",
             "success": True,
             "data": MovementOut(ID=new_movement.ID,IDTipoMovimiento=new_movement.IDTipoMovimiento,Monto=new_movement.Monto).model_dump(),
             "message": "Movement created successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
         
     except ValueError as e:
         logger.warning(f"[POST /create] Error de validación: {str(e)}")
@@ -84,14 +94,15 @@ async def create_movement(
 
 @app.post("/update")
 async def update_movement(
+    request:Request,
     ID: int = Form(...),
     IDTipoMovimiento:int=Form(...),
     Monto:float=Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /update] Movimiento: {current_user['user_id']} - Actualizando movimiento id={ID}")
+    #logger.info(f"[POST /update] Movimiento: {current_user['user_id']} - Actualizando movimiento id={ID}")
     try:
-        existing = controller.get_by_id(MovementOut, ID)
+        existing = controller.get_by_column(MovementOut, "ID",ID)
         if existing is None:
             logger.warning(f"[POST /update] Movimiento no encontrada: id={ID}")
             raise HTTPException(404, detail="Movement not found")
@@ -99,12 +110,14 @@ async def update_movement(
         updated_movement = MovementOut(ID=ID, IDTipoMovimiento=IDTipoMovimiento, Monto=Monto)
         controller.update(updated_movement)
         logger.info(f"[POST /update] Movimiento actualizada exitosamente: {updated_movement}")
-        return {
+        context= {
+            "request":request,
             "operation": "update",
             "success": True,
             "data": MovementOut(ID=ID, IDTipoMovimiento=updated_movement.IDTipoMovimiento,Monto=updated_movement.Monto).model_dump(),
             "message": f"Movement {ID} updated successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
     except ValueError as e:
         logger.warning(f"[POST /update] Error de validación: {str(e)}")
         raise HTTPException(400, detail=str(e))
@@ -113,24 +126,26 @@ async def update_movement(
 
 @app.post("/delete")
 async def delete_movement(
+    request:Request,
     ID: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /delete] Movimiento: {current_user['user_id']} - Eliminando movimiento id={ID}")
+    #logger.info(f"[POST /delete] Movimiento: {current_user['user_id']} - Eliminando movimiento id={ID}")
     try:
-        existing = controller.get_by_id(MovementOut, ID)
+        existing = controller.get_by_column(MovementOut, "ID",ID)
         if not existing:
             logger.warning(f"[POST /delete] Movimiento no encontrado en la base de datos: id={ID}")
             raise HTTPException(404, detail="Movement not found")
 
-        logger.info(f"[POST /delete] Eliminando movimiento con ID={ID}")
         controller.delete(existing) 
         logger.info(f"[POST /delete] Movimiento eliminada exitosamente: id={ID}")
-        return {
+        context = {
+            "request":request,
             "operation": "delete",
             "success": True,
             "message": f"Movement {ID} deleted successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
     except HTTPException as e:
         raise e
     except Exception as e:
