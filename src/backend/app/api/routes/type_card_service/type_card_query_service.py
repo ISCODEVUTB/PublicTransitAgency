@@ -2,11 +2,11 @@ import logging
 from fastapi import APIRouter, HTTPException, Security
 from fastapi import status
 from backend.app.models.type_card import TypeCardOut
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.core.auth import get_current_user
 
 # Initialize the controller for Tipo card operations
-controller = UniversalController()
+
 
 # Create the router with prefix and tags
 app = APIRouter(prefix="/typecard", tags=["Type Card"])

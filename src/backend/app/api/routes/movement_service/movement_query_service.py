@@ -11,7 +11,7 @@ import uvicorn
 
 #from backend.app.core.auth import get_current_user
 from backend.app.models.movement import MovementOut
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.core.auth import get_current_user
 
 # Configuración del logger
@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Initialize the controller to handle database operations
-controller = UniversalController()
 app = APIRouter(prefix="/movement", tags=["movement"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 

@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 
 from backend.app.core.auth import get_current_user
 from backend.app.models.asistance import AsistanceOut
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 
 # Configuración del logger
 logger = logging.getLogger(__name__)
@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 app = APIRouter(prefix="/asistance", tags=["asistance"])
 
 # Initialize universal controller instance
-controller = UniversalController()
+
 
 # Setup Jinja2 template engine
 templates = Jinja2Templates(directory="src/backend/app/templates")

@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Form, HTTPException, Security
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.models.ticket import Ticket
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 
 app = APIRouter(prefix="/tickets", tags=["tickets"])
-controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/create", response_class=HTMLResponse)

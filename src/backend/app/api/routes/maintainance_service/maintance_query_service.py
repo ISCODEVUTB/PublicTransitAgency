@@ -1,7 +1,7 @@
 import logging
 from fastapi import APIRouter, HTTPException, Security,Request
 from fastapi.responses import HTMLResponse
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.core.auth import get_current_user
 from backend.app.models.maintainance import MaintenanceOut
 from fastapi.templating import Jinja2Templates
@@ -11,7 +11,6 @@ from fastapi.templating import Jinja2Templates
 
 # Create the APIRouter instance with a prefix and tags
 app = APIRouter(prefix="/maintainance", tags=["maintainance"])
-controller_maintenance = UniversalController()
 # Set up logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -30,7 +29,7 @@ def read_all():
     """
     
     try:
-        records = controller_maintenance.read_all(MaintenanceOut)
+        records = controller.read_all(MaintenanceOut)
         logger.info(f"[GET /maintainancements] Se han recuperado {len(records)} registros de mantenimiento.")
         return records
     except Exception as e:
@@ -57,7 +56,7 @@ def get_by_id(
     Raises:
     - HTTPException: If the maintenance record is not found.
     """    
-    result = controller_maintenance.get_by_id(MaintenanceOut,ID)
+    result = controller.get_by_id(MaintenanceOut,ID)
     if not result:
         logger.warning(f"[GET /{ID}] Mantenimiento con ID {ID} no encontrado.")
         raise HTTPException(status_code=404, detail="Not found")
@@ -69,7 +68,7 @@ def get_by_id(
 @app.get("/unit/{unit_id}")
 def get_by_unit(idunidad: int): 
     try:
-        records = controller_maintenance.get_by_unit(idunidad)
+        records = controller.get_by_unit(idunidad)
         logger.info(f"[GET /unit/{idunidad}] Se han recuperado {len(records)} registros de mantenimiento para la unidad {idunidad}.")
         return records
     except Exception as e:
@@ -82,7 +81,7 @@ async def listar_mantenimientos(request: Request):
     """
     try:
         # Obtener todos los registros de mantenimiento de la base de datos
-        mantenimientos = controller_maintenance.read_all(MaintenanceOut)
+        mantenimientos = controller.read_all(MaintenanceOut)
 
         # Renderizar la plantilla HTML con los datos obtenidos
         return templates.TemplateResponse("ListarMantenimientos.html", {

@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 
 from backend.app.core.auth import get_current_user
 from backend.app.models.type_movement import TypeMovementOut
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.core.auth import get_current_user
 # Configuración del logger
 logger = logging.getLogger(__name__)
@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 app = APIRouter(prefix="/typemovement", tags=["typemovement"])
 
 # Initialize universal controller instance
-controller = UniversalController()
+
 
 # Setup Jinja2 template engine
 templates = Jinja2Templates(directory="src/backend/app/templates")
@@ -57,8 +57,8 @@ def typemovement(
     Retrieve a user by its ID and render the 'typetransport.html' template with its details.
     If the user is not found, display 'None' for all fields.
     """
-    logger.info(f"[GET /typemovement] Usuario: {current_user['user_id']} - Consultando tipo de movimiento con ID={ID}")
-    unit_typemovement= controller.get_by_id(TypeMovementOut, ID)
+    logger.info(f"[GET /typemovement] Usuario: {current_user['user_id']} - Consultando tipo de movimiento con ID={id}")
+    unit_typemovement= controller.get_by_id(TypeMovementOut, id)
 
     if unit_typemovement:
         logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.id}, {unit_typemovement.type}")

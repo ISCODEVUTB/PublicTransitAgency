@@ -1,13 +1,12 @@
 from fastapi import Request
 from fastapi import APIRouter, Form, HTTPException, Security
 from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.models.maintainance_status import MaintainanceStatus
 from backend.app.core.auth import get_current_user
 from fastapi.responses import HTMLResponse
 
 app = APIRouter(prefix="/maintainance_status", tags=["maintainance_status"])
-controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/create", response_class=HTMLResponse)

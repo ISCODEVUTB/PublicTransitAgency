@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Form, HTTPException, Security, Request
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.models.routes import Route
 from backend.app.models.type_transport import TypeTransportCreate
 from backend.app.models.transport import UnidadTransporte
@@ -9,7 +9,6 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 
 app = APIRouter(prefix="/transport_units", tags=["transport_units"])
-controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/create", response_class=HTMLResponse)

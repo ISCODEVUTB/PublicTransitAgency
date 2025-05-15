@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.models.transport import UnidadTransporte
 from backend.app.core.auth import get_current_user
 
 app = APIRouter(prefix="/transport_units", tags=["transport_units"])
-controller = UniversalController()
+
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 @app.get("/", response_class=HTMLResponse)

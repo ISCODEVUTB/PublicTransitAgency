@@ -8,7 +8,7 @@ from fastapi.responses import HTMLResponse
 from backend.app.models.user import UserCreate, UserOut
 from backend.app.models.rol_user import RolUserOut
 from backend.app.models.shift import Shift
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.core.auth import get_current_user
 
 # Configuración de logging
@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 app = APIRouter(prefix="/user", tags=["user"])
-controller = UniversalController()
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 

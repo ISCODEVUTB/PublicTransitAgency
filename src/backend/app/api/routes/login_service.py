@@ -4,11 +4,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import Depends, Request, HTTPException, status, APIRouter, Form
 from fastapi.templating import Jinja2Templates
 from backend.app.core.auth import encode_token, settings
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.models.user import UserCreate, UserOut
 
 # Crear el controlador para acceder a la base de datos
-controller = UniversalController()
 
 app = APIRouter(prefix="/login", tags=["login"])
 templates = Jinja2Templates(directory="src/frontend/templates")
@@ -88,9 +87,7 @@ async def get_scope_page(request: Request, scope: str):
             "registros_mantenimiento": controller.total_mantenimiento(),
             "proximo_mantenimiento": controller.proximos_mantenimientos(),
             "ultimo_uso_tarjeta": controller.last_card_used(user_id),
-            "nombre":"None",
-            "turno":"None",
-            "zona":"None"
+            "turno":controller.get_turno_usuario(user_id)
         })
     except Exception as e:
         print(f"[SCOPE GET] ERROR: {e}")
@@ -100,7 +97,7 @@ async def get_scope_page(request: Request, scope: str):
 def map_role_to_scope(role_id: int) -> str:
     role_scope_map = {
         1: "pasajero",
-        2: "operador",
+        2: "operario",
         3: "supervisor",
         4: "administrador",
         5: "mantenimiento"

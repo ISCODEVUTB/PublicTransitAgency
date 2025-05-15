@@ -261,16 +261,16 @@ class UniversalController:
         return self.total_registros('usuario', "WHERE IDRolUsuario = 3")
 
     def total_mantenimiento(self) -> int:
-        return self.total_registros('mantenimiento')
+        return self.total_registros('mantenimientoins')
 
     def proximos_mantenimientos(self) -> int:
-        return self.total_registros('mantenimiento', "WHERE fecha < GETDATE()")
+        return self.total_registros('mantenimientoins', "WHERE fecha < GETDATE()")
 
     def alerta_mantenimiento_atrasados(self) -> list:
-        return self._execute_query("SELECT * FROM mantenimiento WHERE fecha < GETDATE()")
+        return self._execute_query("SELECT * FROM mantenimientoins WHERE fecha < GETDATE()")
 
     def alerta_mantenimiento_proximos(self) -> list:
-        return self._execute_query("SELECT * FROM mantenimiento WHERE fecha BETWEEN GETDATE() AND DATEADD(DAY, 7, GETDATE())")
+        return self._execute_query("SELECT * FROM mantenimientoins WHERE fecha BETWEEN GETDATE() AND DATEADD(DAY, 7, GETDATE())")
 
     def total_usuarios(self) -> int:
         return self.total_registros('usuario')
@@ -320,3 +320,18 @@ class UniversalController:
             return [dict(zip([column[0] for column in self.cursor.description], row)) for row in rows]
         except pyodbc.Error as e:
             raise RuntimeError(f"Error al obtener registros de Ruta-Parada: {e}")
+    def get_turno_usuario(self, user_id: int) -> dict:
+        """
+        Obtiene el turno de un usuario según su ID.
+        """
+        query = """
+        SELECT t.TipoTurno
+        FROM Usuario u
+        JOIN Turno t ON u.IDTurno = t.ID
+        WHERE u.ID=?
+        """
+        try:
+            result = self._execute_query(query, (user_id,))
+            return result[0] if result else 0.0
+        except pyodbc.Error as e:
+            raise RuntimeError(f"Error al obtener el turno del usuario con ID {user_id}: {e}")

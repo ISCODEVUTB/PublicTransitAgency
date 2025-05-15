@@ -3,7 +3,7 @@ from fastapi import Request, APIRouter, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 
-from backend.app.logic.universal_controller_sqlserver import UniversalController
+from backend.app.logic.universal_controller_instance import universal_controller as controller
 
 # Configuración del logger
 logger = logging.getLogger("reporte_logger")
@@ -13,7 +13,6 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 app = APIRouter(prefix="/reporte", tags=["Reporte"])
 
 # Inicializar el controlador universal
-controller = UniversalController()
 
 # Configuración del motor de plantillas Jinja2
 templates = Jinja2Templates(directory="src/backend/app/templates")
