@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Gestion de Rendimiento</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+</head>
+<body>
+    <h2 style="text-align: center;  background-color: rgb(47, 165, 255); padding: 10px; color: white;">Consultar Gestion de Rendimiento</h2>
+    <form action="/pqr/find" method="get">
+        <label style="margin-left: 200px;" for="ID">ID Generado de Rendimiento:</label>
+        <input type="text" ID="ID" name="ID" required>
+        
+        <button  style="margin-left: 50px;"type="button" class="btn btn-info" onclick="location.href='/behavior/administrador/behaviors'">Ver Todos</button>
+        <button style="margin-left: 200px; margin-top: 10px; padding: 10px" class="btn btn-secondary" type="submit">Consultar</button>
+    </form>
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; margin-top: 25px;">
+        <div>
+            <button style="padding: 10px; margin-left: 100px;" onclick="location.href='/login/user/administrador'">
+            Regresar a la Pagina Principal
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 50px;" onclick="location.href='/behavior/administrador/crear'">
+            Crear una Nueva Rendimiento
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/behavior/actualizar'">
+            Actualizar Rendimiento
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/behavior/eliminar'">
+            Eliminar Rendimiento
+            </button>
+        </div>
+    </div>
+</body>
+</html> 

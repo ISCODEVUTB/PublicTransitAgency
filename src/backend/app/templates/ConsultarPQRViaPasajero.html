@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Gestion de PQR</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+</head>
+<body>
+    <h2 style="text-align: center;  background-color: rgb(47, 165, 255); padding: 10px; color: white;">Consultar Gestion de PQR</h2>
+    <div class="grid" style="display: grid; grid-template-columns: 2, 1fr; margin-top: 25px;">
+    <form action="/pqr/find" method="get">
+        <div>
+            <label style="margin-left: 200px;" for="ID">ID Generado de PQR:</label>
+            <input type="text" id="ID" name="ID" required>
+            <button style="margin-left: 230px; margin-top: 10px; padding: 10px" class="btn btn-secondary" type="submit">Consultar</button>
+        </div>
+    </form>
+    <form action="/pqr/user" method="get">
+        <div>
+            <label style="margin-left: 100px;" for="id">Ver Todos a Partir de Identificacion del Usuario:</label>
+            <input type="text" id="iduser" name="iduser" required>
+            <button style="margin-left: 230px; margin-top: 10px; padding: 10px" class="btn btn-secondary" type="submit">Consultar</button>
+        </div>
+        
+    </form>
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; margin-top: 25px;">
+        <div>
+            <button style="padding: 10px; margin-left:300px;" onclick="location.href='/login/user/pasajero'">
+            Regresar a la Pagina Principal
+            </button> 
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 170px;" onclick="location.href='/pqr/pasajero/crear'">
+            Crear una Nueva PQR
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 10px;" onclick="location.href='/pqr/pasajero/pqrs'">
+            Ver Todos
+            </button>
+        </div>
+    </div>
+</body>
+</html>

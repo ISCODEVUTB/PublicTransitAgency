@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear PQR</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const fechaInput = document.getElementById('fecha');
+            const hoy = new Date();
+            const fechaFormateada = hoy.toISOString().split('T')[0];
+            fechaInput.value = fechaFormateada;
+        });
+    </script>
+</head>
+<body>
+    <h2 style="text-align: center;background-color: rgb(47, 165, 255); padding: 10px; color: white;">Crear PQR</h2>
+    <form styles=""action="/pqr/create" method="post">
+    <div class="container" style="display: grid; grid-template-columns: repeat(2,1FR); gap: 20px; height: 250px;">
+        <div class="detail">
+          <label for="ID">ID:</label>
+          <input style="border-color: black;" type="number" id="ID" name="ID" value="{{ nuevo_id }}" readonly required>
+        </div>
+        <div class="detail">
+          <label for="identificationuser">Identificacion del Usuario:</label>
+          <input style="border-color: black;" type="number" id="iduser" name="identificationuser"required>
+        </div>
+        <div class="detail">
+          <label for="description">Descripcion:</label>
+          <input style="border-color: black;" type="text" id="description" name="description" required>
+        </div>
+        <!-- Tipo de PQR -->
+        <div class="detail">
+          <label for="type">Tipo de PQR:</label>
+          <select style="border-color: black;" id="type" name="type">
+              <option value="Peticion">Peticion</option>
+              <option value="Queja">Queja</option>
+              <option value="Reclamo">Reclamo</option>
+              <option value="Recomendacion">Recomendacion</option>
+          </select>
+        </div>
+    </div> 
+    <div class="detail">
+            <label style="margin-left: 220px;" for="fecha">Fecha de Emision:</label>
+            <input style="margin-left: 220px;" type="date" id="fecha" name="fecha" required>
+      </div> 
+      <button style="padding: 10px; margin-left: 40px;margin-top: 30px ;border-color: black;" onclick = "location.href='/pqr/consultar/administrador'">Volver a la Pagina de Consulta</button>
+      <button style="padding: 10px; margin-left: 170px;margin-top: 30px; border-color: black;" type="submit">Crear PQR</button>
+      </form>
+</body>
+</html>

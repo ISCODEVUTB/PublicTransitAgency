@@ -25,33 +25,46 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/consultar", response_class=HTMLResponse)
 def consultar(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Render the 'ConsultarTipoMovimiento.html' template for the user consultation page.
     """
-    logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de tipo de movimiento")
+    #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de tipo de movimiento")
     return templates.TemplateResponse("ConsultarTipoMovimiento.html", {"request": request})
 
 
 @app.get("/typemovements")
 async def get_typemovement(
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    request:Request,
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve and return all typemovements records from the database.
     """
-    logger.info(f"[GET /typemovements] Usuario: {current_user['user_id']} - Consultando todas los tipos de movimiento.")
+    #logger.info(f"[GET /typemovements] Usuario: {current_user['user_id']} - Consultando todas los tipos de movimiento.")
     typemovements = controller.read_all(TypeMovementOut)
-    logger.info(f"[GET /typemovements] Número de tipo de movimientos encontrados: {len(typemovements)}")
-    return typemovements
+    if typemovements:
+        # Si hay varias asistencias, iterar sobre ellas
+        context = {
+            "request": request,
+            "tiposmovimientos": typemovements,  # Lista de asistencias
+        }
+    else:
+        logger.warning(f"[GET /users] No se encontraron usuarios registrados")
+        context = {
+            "request": typemovements,
+            "tiposmovimientos": []  # Si no se encontraron usuarios
+        }
+
+    return templates.TemplateResponse("tiposmovimientos.html", context)
 
 
 @app.get("/tipomovimiento", response_class=HTMLResponse)
 def typemovement(
     request: Request,
     id: int = Query(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve a user by its ID and render the 'typetransport.html' template with its details.
@@ -61,15 +74,15 @@ def typemovement(
     unit_typemovement= controller.get_by_id(TypeMovementOut, id)
 
     if unit_typemovement:
-        logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.id}, {unit_typemovement.type}")
+        logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.ID}, {unit_typemovement.TipoMovimiento}")
 
     else:
         logger.warning(f"[GET /typemovement] No se encontró tipo de movimientos con id={id}")
         
     context = {
         "request": request,
-        "id": unit_typemovement.id if unit_typemovement else "None",
-        "type": unit_typemovement.type if unit_typemovement else "None"
+        "ID": unit_typemovement.ID if unit_typemovement else "None",
+        "TipoMovimiento": unit_typemovement.TipoMovimiento if unit_typemovement else "None"
     }
 
     return templates.TemplateResponse(request,"tipomovimiento.html", context)

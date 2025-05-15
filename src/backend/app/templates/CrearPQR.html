@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear PQR</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const fechaInput = document.getElementById('fecha');
+            const hoy = new Date();
+            const fechaFormateada = hoy.toISOString().split('T')[0];
+            fechaInput.value = fechaFormateada;
+        });
+    </script>
+</head>
+<body>
+    <h2 style="text-align: center;">Crear PQR</h2>
+    <form styles=""action="/pqr/create" method="post">
+    <div class="container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; height: 500px;">
+        <div class="detail">
+          <label for="ID">ID:</label>
+          <input style="border-color: black;" type="number" id="id" name="id" required>
+        </div>
+        <div class="detail">
+          <label for="Descripcion">Descripcion:</label>
+          <input style="border-color: black;" type="text" id="descripcion" name="descripcion" required>
+        </div>
+        <!-- Tipo de PQR -->
+        <div class="detail">
+          <label for="type">Tipo de PQR:</label>
+          <select style="border-color: black;" id="type" name="type">
+              <option value="Peticion">Peticion</option>
+              <option value="Queja">Queja</option>
+              <option value="Reclamo">Reclamo</option>
+              <option value="Recomendacion">Recomendacion</option>
+          </select>
+        </div>
+        <div class="detail">
+            <label for="fecha">Fecha de Emision:</label>
+            <input type="date" id="fecha" name="fecha" required>
+        </div> 
+    </div>
+      <button style="padding: 5px; margin-left: 40px; border-color: black;" onclick = "location.href='/login/user/administrador'">Volver a la Pagina Principal</button>
+      <button style="padding: 5px; margin-left: 170px; border-color: black;" type="submit">Crear PQR</button>
+      </form>
+      
+
+</body>
+</html>

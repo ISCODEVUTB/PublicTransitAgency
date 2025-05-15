@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 import datetime
 class BehaviorCreate(BaseModel):
-    __entity_name__ = "rendimiento"  # <- Aquí se define el nombre general de la entidad
-    id: int
+    __entity_name__ = "Rendimiento"  # <- Aquí se define el nombre general de la entidad
+    ID: int
     cantidadrutas: int
     horastrabajadas: int
     observaciones:str
@@ -15,7 +15,7 @@ class BehaviorCreate(BaseModel):
     @classmethod
     def get_fields(cls) -> dict:
         return {
-            "id": "INTEGER PRIMARY KEY",
+            "ID": "INTEGER PRIMARY KEY",
             "cantidadrutas": "INTEGER",
             "horastrabajadas": "INTEGER",
             "observaciones": "VARCHAR",
@@ -23,7 +23,7 @@ class BehaviorCreate(BaseModel):
             "iduser":"INTEGER"
         }
 class BehaviorOut(BehaviorCreate):
-    __entity_name__ = "rendimiento"  # <- También aquí, porque se usa para lectura
+    __entity_name__ = "Rendimiento"  # <- También aquí, porque se usa para lectura
 
     @classmethod
     def from_dict(cls, data: dict):

@@ -21,27 +21,27 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/crear", response_class=HTMLResponse)
 def index_create(
     request: Request,
-    current_user: dict = Security(
-        get_current_user,scopes=["system", "administrador"])
+    #current_user: dict = Security(
+        #get_current_user,scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /crear] Usuario: {current_user['user_id']} - Mostrando formulario de creación de tipo de movimiento")
+    #logger.info(f"[GET /crear] Usuario: {current_user['user_id']} - Mostrando formulario de creación de tipo de movimiento")
     return templates.TemplateResponse("CrearTipoMovimiento.html", {"request": request})
 
 @app.get("/actualizar", response_class=HTMLResponse)
 def index_update(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /actualizar] Usuario: {current_user['user_id']} - Mostrando formulario de actualización de tipo de movimiento")
+    #logger.info(f"[GET /actualizar] Usuario: {current_user['user_id']} - Mostrando formulario de actualización de tipo de movimiento")
     return templates.TemplateResponse("ActualizarTipoMovimiento.html", {"request": request})
 
 
 @app.get("/eliminar", response_class=HTMLResponse)
 def index_delete(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /eliminar] Usuario: {current_user['user_id']} - Mostrando formulario de eliminación de tipo de movimiento")
+    #logger.info(f"[GET /eliminar] Usuario: {current_user['user_id']} - Mostrando formulario de eliminación de tipo de movimiento")
     return templates.TemplateResponse("EliminarTipoMovimiento.html", {"request": request})
 
 #
@@ -49,9 +49,9 @@ def index_delete(
 async def create_typemovement(
     ID: int = Form(...),
     TipoMovimiento: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /create] Usuario: {current_user['user_id']} - Intentando crear tipo de movimiento {TipoMovimiento}")
+    #logger.info(f"[POST /create] Usuario: {current_user['user_id']} - Intentando crear tipo de movimiento {TipoMovimiento}")
 
     try:
         # Verificar si el rol de usuario ya existe
@@ -85,9 +85,9 @@ async def create_typemovement(
 async def update_typemovement(
     ID: int = Form(...),
     TipoMovimiento: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /update] Usuario: {current_user['user_id']} - Actualizando tipo de movimiento ID={ID}")
+    #logger.info(f"[POST /update] Usuario: {current_user['user_id']} - Actualizando tipo de movimiento ID={ID}")
     try:
         existing = controller.get_by_id(TypeMovementOut, ID)
         if existing is None:
@@ -112,9 +112,9 @@ async def update_typemovement(
 @app.post("/delete")
 async def delete_roluser(
     ID: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /delete] Usuario: {current_user['user_id']} - Eliminando tipo de movimiento con ID={ID}")
+    #logger.info(f"[POST /delete] Usuario: {current_user['user_id']} - Eliminando tipo de movimiento con ID={ID}")
     try:
         existing = controller.get_by_id(TypeMovementOut, ID)
         if not existing:

@@ -16,14 +16,15 @@
     </style>
 </head>
 <body>
-    <h1 style="text-align: center;">Eliminar Tipo de Movimiento</h1>
+    <h1 style="text-align: center; background-color: rgb(47, 165, 255); padding: 10px; color: white;">Eliminar Tipo de Movimiento</h1>
     <form action="/typemovement/delete" method="post">
-        <label for="ID">Tipo de Movimiento a eliminar:</label>
+        <label style="margin-left: 80px;" for="ID">ID del Tipo de Movimiento a eliminar:</label>
         <input type="number" id="ID" name="ID" required>
         
-        <p class="warning">¡Advertencia: Esta acción no se puede deshacer!</p>
+        <p style="margin-left: 50px; margin-top: 10px;">¡Advertencia: Esta acción no se puede deshacer!</p>
         
-        <button type="submit" style="align-items: center;">Eliminar</button>
+        <button style="margin-left: 200px;" type="submit" style="align-items: center;">Eliminar</button>
     </form>
+    <p style="margin-left: 640px; margin-top: 10px;"><a href="/typemovement/consultar">Volver a la página de consulta</a></p>
 </body>
 </html>

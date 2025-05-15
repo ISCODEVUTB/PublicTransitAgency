@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de PQRs</title>
+    <title>Lista de Registros de Asistencias</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,25 +27,20 @@
     </style>
 </head>
 <body>
-    <h2>Listado de PQRs</h2>
+    <button style="padding: 10px;"  onclick = "location.href='/roluser/consultar'">Regresar a la Pagina de Consulta</button>
+    <h2 style="text-align: center; background-color: rgb(8, 124, 212); padding: 10px; color: white;">Listado de Tipos de Usuarios</h2>
     <table>
         <thead>
             <tr>
-                <th>Código</th>
-                <th>Identificacion del Usuario</th>
-                <th>Tipo</th>
-                <th>Descripción</th>
-                <th>Fecha</th>
-            </tr>
+                <th>ID</th>
+                <th>Tipo de Usuario</th>
+            </tr>   
         </thead>
         <tbody>
-            {% for pqr in pqrs_list %}
+            {% for roluser in rolusers %}
             <tr>
-                <td>{{ pqr.codigogenerado }}</td>
-                <td>{{ pqr.iduser }}</td>
-                <td>{{ pqr.type }}</td>
-                <td>{{ pqr.description }}</td>
-                <td>{{ pqr.fecha }}</td>
+                <td>{{ roluser.ID}}</td>
+                <td>{{ roluser.Rol}}</td>
             </tr>
             {% endfor %}
         </tbody>

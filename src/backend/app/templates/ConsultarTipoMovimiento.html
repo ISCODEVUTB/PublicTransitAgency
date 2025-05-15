@@ -6,11 +6,34 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h2 style="text-align: center;">Consultar Tipo de Movimiento</h2>
+    <h2 style="text-align: center; background-color: rgb(47, 165, 255); padding: 10px; color: white;">Consultar Tipo de Movimiento</h2>
     <form action="/typemovement/tipomovimiento" method="get">
         <label for="id">ID del Tipo de Movimiento:</label>
         <input type="text" id="id" name="id" required>
-        <button type="submit">Consultar</button>
+        <button  style="margin-left: 50px;"type="button" class="btn btn-info" onclick="location.href='/typemovement/typemovements'">Ver Todos</button>
+        <button class="btn btn-secondary" style="margin-left: 250px; margin-top: 10px; padding: 10px" type="submit">Consultar</button>
     </form>
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;; margin-top: 25px;">
+        <div>
+            <button style="padding: 10px; margin-left: 100px;" onclick="location.href='/login/user/administrador'">
+            Regresar a la Pagina Principal
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 50px;" onclick="location.href='/typemovement/crear'">
+            Crear Nuevo Tipo de Movimiento
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 100px;" onclick="location.href='/typemovement/actualizar'">
+            Actualizar Tipo de Movimiento
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 100px;" onclick="location.href='/typemovement/eliminar'">
+            Eliminar Tipo de Movimiento
+            </button>
+        </div>
+    </div>
 </body>
 </html>

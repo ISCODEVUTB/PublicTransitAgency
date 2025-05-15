@@ -2,24 +2,23 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Tipo de Transporte</title>
+    <title>Crear Servicio de Transporte</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h2 style="text-align: center;">Crear Tipo de Transporte</h2>
-    <div class="container">
-        <form action="/typetransport/create" method="post">
+    <h2 style="text-align: center;">Crear Servicio de Transporte</h2>
+    <form action="/typetransport/create" method="post">
             <div class="detail">
                  <label for="ID">ID</label>
-                <input type="number" id="ID" required>
+                <input type="number" id="ID" name="ID" required>
             </div>
            <div class="detail">
-                <label for="type">Tipo de Transporte</label>
+                <label for="type">Nombre del Servicio de Transporte</label>
                 <input type="text" id="TipoTransporte" name="TipoTransporte" required>
            </div>
-            <button type="submit">Crear Tipo de Transporte</button>
+            <button type="submit">Crear Servicio de Transporte</button>
         </form>
-    </div>
+    <p style="margin-left: 650px;"><a href="/typetransport/consultar">Volver a la página de consulta</a></p>
 
 </body>
 </html>

@@ -2,7 +2,7 @@ from pydantic import BaseModel
 import datetime
 class PQRCreate(BaseModel):
     __entity_name__ = "pqr"  # <- Aquí se define el nombre general de la entidad
-    id: int
+    ID: int
     type: str
     description: str
     fecha: str
@@ -14,7 +14,7 @@ class PQRCreate(BaseModel):
     @classmethod
     def get_fields(cls) -> dict:
         return {
-            "id": "INTEGER PRIMARY KEY",
+            "ID": "INTEGER PRIMARY KEY",
             "type": "VARCHAR",
             "description": "VARCHAR",
             "fecha": "DATE",

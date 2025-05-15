@@ -2,15 +2,37 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Consultar Tipo de Transporte</title>
+    <title>Consultar Servicio de Transporte</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h2 style="text-align: center;">Consultar Tipo de Transporte</h2>
+    <h2 style="text-align: center;">Consultar Servicios de Transporte</h2>
     <form action="/typetransport/tipotransporte" method="get">
-        <label for="id">ID del Tipo de Transporte:</label>
-        <input type="text" id="id" name="id" required>
-        <button type="submit">Consultar</button>
+        <label for="ID">ID del Servicio de Transporte:</label>
+        <input type="text" id="ID" name="ID" required>
+        <button style="margin-left: 250px; margin-top: 10px; padding: 5px" type="submit">Consultar</button>
     </form>
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;; margin-top: 25px;">
+        <div>
+            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/login/user/administrador'">
+            Regresar a la Pagina Principal
+            </button>
+        </div>
+        <div>
+            <button style="padding: 5px; margin-left: 50px;" onclick="location.href='/typetransport/crear'">
+            Crear Nuevo Servicio de Transporte
+            </button>
+        </div>
+        <div>
+            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/typetransport/actualizar'">
+            Actualizar Servicio de Transporte
+            </button>
+        </div>
+        <div>
+            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/typetransport/eliminar'">
+            Eliminar Servicio de Transporte
+            </button>
+        </div>
+    </div>
 </body>
 </html>

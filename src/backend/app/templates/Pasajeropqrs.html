@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de PQRs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 1em;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <button style="padding: 10px;"  onclick = "location.href='/pqr/consultar/pasajero'">Regresar a la Pagina de Consulta</button>
+    <h2 style="text-align: center; background-color: rgb(8, 124, 212); padding: 10px; color: white;">Listado de PQRs</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Identificacion del Usuario</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Fecha de Emision</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pqr in pqrs %}
+            <tr>
+                <td>{{ pqr.codigogenerado }}</td>
+                <td>{{ pqr.iduser }}</td>
+                <td>{{ pqr.type }}</td>
+                <td>{{ pqr.description }}</td>
+                <td>{{ pqr.fecha }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

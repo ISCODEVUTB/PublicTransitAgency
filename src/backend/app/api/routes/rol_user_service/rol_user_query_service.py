@@ -34,6 +34,7 @@ def consultar(
 
 @app.get("/rolusers")
 async def get_roluser(
+    request: Request
 ):
     """
     Retrieve and return all rolusers records from the database.
@@ -41,8 +42,20 @@ async def get_roluser(
     #logger.info(f"[GET /rolusers] Usuario: {current_user['user_id']} - Consultando todas los tipos de usuarios.")
     rolusers = controller.read_all(RolUserOut)
     logger.info(f"[GET /rolusers] Número de tipo de usuarios encontrados: {len(rolusers)}")
-    return rolusers
+    if rolusers:
+        # Si hay varias asistencias, iterar sobre ellas
+        context = {
+            "request": request,
+            "rolusers": rolusers,  # Lista de asistencias
+        }
+    else:
+        logger.warning(f"[GET /rolusers] No se encontraron usuarios registrados")
+        context = {
+            "request": request,
+            "rolusers": []  # Si no se encontraron usuarios
+        }
 
+    return templates.TemplateResponse("rolusers.html", context)
 
 @app.get("/tipousuario", response_class=HTMLResponse)
 def roluser(
@@ -65,8 +78,8 @@ def roluser(
 
     context = {
         "request": request,
-        "id": unit_roluser.ID if unit_roluser else "None",
-        "type": unit_roluser.Rol if unit_roluser else "None"
+        "ID": unit_roluser.ID if unit_roluser else "None",
+        "Rol": unit_roluser.Rol if unit_roluser else "None"
     }
 
     return templates.TemplateResponse(request,"roluser.html", context)

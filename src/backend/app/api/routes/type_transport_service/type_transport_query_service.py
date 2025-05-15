@@ -25,23 +25,23 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 @app.get("/consultar", response_class=HTMLResponse)
 def consultar(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Render the 'ConsultarTipoTransporte.html' template for the user consultation page.
     """
-    logger.info(f"[GET /consultar] Usuario: {current_user['user_ID']} - Mostrando página de consulta de tipo de transporte")
+    #logger.info(f"[GET /consultar] Usuario: {current_user['user_ID']} - Mostrando página de consulta de tipo de transporte")
     return templates.TemplateResponse("ConsultarTipoTransporte.html", {"request": request})
 
 
 @app.get("/typetransports")
 async def get_typetransport(
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve and return all typetransports records from the database.
     """
-    logger.info(f"[GET /typetransports] Usuario: {current_user['user_ID']} - Consultando todas los tipos de transporte.")
+    #logger.info(f"[GET /typetransports] Usuario: {current_user['user_ID']} - Consultando todas los tipos de transporte.")
     typetransports = controller.read_all(TypeTransportOut)
     logger.info(f"[GET /typetransports] Número de tipo de transportes encontrados: {len(typetransports)}")
     return typetransports
@@ -51,13 +51,13 @@ async def get_typetransport(
 def typetransport(
     request: Request,
     ID: int = Query(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve a user by its ID and render the 'typetransport.html' template with its details.
     If the user is not found, display 'None' for all fields.
     """
-    logger.info(f"[GET /typetransport] Usuario: {current_user['user_ID']} - Consultando tipo de transporte con ID={ID}")
+    #logger.info(f"[GET /typetransport] Usuario: {current_user['user_ID']} - Consultando tipo de transporte con ID={ID}")
     unit_typetransport= controller.get_by_ID(TypeTransportOut, ID)
 
     if unit_typetransport:

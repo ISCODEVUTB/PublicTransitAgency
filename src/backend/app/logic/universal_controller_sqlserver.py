@@ -34,7 +34,7 @@ class UniversalController:
         columns = []
         for k, v in fields.items():
             if k == "id":
-                columns.append(f"{k} INT IDENTITY(1,1) PRIMARY KEY")
+                columns.append(f"{k} INT PRIMARY KEY")
             else:
                 columns.append(f"{k} {v}")
 

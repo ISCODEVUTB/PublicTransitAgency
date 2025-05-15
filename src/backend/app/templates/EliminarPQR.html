@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+    <title>Eliminar PQR</title>
+</head>
+<body>
+    <h1 style="text-align: center;background-color: rgb(47, 165, 255); padding: 10px; color: white;">Eliminar PQR</h1>
+    <form action="/pqr/delete" method="post">
+        <div>
+            <label style="margin-left: 150px;" for="ID">ID Generado del PQR a Eliminar:</label>
+            <input type="number" id="ID" name="ID" required>
+        </div>
+        <button style="margin-left: 220px; padding: 10px; margin-top: 10px;" type="submit">Eliminar PQR</button>
+    </form>
+    <p style="margin-left: 650px;"><a href="/pqr/consultar/administrador">Volver a la Pagina de Consulta</a></p>
+</body>
+</html>

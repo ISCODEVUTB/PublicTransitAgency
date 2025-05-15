@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Registros de Asistencias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 1em;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <button style="padding: 5px;"  onclick = "location.href='/typemovement/consultar'">Regresar a la Pagina de Consultas</button>
+    <h2 style="text-align: center;">Listado de Tipos de Movimientos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo de Usuario</th>
+            </tr>   
+        </thead>
+        <tbody>
+            {% for tiposmovimiento in tiposmovimientos %}
+            <tr>
+                <td>{{ tiposmovimiento.ID}}</td>
+                <td>{{ tiposmovimiento.TipoMovimiento}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

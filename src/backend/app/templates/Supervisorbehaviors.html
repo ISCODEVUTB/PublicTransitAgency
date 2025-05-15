@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Registros de Rendimiento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            padding: 2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 1em;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <button style="padding: 10px;" onclick="location.href='/behavior/consultar/supervisor'">Regresar a la Página de Consulta</button>
+    <h2 style="text-align: center; background-color: rgb(8, 124, 212); padding: 10px; color: white;">Listado de Reportes de Rendimiento</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Identificacion del Usuario</th>s
+                <th>Cantidad de Rutas</th>
+                <th>Horas Trabajadas</th>
+                <th>Observaciones</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in behaviors %}
+            <tr>
+                <td>{{ item.ID }}</td>
+                <td>{{ item.iduser }}</td>
+                <td>{{ item.cantidadrutas }}</td>
+                <td>{{ item.horastrabajadas }}</td>
+                <td>{{ item.observaciones }}</td>
+                <td>{{ item.fecha }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

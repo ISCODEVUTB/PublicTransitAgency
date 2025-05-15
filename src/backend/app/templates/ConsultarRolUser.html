@@ -6,30 +6,33 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h2 style="text-align: center;">Consultar Tipo de Usuario</h2>
+    <h2 style="text-align: center;  background-color: rgb(47, 165, 255); padding: 10px; color: white;">Consultar Tipo de Usuario</h2>
     <form action="/roluser/tipousuario" method="get">
-        <label for="ID">ID del Tipo de Usuario:</label>
+        <label style="margin-left: 200px;" for="ID">ID del Tipo de Usuario:</label>
+
         <input type="text" id="ID" name="ID" required>
-        <button style="margin-left: 250px; margin-top: 10px; padding: 5px" type="submit">Consultar</button>
+        
+        <button  style="margin-left: 50px;"type="button" class="btn btn-info" onclick="location.href='/roluser/rolusers'">Ver Todos</button>
+        <button style="margin-left: 200px; margin-top: 10px; padding: 10px" class="btn btn-secondary" type="submit">Consultar</button>
     </form>
     <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;; margin-top: 25px;">
         <div>
-            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/login/user/administrador'">
+            <button style="padding: 10px; margin-left: 100px;" onclick="location.href='/login/user/administrador'">
             Regresar a la Pagina Principal
             </button>
         </div>
         <div>
-            <button style="padding: 5px; margin-left: 50px;" onclick="location.href='/roluser/crear'">
+            <button style="padding: 10px; margin-left: 50px;" onclick="location.href='/roluser/crear'">
             Crear Nuevo Tipo de Usuario
             </button>
         </div>
         <div>
-            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/roluser/actualizar'">
+            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/roluser/actualizar'">
             Actualizar Tipo de Usuario
             </button>
         </div>
         <div>
-            <button style="padding: 5px; margin-left: 100px;" onclick="location.href='/roluser/eliminar'">
+            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/roluser/eliminar'">
             Eliminar Tipo de Usuario
             </button>
         </div>
