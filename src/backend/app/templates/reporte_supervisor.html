@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Mantenimiento</title>
+    <title>Reporte de Supervisor</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Reporte de Mantenimiento</h1>
+        <h1>Reporte de Supervisor</h1>
         <div class="card">
-            <h2>Mantenimientos Atrasados</h2>
-            {% for mantenimiento in mantenimientos_atrasados %}
-                <p>{{ mantenimiento }}</p>
-            {% endfor %}
+            <h2>Total de Movimientos</h2>
+            <p>{{ total_movimientos }}</p>
         </div>
         <div class="card">
-            <h2>Mantenimientos Próximos</h2>
-            {% for mantenimiento in mantenimientos_proximos %}
-                <p>{{ mantenimiento }}</p>
-            {% endfor %}
+            <h2>Total de Usuarios</h2>
+            <p>{{ total_usuarios }}</p>
+        </div>
+        <div class="card">
+            <h2>Promedio de Horas Trabajadas</h2>
+            <p>{{ promedio_horas_trabajadas }}</p>
         </div>
     </div>
 </body>
