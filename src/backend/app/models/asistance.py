@@ -2,7 +2,7 @@ from pydantic import BaseModel
 import datetime
 class AsistanceCreate(BaseModel):
     __entity_name__ = "Asistencia"  # <- Aquí se define el nombre general de la entidad
-    id: int
+    ID: int
     iduser: int
     horainicio: str
     horafinal:str
@@ -14,11 +14,11 @@ class AsistanceCreate(BaseModel):
     @classmethod
     def get_fields(cls) -> dict:
         return {
-            "id": "INTEGER PRIMARY KEY",
+            "ID": "INTEGER PRIMARY KEY",
             "iduser": "INTEGER",
             "horainicio": "TIME",
             "horafinal": "TIME",
-            "fecha": "DATE"
+            "fecha": "VARCHAR"
         }
 class AsistanceOut(AsistanceCreate):
     __entity_name__ = "Asistencia"  # <- También aquí, porque se usa para lectura

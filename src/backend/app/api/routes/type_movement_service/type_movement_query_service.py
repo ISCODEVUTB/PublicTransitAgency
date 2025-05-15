@@ -40,7 +40,6 @@ def consultar(
 async def get_typemovement(
     request:Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    request:Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
@@ -63,20 +62,6 @@ async def get_typemovement(
         }
 
     return templates.TemplateResponse("tiposmovimientos.html", context)
-    if typemovements:
-        # Si hay varias asistencias, iterar sobre ellas
-        context = {
-            "request": request,
-            "tiposmovimientos": typemovements,  # Lista de asistencias
-        }
-    else:
-        logger.warning(f"[GET /users] No se encontraron usuarios registrados")
-        context = {
-            "request": typemovements,
-            "tiposmovimientos": []  # Si no se encontraron usuarios
-        }
-
-    return templates.TemplateResponse("tiposmovimientos.html", context)
 
 
 @app.get("/tipomovimiento", response_class=HTMLResponse)
@@ -84,13 +69,12 @@ def typemovement(
     request: Request,
     id: int = Query(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve a user by its ID and render the 'typetransport.html' template with its details.
     If the user is not found, display 'None' for all fields.
     """
-    logger.info(f"[GET /typemovement] Usuario: {current_user['user_id']} - Consultando tipo de movimiento con ID={id}")
+    #logger.info(f"[GET /typemovement] Usuario: {current_user['user_id']} - Consultando tipo de movimiento con ID={id}")
     unit_typemovement= controller.get_by_id(TypeMovementOut, id)
 
     if unit_typemovement:
@@ -102,8 +86,6 @@ def typemovement(
         
     context = {
         "request": request,
-        "ID": unit_typemovement.ID if unit_typemovement else "None",
-        "TipoMovimiento": unit_typemovement.TipoMovimiento if unit_typemovement else "None"
         "ID": unit_typemovement.ID if unit_typemovement else "None",
         "TipoMovimiento": unit_typemovement.TipoMovimiento if unit_typemovement else "None"
     }

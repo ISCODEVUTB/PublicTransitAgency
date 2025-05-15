@@ -17,69 +17,140 @@ app = APIRouter(prefix="/asistance", tags=["asistance"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 
-@app.get("/crear", response_class=HTMLResponse)
+
+@app.get("/administrador/crear", response_class=HTMLResponse)
 def index_create(
     request: Request,
-    current_user: dict = Security(
-        get_current_user,
-        scopes=["system", "administrador", "supervisor","tecnico","conductor"]
-    )
+    #current_user: dict = Security(
+        #get_current_user,scopes=["system", "administrador", "supervisor","tecnico","conductor"])
 ):
-    logger.info(f"[GET /crear] Asistencia: {current_user['user_id']} - Mostrando formulario de creación de asistencia")
-    return templates.TemplateResponse("CrearAsistencia.html", {"request": request})
+    #logger.info(f"[GET /crear] Asistencia: {current_user['user_id']} - Mostrando formulario de creación de asistencia")
+    try:
+        asistances = controller.read_all(AsistanceOut)
+        ultimo_id = max(p["ID"] for p in asistances) if asistances else 0
+        nuevo_id = ultimo_id + 1
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        nuevo_id = 1  # Por defecto
+
+    return templates.TemplateResponse("CrearAdministradorAsistencia.html", {
+        "request": request,
+        "nuevo_id": nuevo_id
+    })
+
+@app.get("/conductor/crear", response_class=HTMLResponse)
+def index_create(
+    request: Request,
+    #current_user: dict = Security(
+        #get_current_user,scopes=["system", "administrador", "supervisor","tecnico","conductor"])
+):
+    #logger.info(f"[GET /crear] Asistencia: {current_user['user_id']} - Mostrando formulario de creación de asistencia")
+    try:
+        asistances = controller.read_all(AsistanceOut)
+        ultimo_id = max(p["ID"] for p in asistances) if asistances else 0
+        nuevo_id = ultimo_id + 1
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        nuevo_id = 1  # Por defecto
+
+    return templates.TemplateResponse("CrearConductorAsistencia.html", {
+        "request": request,
+        "nuevo_id": nuevo_id
+    })
+
+@app.get("/supervisor/crear", response_class=HTMLResponse)
+def index_create(
+    request: Request,
+    #current_user: dict = Security(
+        #get_current_user,scopes=["system", "administrador", "supervisor","tecnico","conductor"])
+):
+    #logger.info(f"[GET /crear] Asistencia: {current_user['user_id']} - Mostrando formulario de creación de asistencia")
+    try:
+        asistances = controller.read_all(AsistanceOut)
+        ultimo_id = max(p["ID"] for p in asistances) if asistances else 0
+        nuevo_id = ultimo_id + 1
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        nuevo_id = 1  # Por defecto
+
+    return templates.TemplateResponse("CrearSupervisorAsistencia.html", {
+        "request": request,
+        "nuevo_id": nuevo_id
+    })
+
+@app.get("/tecnico/crear", response_class=HTMLResponse)
+def index_create(
+    request: Request,
+    #current_user: dict = Security(
+        #get_current_user,scopes=["system", "administrador", "supervisor","tecnico","conductor"])
+):
+    #logger.info(f"[GET /crear] Asistencia: {current_user['user_id']} - Mostrando formulario de creación de asistencia")
+    try:
+        asistances = controller.read_all(AsistanceOut)
+        ultimo_id = max(p["ID"] for p in asistances) if asistances else 0
+        nuevo_id = ultimo_id + 1
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        nuevo_id = 1  # Por defecto
+
+    return templates.TemplateResponse("CrearTecnicoAsistencia.html", {
+        "request": request,
+        "nuevo_id": nuevo_id
+    })
 
 
-@app.get("/actualizar", response_class=HTMLResponse)
+@app.get("/administrador/actualizar", response_class=HTMLResponse)
 def index_update(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /actualizar] Asistencia: {current_user['user_id']} - Mostrando formulario de actualización de asistencia")
-    return templates.TemplateResponse("ActualizarAsistencia.html", {"request": request})
+    #logger.info(f"[GET /actualizar] Asistencia: {current_user['user_id']} - Mostrando formulario de actualización de asistencia")
+    return templates.TemplateResponse("ActualizarAdministradorAsistencia.html", {"request": request})
 
 
-@app.get("/eliminar", response_class=HTMLResponse)
+@app.get("/administrador/eliminar", response_class=HTMLResponse)
 def index_delete(
     request: Request,
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[GET /eliminar] Asistencia: {current_user['user_id']} - Mostrando formulario de eliminación de asistencia")
-    return templates.TemplateResponse("EliminarAsistencia.html", {"request": request})
+    #logger.info(f"[GET /eliminar] Asistencia: {current_user['user_id']} - Mostrando formulario de eliminación de asistencia")
+    return templates.TemplateResponse("EliminarAdministradorAsistencia.html", {"request": request})
 
 
 @app.post("/create")
 async def create_asistance(
+    request: Request,
     id: int = Form(...),
     iduser:int= Form(...),
     horainicio: str = Form(...),
     horafinal: str = Form(...),
     fecha: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /create] Asistance: {current_user['user_id']} - Intentando crear asistencia con id: {id}")
+    #logger.info(f"[POST /create] Asistance: {current_user['user_id']} - Intentando crear asistencia con id: {id}")
 
     try:
         # Verificar si el asistencia ya existe
-        existing_asistance = controller.get_by_column(AsistanceOut, "id", id)  
+        existing_asistance = controller.get_by_column(AsistanceOut,"ID" ,id)  
         if existing_asistance:
             logger.warning(f"[POST /create] Error de validación: El asistencia ya existe con identificación {id}")
             raise HTTPException(400, detail="El asistencia ya existe con la misma identificación.")
         if existing_asistance is None or not existing_asistance:
             # Crear asistencia
-            new_asistance = AsistanceCreate(id=id, iduser=iduser,horainicio=horainicio,horafinal=horafinal,fecha=fecha)
-            logger.info(f"Intentando insertar asistencia con datos: {new_asistance.model_dump()}")
+            new_asistance = AsistanceCreate(ID=id, iduser=iduser,horainicio=horainicio,horafinal=horafinal,fecha=fecha)
             controller.add(new_asistance)
-            logger.info(f"Asistencia insertado con id: {new_asistance.id}")  # Verifica si el ID se asigna
             logger.info(f"[POST /create] Asistencia creado exitosamente con identificación {id}")
-            return {
+            context = {
+                "request": request,
                 "operation": "create",
                 "success": True,
-                "data": AsistanceOut(id=new_asistance.id,iduser=new_asistance.iduser,
+                "data": AsistanceOut(ID=new_asistance.ID,iduser=new_asistance.iduser,
                                     horainicio=new_asistance.horainicio,
                                     horafinal=new_asistance.horafinal,
                                     fecha=new_asistance.fecha).model_dump(),
                 "message": "Asistance created successfully."
             }
+            return templates.TemplateResponse("Confirmacion.html", context)
         
     except ValueError as e:
         logger.warning(f"[POST /create] Error de validación: {str(e)}")
@@ -91,35 +162,39 @@ async def create_asistance(
 
 @app.post("/update")
 async def update_asistance(
+    request, Request,
     id: int = Form(...),
     iduser:int= Form(...),
     horainicio: str = Form(...),
     horafinal: str = Form(...),
     fecha: str = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /update] Asistencia: {current_user['user_id']} - Actualizando asistencia id={id}")
+    #logger.info(f"[POST /update] Asistencia: {current_user['user_id']} - Actualizando asistencia id={id}")
     try:
-        existing = controller.get_by_column(AsistanceOut,"id" ,id)
+        existing = controller.get_by_column(AsistanceOut,"ID" ,id) 
         if existing is None or not existing:
             logger.warning(f"[POST /update] Asistencia no encontrada: id={id}")
             raise HTTPException(404, detail="Asistance not found")
 
-        updated_asistance = AsistanceOut(id=id, iduser=iduser,
+        updated_asistance = AsistanceOut(ID=id, iduser=iduser,
                                          horainicio=horainicio,
                                          horafinal=horafinal,
                                          fecha=fecha)
         controller.update(updated_asistance)
         logger.info(f"[POST /update] Asistencia actualizada exitosamente: {updated_asistance}")
-        return {
+        context=  {
+            "request":request,
             "operation": "update",
             "success": True,
-            "data": AsistanceOut(id=id, iduser=updated_asistance.iduser,
+            "data": AsistanceOut(ID=id, iduser=updated_asistance.iduser,
                                  horainicio=updated_asistance.horainicio, 
                                  horafinal=updated_asistance.horafinal,
                                  fecha=updated_asistance.fecha).model_dump(),
             "message": f"Asistance {id} updated successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
+
     except ValueError as e:
         if "No se encontró ningún registro" in str(e):
             raise HTTPException(status_code=404, detail=str(e))
@@ -130,24 +205,26 @@ async def update_asistance(
 
 @app.post("/delete")
 async def delete_asistance(
+    request:Request,
     id: int = Form(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    logger.info(f"[POST /delete] Asistencia: {current_user['user_id']} - Eliminando asistencia id={id}")
+    #logger.info(f"[POST /delete] Asistencia: {current_user['user_id']} - Eliminando asistencia id={id}")
     try:
-        existing = controller.get_by_column(AsistanceOut,"id" ,id)
+        existing = controller.get_by_column(AsistanceOut, "ID" ,id) 
         if not existing:
             logger.warning(f"[POST /delete] Asistencia no encontrado en la base de datos: id={id}")
             raise HTTPException(404, detail="Asistance not found")
-
-        logger.info(f"[POST /delete] Eliminando asistencia con id={id}")
+        
         controller.delete(existing) 
         logger.info(f"[POST /delete] Asistencia eliminada exitosamente: id={id}")
-        return {
+        context= {
+            "request":request,
             "operation": "delete",
             "success": True,
             "message": f"Asistance {id} deleted successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
     except HTTPException as e:
         raise e
     except Exception as e:

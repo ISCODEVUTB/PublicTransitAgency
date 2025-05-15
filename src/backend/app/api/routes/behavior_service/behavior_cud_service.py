@@ -38,7 +38,7 @@ def index_create(
         "nuevo_id": nuevo_id
     })
 
-@app.get("/actualizar", response_class=HTMLResponse)
+@app.get("/administrador/actualizar", response_class=HTMLResponse)
 def index_update(
     request: Request,
     current_user: dict = Security(get_current_user, scopes=["system", "administrador","supervisor"])
@@ -47,7 +47,7 @@ def index_update(
     return templates.TemplateResponse("ActualizarRendimiento.html", {"request": request})
 
 
-@app.get("/eliminar", response_class=HTMLResponse)
+@app.get("/administrador/eliminar", response_class=HTMLResponse)
 def index_delete(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
@@ -58,6 +58,7 @@ def index_delete(
 
 @app.post("/create")
 async def create_behavior(
+    request: Request,
     ID: int = Form(...),
     iduser:int= Form(...),
     cantidadrutas: int=Form(...),
@@ -77,16 +78,16 @@ async def create_behavior(
 
         # Crear rendimiento
         new_behavior = BehaviorCreate(ID=ID, iduser=iduser,cantidadrutas=cantidadrutas, horastrabajadas=horastrabajadas,observaciones=observaciones,fecha=fecha)
-        logger.info(f"Intentando insertar rendimiento con datos: {new_behavior.model_dump()}")
         controller.add(new_behavior)
         logger.info(f"Rendimiento insertado con ID: {new_behavior.ID}")  # Verifica si el ID se asigna
         logger.info(f"[POST /create] Rendimiento creado exitosamente con identificación {ID}")
-        return {
+        context =  {
             "operation": "create",
             "success": True,
             "data": BehaviorOut(ID=new_behavior.ID,iduser=new_behavior.iduser,cantidadrutas=new_behavior.cantidadrutas,horastrabajadas=new_behavior.horastrabajadas,observaciones=new_behavior.observaciones,fecha=new_behavior.fecha).model_dump(),
             "message": "Behavior created successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
         
     except ValueError as e:
         logger.warning(f"[POST /create] Error de validación: {str(e)}")
@@ -98,6 +99,7 @@ async def create_behavior(
 
 @app.post("/update")
 async def update_behavior(
+    request: Request,
     ID: int = Form(...),
     iduser:int= Form(...),
     cantidadrutas: int=Form(...),
@@ -118,7 +120,7 @@ async def update_behavior(
                                        observaciones=observaciones,fecha=fecha)
         controller.update(updated_behavior)
         logger.info(f"[POST /update] Rendimiento actualizada exitosamente: {updated_behavior}")
-        return {
+        context = {
             "operation": "update",
             "success": True,
             "data": BehaviorOut(ID=ID, iduser=updated_behavior.iduser,horastrabajadas=updated_behavior.horastrabajadas, 
@@ -127,6 +129,7 @@ async def update_behavior(
                                 fecha=updated_behavior.fecha).model_dump(),
             "message": f"Behavior {ID} updated successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
     except ValueError as e:
         logger.warning(f"[POST /update] Error de validación: {str(e)}")
         raise HTTPException(400, detail=str(e))
@@ -148,11 +151,13 @@ async def delete_behavior(
         logger.info(f"[POST /delete] Eliminando rendimiento con ID={ID}")
         controller.delete(existing) 
         logger.info(f"[POST /delete] Rendimiento eliminada exitosamente: ID={ID}")
-        return {
+        context= {
             "operation": "delete",
             "success": True,
             "message": f"Behavior {ID} deleted successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
+    
     except HTTPException as e:
         raise e
     except Exception as e:

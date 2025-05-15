@@ -122,10 +122,8 @@ def index_delete(
 @app.post("/create")
 async def create_pqr(
     ID: int = Form(...),
-    ID: int = Form(...),
     type: str  = Form(...),
     description: str  = Form(...),
-    fecha: str = Form(...),
     fecha: str = Form(...),
     identificationuser: int  = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
@@ -133,29 +131,22 @@ async def create_pqr(
 ):
     #logger.info(f"[POST /create] Usuario: {current_user['user_id']} - Intentando crear PQR con identificación {ID}")
     #logger.info(f"[POST /create] Usuario: {current_user['user_id']} - Intentando crear PQR con identificación {ID}")
-
     try:
         # Verificar si el PQR ya existe
         existing_user = controller.get_by_column(PQROut, "ID", ID)  
-        existing_user = controller.get_by_column(PQROut, "ID", ID)  
         if existing_user:
-            logger.warning(f"[POST /create] Error de validación: El PQR ya existe con ID {ID}")
             logger.warning(f"[POST /create] Error de validación: El PQR ya existe con ID {ID}")
             raise HTTPException(400, detail="El PQR ya existe con la misma identificación.")
 
         # Crear PQR
         new_pqr = PQRCreate(ID=ID, type=type, description=description, fecha=fecha,identificationuser=identificationuser)
-        new_pqr = PQRCreate(ID=ID, type=type, description=description, fecha=fecha,identificationuser=identificationuser)
         logger.info(f"Intentando insertar PQR con datos: {new_pqr.model_dump()}")
         controller.add(new_pqr)
-        logger.info(f"PQR insertado con ID: {new_pqr.ID}")  # Verifica si el ID se asigna
-        logger.info(f"[POST /create] Usuario creado exitosamente con ID {ID}")
         logger.info(f"PQR insertado con ID: {new_pqr.ID}")  # Verifica si el ID se asigna
         logger.info(f"[POST /create] Usuario creado exitosamente con ID {ID}")
         return {
             "operation": "create",
             "success": True,
-            "data": PQROut(ID=new_pqr.ID, type=new_pqr.type, description=new_pqr.description,
             "data": PQROut(ID=new_pqr.ID, type=new_pqr.type, description=new_pqr.description,
                             fecha=new_pqr.fecha,identificationuser=new_pqr.identificationuser).model_dump(),
             "message": "PQR created successfully."
@@ -173,26 +164,19 @@ async def create_pqr(
 @app.post("/update")
 async def update_pqr(
     ID: int = Form(...),
-    ID: int = Form(...),
     type: str  = Form(...),
     description: str  = Form(...),
     fecha: str = Form(...),
-    fecha: str = Form(...),
     identificationuser: int  = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     #logger.info(f"[POST /update] Usuario: {current_user['user_id']} - Actualizando PQR ID={ID}")
-    #logger.info(f"[POST /update] Usuario: {current_user['user_id']} - Actualizando PQR ID={ID}")
     try:
-        existing = controller.get_by_id(PQROut, ID)
         existing = controller.get_by_id(PQROut, ID)
         if existing is None:
             logger.warning(f"[POST /update] PQR no encontrada: ID={ID}")
-            logger.warning(f"[POST /update] PQR no encontrada: ID={ID}")
             raise HTTPException(404, detail="PQR not found")
 
-        updated_pqr = PQROut(ID=ID, type=type,description=description,fecha=fecha,identificationuser=identificationuser)
         updated_pqr = PQROut(ID=ID, type=type,description=description,fecha=fecha,identificationuser=identificationuser)
         controller.update(updated_pqr)
         logger.info(f"[POST /update] PQR actualizada exitosamente: {updated_pqr}")
@@ -200,9 +184,7 @@ async def update_pqr(
             "operation": "update",
             "success": True,
             "data": PQROut(ID=updated_pqr.ID, type=updated_pqr.type, description=updated_pqr.description,
-            "data": PQROut(ID=updated_pqr.ID, type=updated_pqr.type, description=updated_pqr.description,
                             fecha=updated_pqr.fecha,identificationuser=updated_pqr.identificationuser).model_dump(),
-            "message": f"PQR {ID} updated successfully."
             "message": f"PQR {ID} updated successfully."
         }
     except ValueError as e:
@@ -215,29 +197,20 @@ async def update_pqr(
 async def delete_pqr(
     ID: int = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-async def delete_pqr(
-    ID: int = Form(...),
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /delete] Usuario: {current_user['user_id']} - Eliminando PQR ID={ID}")
     #logger.info(f"[POST /delete] Usuario: {current_user['user_id']} - Eliminando PQR ID={ID}")
     try:
         existing = controller.get_by_column(PQROut,"ID" ,ID)
-        existing = controller.get_by_column(PQROut,"ID" ,ID)
         if not existing:
-            logger.warning(f"[POST /delete] PQR no encontrado en la base de datos")
             logger.warning(f"[POST /delete] PQR no encontrado en la base de datos")
             raise HTTPException(404, detail="PQR not found")
 
         logger.info(f"[POST /delete] Eliminando PQR")
-        logger.info(f"[POST /delete] Eliminando PQR")
         controller.delete(existing) 
-        logger.info(f"[POST /delete] PQR eliminada exitosamente:")
         logger.info(f"[POST /delete] PQR eliminada exitosamente:")
         return {
             "operation": "delete",
             "success": True,
-            "message": f"PQR {ID} deleted successfully."
             "message": f"PQR {ID} deleted successfully."
         }
     except HTTPException as e:

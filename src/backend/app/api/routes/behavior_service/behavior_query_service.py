@@ -64,15 +64,14 @@ async def get_behaviors(
         logger.warning(f"[GET /pqrs] No se encontraron usuarios registrados")
         context = {
             "request": request,
-            "behaviors": []  # Si no se encontraron usuarios
+            "behaviors": behaviors  # Si no se encontraron usuarios
         }
     return templates.TemplateResponse("Supervisorbehaviors.html", context)
 
 
-
-
 @app.get("/rendimientos")
 async def get_rendimientos(
+    request:Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
@@ -81,10 +80,22 @@ async def get_rendimientos(
     #logger.info(f"[GET /rendimientos] Usuario: {current_user['user_id']} - Consultando todas las rendimientos.")
     rendimientos = controller.read_all(BehaviorOut)
     logger.info(f"[GET /rendimientos] Número de rendimientos encontradas: {len(rendimientos)}")
-    return rendimientos
+    if rendimientos:
+        # Si hay varias asistencias, iterar sobre ellas
+        context = {
+            "request": request,
+            "rendimientos": rendimientos,  # Lista de asistencias
+        }
+    else:
+        context = {
+            "request": request,
+            "rendimientos": rendimientos  # Si no se encontraron asistencias, pasar una lista vacía
+        }
+
+    return templates.TemplateResponse("rendimientos.html", context)
 
 #behavior by ID behavior
-@app.get("/rendimiento", response_class=HTMLResponse)
+@app.get("/byid", response_class=HTMLResponse)
 def rendimiento_by_id(
     request: Request,
     ID: int =Query(...),
@@ -115,7 +126,7 @@ def rendimiento_by_id(
     return templates.TemplateResponse(request,"rendimiento.html", context)
 
 #behavior by user ID
-@app.get("/user", response_class=HTMLResponse)
+@app.get("/byuser", response_class=HTMLResponse)
 def rendimiento_by_user(
     request: Request,
     iduser: int = Query(...),
@@ -132,12 +143,12 @@ def rendimiento_by_user(
         # Si hay varias asistencias, iterar sobre ellas
         context = {
             "request": request,
-            "asistencias": unit_rendimiento,  # Lista de asistencias
+            "rendimientos": unit_rendimiento,  # Lista de asistencias
         }
     else:
         logger.warning(f"[GET /asistencia] No se encontraron asistencias con iduser={iduser}")
         context = {
             "request": request,
-            "rendimientos_list": []  # Si no se encontraron asistencias, pasar una lista vacía
+            "rendimientos": unit_rendimiento # Si no se encontraron asistencias, pasar una lista vacía
         }
     return templates.TemplateResponse(request,"rendimientos.html", context)
