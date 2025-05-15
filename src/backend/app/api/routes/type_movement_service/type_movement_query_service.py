@@ -26,10 +26,12 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 def consultar(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Render the 'ConsultarTipoMovimiento.html' template for the user consultation page.
     """
+    #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de tipo de movimiento")
     #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de tipo de movimiento")
     return templates.TemplateResponse("ConsultarTipoMovimiento.html", {"request": request})
 
@@ -38,12 +40,29 @@ def consultar(
 async def get_typemovement(
     request:Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    request:Request,
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve and return all typemovements records from the database.
     """
     #logger.info(f"[GET /typemovements] Usuario: {current_user['user_id']} - Consultando todas los tipos de movimiento.")
+    #logger.info(f"[GET /typemovements] Usuario: {current_user['user_id']} - Consultando todas los tipos de movimiento.")
     typemovements = controller.read_all(TypeMovementOut)
+    if typemovements:
+        # Si hay varias asistencias, iterar sobre ellas
+        context = {
+            "request": request,
+            "tiposmovimientos": typemovements,  # Lista de asistencias
+        }
+    else:
+        logger.warning(f"[GET /users] No se encontraron usuarios registrados")
+        context = {
+            "request": typemovements,
+            "tiposmovimientos": []  # Si no se encontraron usuarios
+        }
+
+    return templates.TemplateResponse("tiposmovimientos.html", context)
     if typemovements:
         # Si hay varias asistencias, iterar sobre ellas
         context = {
@@ -65,6 +84,7 @@ def typemovement(
     request: Request,
     id: int = Query(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve a user by its ID and render the 'typetransport.html' template with its details.
@@ -75,12 +95,15 @@ def typemovement(
 
     if unit_typemovement:
         logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.ID}, {unit_typemovement.TipoMovimiento}")
+        logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.ID}, {unit_typemovement.TipoMovimiento}")
 
     else:
         logger.warning(f"[GET /typemovement] No se encontró tipo de movimientos con id={id}")
         
     context = {
         "request": request,
+        "ID": unit_typemovement.ID if unit_typemovement else "None",
+        "TipoMovimiento": unit_typemovement.TipoMovimiento if unit_typemovement else "None"
         "ID": unit_typemovement.ID if unit_typemovement else "None",
         "TipoMovimiento": unit_typemovement.TipoMovimiento if unit_typemovement else "None"
     }
