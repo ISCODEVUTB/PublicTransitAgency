@@ -43,8 +43,17 @@ def index_update(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
+    try: 
+        typemovements = controller.read_all(TypeMovementOut)
+
     #logger.info(f"[GET /actualizar] Movimiento: {current_user['user_id']} - Mostrando formulario de actualización de movimiento")
-    return templates.TemplateResponse("ActualizarAdministradorMovimiento.html", {"request": request})
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        
+    return templates.TemplateResponse("ActualizarAdministradorMovimiento.html", {
+        "request": request,
+        "typemovements":typemovements
+    })
 
 
 @app.get("/administrador/eliminar", response_class=HTMLResponse)

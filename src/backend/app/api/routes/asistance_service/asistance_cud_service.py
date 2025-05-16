@@ -120,26 +120,26 @@ def index_delete(
 @app.post("/create")
 async def create_asistance(
     request: Request,
-    id: int = Form(...),
+    ID: int = Form(...),
     iduser:int= Form(...),
     horainicio: str = Form(...),
     horafinal: str = Form(...),
     fecha: str = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /create] Asistance: {current_user['user_id']} - Intentando crear asistencia con id: {id}")
+    #logger.info(f"[POST /create] Asistance: {current_user['user_id']} - Intentando crear asistencia con ID: {ID}")
 
     try:
         # Verificar si el asistencia ya existe
-        existing_asistance = controller.get_by_column(AsistanceOut,"ID" ,id)  
+        existing_asistance = controller.get_by_column(AsistanceOut,"ID" ,ID)  
         if existing_asistance:
-            logger.warning(f"[POST /create] Error de validación: El asistencia ya existe con identificación {id}")
+            logger.warning(f"[POST /create] Error de validación: El asistencia ya existe con identificación {ID}")
             raise HTTPException(400, detail="El asistencia ya existe con la misma identificación.")
         if existing_asistance is None or not existing_asistance:
             # Crear asistencia
-            new_asistance = AsistanceCreate(ID=id, iduser=iduser,horainicio=horainicio,horafinal=horafinal,fecha=fecha)
+            new_asistance = AsistanceCreate(ID=ID, iduser=iduser,horainicio=horainicio,horafinal=horafinal,fecha=fecha)
             controller.add(new_asistance)
-            logger.info(f"[POST /create] Asistencia creado exitosamente con identificación {id}")
+            logger.info(f"[POST /create] Asistencia creado exitosamente con identificación {ID}")
             context = {
                 "request": request,
                 "operation": "create",
@@ -163,21 +163,21 @@ async def create_asistance(
 @app.post("/update")
 async def update_asistance(
     request: Request,
-    id: int = Form(...),
+    ID: int = Form(...),
     iduser:int= Form(...),
     horainicio: str = Form(...),
     horafinal: str = Form(...),
     fecha: str = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /update] Asistencia: {current_user['user_id']} - Actualizando asistencia id={id}")
+    #logger.info(f"[POST /update] Asistencia: {current_user['user_id']} - Actualizando asistencia ID={ID}")
     try:
-        existing = controller.get_by_column(AsistanceOut,"ID" ,id) 
+        existing = controller.get_by_column(AsistanceOut,"ID" ,ID) 
         if existing is None or not existing:
-            logger.warning(f"[POST /update] Asistencia no encontrada: id={id}")
+            logger.warning(f"[POST /update] Asistencia no encontrada: ID={ID}")
             raise HTTPException(404, detail="Asistance not found")
 
-        updated_asistance = AsistanceOut(ID=id, iduser=iduser,
+        updated_asistance = AsistanceOut(ID=ID, iduser=iduser,
                                          horainicio=horainicio,
                                          horafinal=horafinal,
                                          fecha=fecha)
@@ -187,11 +187,11 @@ async def update_asistance(
             "request":request,
             "operation": "update",
             "success": True,
-            "data": AsistanceOut(ID=id, iduser=updated_asistance.iduser,
+            "data": AsistanceOut(ID=ID, iduser=updated_asistance.iduser,
                                  horainicio=updated_asistance.horainicio, 
                                  horafinal=updated_asistance.horafinal,
                                  fecha=updated_asistance.fecha).model_dump(),
-            "message": f"Asistance {id} updated successfully."
+            "message": f"Asistance {ID} updated successfully."
         }
         return templates.TemplateResponse("Confirmacion.html", context)
 
@@ -206,23 +206,23 @@ async def update_asistance(
 @app.post("/delete")
 async def delete_asistance(
     request:Request,
-    id: int = Form(...),
+    ID: int = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
-    #logger.info(f"[POST /delete] Asistencia: {current_user['user_id']} - Eliminando asistencia id={id}")
+    #logger.info(f"[POST /delete] Asistencia: {current_user['user_id']} - Eliminando asistencia ID={ID}")
     try:
-        existing = controller.get_by_column(AsistanceOut, "ID" ,id) 
+        existing = controller.get_by_column(AsistanceOut, "ID" ,ID) 
         if not existing:
-            logger.warning(f"[POST /delete] Asistencia no encontrado en la base de datos: id={id}")
+            logger.warning(f"[POST /delete] Asistencia no encontrado en la base de datos: ID={ID}")
             raise HTTPException(404, detail="Asistance not found")
         
         controller.delete(existing) 
-        logger.info(f"[POST /delete] Asistencia eliminada exitosamente: id={id}")
+        logger.info(f"[POST /delete] Asistencia eliminada exitosamente: ID={ID}")
         context= {
             "request":request,
             "operation": "delete",
             "success": True,
-            "message": f"Asistance {id} deleted successfully."
+            "message": f"Asistance {ID} deleted successfully."
         }
         return templates.TemplateResponse("Confirmacion.html", context)
     except HTTPException as e:

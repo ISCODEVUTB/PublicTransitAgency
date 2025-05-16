@@ -32,6 +32,16 @@ def consultar(
     """
     return templates.TemplateResponse("ConsultarAdministradorMovimiento.html", {"request": request})
 
+@app.get("/consultar/pasajero", response_class=HTMLResponse)
+def consultar(
+    request: Request
+):
+    """
+    Render the 'ConsultarMovimiento.html' template for the movement consultation page.
+    """
+    return templates.TemplateResponse("ConsultarPasajeroMovements.html", {"request": request})
+
+
 
 # Route to get all the movement from the database
 @app.get("/pasajero/movements")

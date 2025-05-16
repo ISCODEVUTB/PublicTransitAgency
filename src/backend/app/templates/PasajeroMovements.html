@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Registros de Rendimiento</title>
+    <title>Lista de Registros de Movimiento</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,28 +27,22 @@
     </style>
 </head>
 <body>
-     <button style="padding: 10px;"  onclick = "location.href='/asistance/consultar/administrador'">Regresar a la Pagina de Consulta</button>
-    <h2>Listado de Registros de Rendimiento</h2>
+     <button style="padding: 10px;"  onclick = "location.href='/login/user/pasajero'">Regresar a la Pagina Principal</button>
+    <h2>Listado de Registros de Movimiento</h2>
     <table>
         <thead>
             <tr>
                 <th>Id de Reporte</th>
-                <th>Identificacion de Usuario</th>
-                <th>Cantidad de Rutas Cubiertas</th>
-                <th>Horas Trabajadas</th>
-                <th>>Observaciones</th>
-                <th>Fecha</th>
+                <th>Id de Tipo de Movimiento</th>
+                <th>Monto</th>
             </tr>
         </thead>
         <tbody>
-            {% for rendimiento in rendimientos_list %}
+            {% for movement in movements %}
             <tr>
-                <td>{{ rendimiento.id }}</td>
-                <td>{{ rendimiento.iduser }}</td>
-                <td>{{ rendimiento.cantidadrutas }}</td>
-                <td>{{ rendimiento.horastrabajadas }}</td>
-                <td>{{ rendimiento.observaciones }}</td>
-                <td>{{ rendimiento.fecha }}</td>
+                <td>{{ movement.ID }}</td>
+                <td>{{ movement.IDTipoMovimiento }}</td>
+                <td>{{ movement.Monto }}</td>
             </tr>
             {% endfor %}
         </tbody>

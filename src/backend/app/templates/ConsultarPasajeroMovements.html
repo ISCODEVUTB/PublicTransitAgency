@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Gestion de Registro de Movimiento</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+</head>
+<body>
+    <h2 style="text-align: center;  background-color: rgb(47, 165, 255); padding: 10px; color: white;">Consultar Gestion de Registro de Movimiento</h2>
+    <form action="/movement/pasajero/movements" method="get">
+        <label style="margin-left:180px;" for="ID">Identificacion del Usuario:</label>
+        <input type="text" id="iduser" name="iduser" required>
+        <button style="margin-left: 240px; margin-top: 10px; padding: 10px" class="btn btn-secondary" type="submit">Consultar</button>
+    </form>
+    <div>
+            <button style="padding: 10px; margin-left: 650px;" onclick="location.href='/login/user/pasajero'">
+            Regresar a la Pagina Principal
+            </button>
+    </div>
+</body>
+</html> 

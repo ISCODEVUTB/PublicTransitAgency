@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
     <title>Eliminar Registro de Movimiento</title>
+
 </head>
 <body>
     <h1 style="text-align: center;background-color: rgb(47, 165, 255); padding: 10px; color: white;">Eliminar Registro de Movimiento</h1>
     <form action="/movement/delete" method="post">
         <div>
-            <label style="margin-left: 150px;" for="ID">ID Generado del Registro de Movimiento a Eliminar:</label>
+            <label style="margin-left: 100px;" for="ID">ID Generado del Registro de Movimiento a Eliminar:</label>
             <input type="number" id="ID" name="ID" required>
         </div>
-        <button style="margin-left: 220px; padding: 10px; margin-top: 10px;" type="submit">Eliminar Registro de Movimiento</button>
+        <button style="margin-left: 180px; padding: 10px; margin-top: 10px;" type="submit">Eliminar Registro de Movimiento</button>
     </form>
     <p style="margin-left: 650px;"><a href="/movement/consultar/administrador">Volver a la Pagina de Consulta</a></p>
 </body>

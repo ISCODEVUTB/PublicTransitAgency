@@ -4,33 +4,41 @@
     <meta charset="UTF-8">
     <title>Crear Registro de Asistencia</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const fechaInput = document.getElementById('fecha');
+            const hoy = new Date();
+            const fechaFormateada = hoy.toISOString().split('T')[0];
+            fechaInput.value = fechaFormateada;
+        });
+    </script>
 </head>
 <body>
     <h2 style="text-align: center;">Crear Registro de Asistencia</h2>
     <form styles=""action="/asistance/create" method="post">
-    <div class="container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; height: 400px;">
+    <div class="container" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; height: 300px;">
         <div class="detail">
           <label for="ID">ID:</label>
-          <input style="border-color: black;" type="number" id="ID" name="ID" value="{{ nuevo_id }}" readonly required>
+          <input style="border-color: black; width:200px;" type="number" id="ID" name="ID" value="{{ nuevo_id }}" readonly required>
         </div>
         <div class="detail">
-          <label for="iduser">Identificacion de Usuario:</label>
-          <input style="border-color: black;" type="number" id="iduser" name="iduser" required>
+          <label style="margin-left: -50px; " for="iduser">Identificacion de Usuario:</label>
+          <input style="border-color: black; width:200px; margin-left: -50px;" type="number" id="iduser" name="iduser" required>
         </div>
         <div class="detail">
-          <label for="horainicio">Hora Inicial:</label>
-          <input style="border-color: black;" type="time" id="horainicio" name="horainicio" required>
+          <label style="margin-left: 100px;" for="horainicio">Hora Inicial:</label>
+          <input style="border-color: black; margin-left: 110px;" type="time" id="horainicio" name="horainicio" required>
         </div>
         <div class="detail">
-          <label for="horafinal">Hora Final:</label>
-          <input style="border-color: black;" type="time" id="horafinal" name="horafinal" required>
+          <label style="margin-left: -50px;" for="horafinal">Hora Final:</label>
+          <input style="border-color: black; margin-left: -50px;" type="time" id="horafinal" name="horafinal" required>
         </div>
         <div class="detail">
-            <label style="margin-left: 220px;" for="fecha">Fecha de Emision:</label>
-            <input style="margin-left: 220px;" type="date" id="fecha" name="fecha" required>
+            <label style="margin-left: 200px;" for="fecha">Fecha de Emision:</label>
+            <input style="margin-left: 200px;" type="date" id="fecha" name="fecha" required>
         </div> 
        </div>
-      <button style="padding: 5px; margin-left: 230px; border-color: black;" type="submit">Crear Registro de Asistencia</button>
+      <button style="padding: 5px; margin-left: 180px; margin-top: 10px; border-color: black;" type="submit">Crear Registro de Asistencia</button>
       </form>
       <a style="margin-left: 650px;" onclick = "location.href='/login/user/supervisor'">Volver a la Pagina Principal</button>
       

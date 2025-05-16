@@ -31,19 +31,20 @@
     </style>
 </head>
 <body>
+     <button style="padding: 10px;"  onclick = "location.href='/asistance/consultar/administrador'">Regresar a la Pagina de Consulta</button>
     <div class="asistance-container">
         <h2>Registro de Asistencia</h2>
         <div class="asistance-detail">
             <span class="label">Identificacion de Usuario:</span> {{ iduser }}
         </div>
         <div class="asistance-detail">
-            <span class="label">Hora Inicial:</span> ${{ horainicio }}
+            <span class="label">Hora Inicial:</span> {{ horainicio }}
         </div>
         <div class="asistance-detail">
-            <span class="label">Hora Final:</span> ${{ horafinal }}
+            <span class="label">Hora Final:</span> {{ horafinal }}
         </div>
         <div class="asistance-detail">
-            <span class="label">Fecha de Emision:</span> ${{ fecha}}
+            <span class="label">Fecha de Emision:</span> {{ fecha}}
         </div>      
     </div>
 </body>

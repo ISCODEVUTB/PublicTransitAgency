@@ -65,7 +65,15 @@ def index_update(
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador","supervisor"])
 ):
     #logger.info(f"[GET /actualizar] Rendimiento: {current_user['user_id']} - Mostrando formulario de actualización de rendimiento")
-    return templates.TemplateResponse("ActualizarRendimiento.html", {"request": request})
+    return templates.TemplateResponse("ActualizarAdministradorRendimiento.html", {"request": request})
+
+@app.get("/administrador/eliminar", response_class=HTMLResponse)
+def index_update(
+    request: Request,
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador","supervisor"])
+):
+    #logger.info(f"[GET /actualizar] Rendimiento: {current_user['user_id']} - Mostrando formulario de actualización de rendimiento")
+    return templates.TemplateResponse("EliminarAdministradorRendimiento.html", {"request": request})
 
 
 @app.get("/administrador/eliminar", response_class=HTMLResponse)
@@ -74,7 +82,7 @@ def index_delete(
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     #logger.info(f"[GET /eliminar] Rendimiento: {current_user['user_id']} - Mostrando formulario de eliminación de rendimiento")
-    return templates.TemplateResponse("EliminarRendimiento.html", {"request": request})
+    return templates.TemplateResponse("EliminarAdministradorRendimiento.html", {"request": request})
 
 
 @app.post("/create")
