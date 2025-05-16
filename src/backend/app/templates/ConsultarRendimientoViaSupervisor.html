@@ -8,14 +8,14 @@
 <body>
     <h2 style="text-align: center;  background-color: rgb(47, 165, 255); padding: 10px; color: white;">Consultar Gestion de Rendimiento</h2>
     <div class="grid" style="display: grid; grid-template-columns: 2, 1fr; margin-top: 25px;">
-    <form action="/behavior/find" method="get">
+    <form action="/behavior/byid" method="get">
         <div>
             <label style="margin-left: 200px;" for="ID">ID Generado de Rendimiento:</label>
             <input type="text" id="ID" name="ID" required>
             <button style="margin-left: 230px; margin-top: 10px; padding: 10px" class="btn btn-secondary" type="submit">Consultar</button>
         </div>
     </form>
-    <form action="/behavior/user" method="get">
+    <form action="/behavior/byuser" method="get">
         <div>
             <label style="margin-left: 100px;" for="id">Ver Todos a Partir de Identificacion del Usuario:</label>
             <input type="text" id="iduser" name="iduser" required>

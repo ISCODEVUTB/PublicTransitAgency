@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2 style="text-align: center;  background-color: rgb(47, 165, 255); padding: 10px; color: white;">Consultar Gestion de Rendimiento</h2>
-    <form action="/pqr/find" method="get">
+    <form action="/behavior/byid" method="get">
         <label style="margin-left: 200px;" for="ID">ID Generado de Rendimiento:</label>
         <input type="text" ID="ID" name="ID" required>
         
@@ -26,12 +26,12 @@
             </button>
         </div>
         <div>
-            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/behavior/actualizar'">
+            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/behavior/administrador/actualizar'">
             Actualizar Rendimiento
             </button>
         </div>
         <div>
-            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/behavior/eliminar'">
+            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/behavior/administrador/eliminar'">
             Eliminar Rendimiento
             </button>
         </div>

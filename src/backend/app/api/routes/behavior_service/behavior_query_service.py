@@ -20,7 +20,7 @@ app = APIRouter(prefix="/behavior", tags=["behavior"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 
-@app.get("/administrador/consultar", response_class=HTMLResponse)
+@app.get("/consultar/administrador", response_class=HTMLResponse)
 def consultar(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"
@@ -32,7 +32,7 @@ def consultar(
     #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de rendimiento")
     return templates.TemplateResponse(request,"ConsultarRendimientoViaAdministrador.html", {"request": request})
 
-@app.get("/supervisor/consultar", response_class=HTMLResponse)
+@app.get("/consultar/supervisor", response_class=HTMLResponse)
 def consultar(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=[
@@ -68,6 +68,29 @@ async def get_behaviors(
         }
     return templates.TemplateResponse("Supervisorbehaviors.html", context)
 
+@app.get("/administrador/behaviors")
+async def get_behaviors(
+    request:Request
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+):
+    """
+    Retrieve and return all behaviors records from the database.
+    """
+    #logger.info(f"[GET /pqrs] Usuario: {current_user['user_id']} - Consultando todas las behaviors.")
+    behaviors = controller.read_all(BehaviorOut)
+    if behaviors:
+        # Si hay varias asistencias, iterar sobre ellas
+        context = {
+            "request": request,
+            "behaviors": behaviors,  # Lista de behaviors
+        }
+    else:
+        logger.warning(f"[GET /pqrs] No se encontraron usuarios registrados")
+        context = {
+            "request": request,
+            "behaviors": behaviors  # Si no se encontraron usuarios
+        }
+    return templates.TemplateResponse("Administradorbehaviors.html", context)
 
 @app.get("/rendimientos")
 async def get_rendimientos(

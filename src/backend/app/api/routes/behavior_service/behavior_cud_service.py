@@ -38,6 +38,27 @@ def index_create(
         "nuevo_id": nuevo_id
     })
 
+@app.get("/administrador/crear", response_class=HTMLResponse)
+def index_create(
+    request: Request,
+    #current_user: dict = Security(
+        #get_current_user,
+        #scopes=["system", "administrador", "pasajero"])
+):
+    #logger.info(f"[GET /crear] Usuario: {current_user['user_id']} - Mostrando formulario de creación de PQR")
+    try:
+        behaviors = controller.read_all(BehaviorOut)
+        ultimo_id = max(p["ID"] for p in behaviors) if behaviors else 0
+        nuevo_id = ultimo_id + 1
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        nuevo_id = 1  # Por defecto
+
+    return templates.TemplateResponse("CrearAdministradorRendimiento.html", {
+        "request": request,
+        "nuevo_id": nuevo_id
+    })
+
 @app.get("/administrador/actualizar", response_class=HTMLResponse)
 def index_update(
     request: Request,
