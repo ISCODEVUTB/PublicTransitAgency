@@ -21,7 +21,7 @@ app = APIRouter(prefix="/asistance", tags=["asistance"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 
-@app.get("/consultar", response_class=HTMLResponse)
+@app.get("/consultar/administrador", response_class=HTMLResponse)
 def consultar(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "conductor", "supervisor", "mantenimiento"])
@@ -32,7 +32,7 @@ def consultar(
     #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de asistencia")
     return templates.TemplateResponse(request,"ConsultarAsistencia.html", {"request": request})
 
-@app.get("/consultar/user", response_class=HTMLResponse)
+@app.get("/consultar/conductor", response_class=HTMLResponse)
 def consultar(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
@@ -41,7 +41,29 @@ def consultar(
     Render the 'ConsultarPQR.html' template for the pqr consultation page.
     """
     #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de pqr")
-    return templates.TemplateResponse(request,"ConsultarAsistenciaUsuario.html", {"request": request})
+    return templates.TemplateResponse(request,"ConsultarAsistenciaConductor.html", {"request": request})
+
+@app.get("/consultar/supervisor", response_class=HTMLResponse)
+def consultar(
+    request: Request,
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+):
+    """
+    Render the 'ConsultarPQR.html' template for the pqr consultation page.
+    """
+    #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de pqr")
+    return templates.TemplateResponse(request,"ConsultarAsistenciaSupervisor.html", {"request": request})
+
+@app.get("/consultar/tecnico", response_class=HTMLResponse)
+def consultar(
+    request: Request,
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
+):
+    """
+    Render the 'ConsultarPQR.html' template for the pqr consultation page.
+    """
+    #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de pqr")
+    return templates.TemplateResponse(request,"ConsultarAsistenciaTecnico.html", {"request": request})
 
 @app.get("/asistencias")
 async def get_asistencias(

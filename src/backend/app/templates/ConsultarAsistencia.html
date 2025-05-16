@@ -2,15 +2,39 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Consultar Registro de Asistencia</title>
+    <title>Consultar Gestion de Registro de Asistencia</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
 </head>
 <body>
-    <h2 style="text-align: center;">Consultar Registro de Asistencia</h2>
+    <h2 style="text-align: center;  background-color: rgb(47, 165, 255); padding: 10px; color: white;">Consultar Gestion de Registro de Asistencia</h2>
     <form action="/asistance/find" method="get">
-        <label for="id">ID del Registro de Asistencia:</label>
+        <label style="margin-left: 200px;" for="id">ID Generado de Registro de Asistencia:</label>
         <input type="text" id="id" name="id" required>
-        <button type="submit">Consultar</button>
+        
+        <button  style="margin-left: 50px;"type="button" class="btn btn-info" onclick="location.href='/asistance/administrador/pqrs'">Ver Todos</button>
+        <button style="margin-left: 200px; margin-top: 10px; padding: 10px" class="btn btn-secondary" type="submit">Consultar</button>
     </form>
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; margin-top: 25px;">
+        <div>
+            <button style="padding: 10px; margin-left: 100px;" onclick="location.href='/login/user/administrador'">
+            Regresar a la Pagina Principal
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 50px;" onclick="location.href='/asistance/administrador/crear'">
+            Crear una Nueva Registro de Asistencia
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/asistance/administrador/actualizar'">
+            Actualizar Registro de Asistencia
+            </button>
+        </div>
+        <div>
+            <button style="padding: 10px; margin-left: 80px;" onclick="location.href='/asistance/administrador/eliminar'">
+            Eliminar Registro de Asistencia
+            </button>
+        </div>
+    </div>
 </body>
-</html>
+</html> 

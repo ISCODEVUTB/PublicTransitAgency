@@ -27,10 +27,12 @@
     </style>
 </head>
 <body>
-    <h2>Listado de Registros de Asistencias</h2>
+    <button style="padding: 10px;"  onclick = "location.href='/asistance/consultar'">Regresar a la Pagina de Consulta</button>
+    <h2>Listado de Registros de Registros de Asistencias</h2>
     <table>
         <thead>
             <tr>
+                <th>ID de Registro</th>
                 <th>Identificacion del Usuario</th>
                 <th>Hora Inicial</th>
                 <th>Hora Final</th>
@@ -40,6 +42,7 @@
         <tbody>
             {% for asistance in asistencia_list %}
             <tr>
+                <td>{{ asistance.ID }}</td>
                 <td>{{ asistance.iduser }}</td>
                 <td>{{ asistance.horainicio }}</td>
                 <td>{{ asistance.horafinal }}</td>
