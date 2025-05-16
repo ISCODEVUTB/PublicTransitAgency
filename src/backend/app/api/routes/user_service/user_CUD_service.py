@@ -25,7 +25,20 @@ def index_create(
     roles = controller.read_all(RolUserOut),
     turnos = controller.read_all(Shift)
 ):
-    return templates.TemplateResponse("CrearUsuario.html", {"request": request, "roles":roles, "turnos":turnos})
+    try:
+        users = controller.read_all(UserOut)
+        ultimo_id = max(p["ID"] for p in users) if users else 0
+        nuevo_id = ultimo_id + 1
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        nuevo_id = 1  # Por defecto
+
+    return templates.TemplateResponse("CrearUsuario.html", {
+        "request": request,
+        "nuevo_id": nuevo_id,
+        "roles":roles, 
+        "turnos":turnos
+    })
 
 
 @app.get("/actualizar", response_class=HTMLResponse)
@@ -44,6 +57,7 @@ def index_delete(
 
 @app.post("/create")
 async def create_user(
+    request:Request,
     ID: int = Form(...),
     Identificacion: int = Form(...),
     Nombre: str = Form(...),
@@ -70,6 +84,7 @@ async def create_user(
             logger.info(f"Usuario insertado con ID: {new_user.ID}")  # Verifica si el ID se asigna
             logger.info(f"[POST /create] Usuario creado exitosamente con identificación {Identificacion}")
             return {
+                "request": request,
                 "operation": "create",
                 "success": True,
                 "data": UserOut(ID=new_user.ID, Identificacion=new_user.Identificacion, Nombre=new_user.Nombre,
@@ -88,6 +103,7 @@ async def create_user(
 
 @app.post("/update")
 async def update_user(
+    request:Request,
     ID: int = Form(...),
     Identificacion: int = Form(...),
     Nombre: str = Form(...),
@@ -109,6 +125,7 @@ async def update_user(
         controller.update(updated_user)
         logger.info(f"[POST /update] Usuario actualizada exitosamente: {updated_user}")
         return {
+            "request":request,
             "operation": "update",
             "success": True,
             "data": UserOut(ID=ID, Identificacion=updated_user.Identificacion, Nombre=updated_user.Nombre,
@@ -125,6 +142,7 @@ async def update_user(
 
 @app.post("/delete")
 async def delete_user(
+    request:Request,
     ID: int = Form(...)
 ):
     try:
@@ -135,9 +153,13 @@ async def delete_user(
 
         logger.info(f"[POST /delete] Eliminando usuario con id={ID}")
         controller.delete(existing)
-        return templates.TemplateResponse("DeleteConfirmation.html", {
-            "request": None, "ID": ID, "message": f"User {ID} deleted successfully."
-        })
+        context = {
+            "request":request,
+            "operation": "delete",
+            "success": True,
+            "message": f"User {ID} deleted successfully."
+        }
+        return templates.TemplateResponse("Confirmacion.html", context)
     except HTTPException as e:
         raise e
     except Exception as e:

@@ -20,7 +20,7 @@ app = APIRouter(prefix="/behavior", tags=["behavior"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 
-@app.get("/consultar/administrador", response_class=HTMLResponse)
+@app.get("/administrador/consultar", response_class=HTMLResponse)
 def consultar(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"
@@ -32,7 +32,7 @@ def consultar(
     #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de rendimiento")
     return templates.TemplateResponse(request,"ConsultarRendimientoViaAdministrador.html", {"request": request})
 
-@app.get("/consultar/supervisor", response_class=HTMLResponse)
+@app.get("/supervisor/consultar", response_class=HTMLResponse)
 def consultar(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=[

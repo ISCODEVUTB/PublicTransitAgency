@@ -25,7 +25,18 @@ def index_create(
         #scopes=["system", "administrador"])
 ):
     #logger.info(f"[GET /crear] Usuario: {current_user['user_id']} - Mostrando formulario de creación de rol de usuario")
-    return templates.TemplateResponse("CrearRolUsuario.html", {"request": request})
+    try:
+        rolusers = controller.read_all(RolUserOut)
+        ultimo_id = max(p["ID"] for p in rolusers) if rolusers else 0
+        nuevo_id = ultimo_id + 1
+    except Exception as e:
+        logger.error(f"Error al obtener el último ID: {str(e)}")
+        nuevo_id = 1  # Por defecto
+
+    return templates.TemplateResponse("CrearRolUsuario.html", {
+        "request": request,
+        "nuevo_id": nuevo_id
+    })
 
 @app.get("/actualizar", response_class=HTMLResponse)
 def index_update(
@@ -47,6 +58,7 @@ def index_delete(
 #
 @app.post("/create")
 async def create_roluser(
+    request: Request,
     ID: int = Form(...),
     Rol: str = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
@@ -66,12 +78,14 @@ async def create_roluser(
         controller.add(new_roluser)
         logger.info(f"Rol de Usuario insertado con ID: {new_roluser.ID}")  # Verifica si el ID se asigna
         logger.info(f"[POST /create] Rol de Usuario creado exitosamente con identificación {ID}")
-        return {
+        context =  {
+            "request":request,
             "operation": "create",
             "success": True,
             "data": RolUserOut(ID=new_roluser.ID, Rol=new_roluser.Rol).model_dump(),
             "message": "RolUser created successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
         
     except ValueError as e:
         logger.warning(f"[POST /create] Error de validación: {str(e)}")
@@ -83,13 +97,14 @@ async def create_roluser(
 
 @app.post("/update")
 async def update_roluser(
+    request:Request,
     ID: int = Form(...),
     Rol: str = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     #logger.info(f"[POST /update] Usuario: {current_user['user_id']} - Actualizando rol de usuario ID={ID}")
     try:
-        existing = controller.get_by_id(RolUserOut, ID)
+        existing = controller.get_by_column(RolUserOut, "ID",ID)
         if existing is None:
             logger.warning(f"[POST /update] Rol de Usuario no encontrada: ID={ID}")
             raise HTTPException(404, detail="RolUser not found")
@@ -97,26 +112,28 @@ async def update_roluser(
         updated_roluser = RolUserOut(ID=ID, Rol=Rol)
         controller.update(updated_roluser)
         logger.info(f"[POST /update] Usuario actualizada exitosamente: {updated_roluser}")
-        return {
+        context= {
+            "request":request,
             "operation": "update",
             "success": True,
             "data": RolUserOut(ID=ID, Rol=updated_roluser.Rol).model_dump(),
             "message": f"RolUser {ID} updated successfully."
         }
+        return templates.TemplateResponse("Confirmacion.html", context)
     except ValueError as e:
         logger.warning(f"[POST /update] Error de validación: {str(e)}")
         raise HTTPException(400, detail=str(e))
 
 
-
 @app.post("/delete")
 async def delete_roluser(
+    request:Request,
     ID: int = Form(...),
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     #logger.info(f"[POST /delete] Usuario: {current_user['user_id']} - Eliminando rol de usuario ID={ID}")
     try:
-        existing = controller.get_by_id(RolUserOut, ID)
+        existing = controller.get_by_column(RolUserOut,"ID",ID)
         if not existing or existing is None:
             logger.warning(f"[POST /delete] Rol de Usuario no encontrado en la base de datos: ID={ID}")
             raise HTTPException(404, detail="RolUser not found")
@@ -124,9 +141,13 @@ async def delete_roluser(
         logger.info(f"[POST /delete] Eliminando rol de usuario con ID={ID}")
         controller.delete(existing) 
         logger.info(f"[POST /delete] Rol de Usuario eliminada exitosamente: ID={ID}")
-        return templates.TemplateResponse("DeleteConfirmation.html", {
-            "request": None, "ID": ID, "message": f"User {ID} deleted successfully."
-        })
+        context = {
+            "request":request,
+            "operation": "delete",
+            "success": True,
+            "message": f"RolUser {ID} deleted successfully."
+        }
+        return templates.TemplateResponse("Confirmacion.html", context)
     except HTTPException as e:
         raise e
     except Exception as e:

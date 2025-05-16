@@ -26,12 +26,10 @@ templates = Jinja2Templates(directory="src/backend/app/templates")
 def consultar(
     request: Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Render the 'ConsultarTipoMovimiento.html' template for the user consultation page.
     """
-    #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de tipo de movimiento")
     #logger.info(f"[GET /consultar] Usuario: {current_user['user_id']} - Mostrando página de consulta de tipo de movimiento")
     return templates.TemplateResponse("ConsultarTipoMovimiento.html", {"request": request})
 
@@ -40,12 +38,10 @@ def consultar(
 async def get_typemovement(
     request:Request,
     #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
-    #current_user: dict = Security(get_current_user, scopes=["system", "administrador"])
 ):
     """
     Retrieve and return all typemovements records from the database.
     """
-    #logger.info(f"[GET /typemovements] Usuario: {current_user['user_id']} - Consultando todas los tipos de movimiento.")
     #logger.info(f"[GET /typemovements] Usuario: {current_user['user_id']} - Consultando todas los tipos de movimiento.")
     typemovements = controller.read_all(TypeMovementOut)
     if typemovements:
@@ -57,8 +53,8 @@ async def get_typemovement(
     else:
         logger.warning(f"[GET /users] No se encontraron usuarios registrados")
         context = {
-            "request": typemovements,
-            "tiposmovimientos": []  # Si no se encontraron usuarios
+            "request": request,
+            "tiposmovimientos": typemovements  # Si no se encontraron usuarios
         }
 
     return templates.TemplateResponse("tiposmovimientos.html", context)
@@ -79,8 +75,6 @@ def typemovement(
 
     if unit_typemovement:
         logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.ID}, {unit_typemovement.TipoMovimiento}")
-        logger.info(f"[GET /typemovement] Tipo de Movimiento encontrado: {unit_typemovement.ID}, {unit_typemovement.TipoMovimiento}")
-
     else:
         logger.warning(f"[GET /typemovement] No se encontró tipo de movimientos con id={id}")
         

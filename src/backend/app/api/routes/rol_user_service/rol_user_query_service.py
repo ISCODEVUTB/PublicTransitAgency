@@ -22,7 +22,7 @@ app = APIRouter(prefix="/roluser", tags=["roluser"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 
-@app.get("/consultar", response_class=HTMLResponse)
+@app.get("/administrador/consultar", response_class=HTMLResponse)
 def consultar(
     request: Request
 ):
@@ -32,7 +32,7 @@ def consultar(
     return templates.TemplateResponse("ConsultarRolUser.html", {"request": request})
 
 
-@app.get("/rolusers")
+@app.get("/administrador/rolusers")
 async def get_roluser(
     request: Request
 ):
@@ -52,12 +52,12 @@ async def get_roluser(
         logger.warning(f"[GET /rolusers] No se encontraron usuarios registrados")
         context = {
             "request": request,
-            "rolusers": []  # Si no se encontraron usuarios
+            "rolusers": rolusers # Si no se encontraron usuarios
         }
 
     return templates.TemplateResponse("rolusers.html", context)
 
-@app.get("/tipousuario", response_class=HTMLResponse)
+@app.get("/administrador/tipousuario", response_class=HTMLResponse)
 def roluser(
     request: Request,
     ID: int = Query(...),

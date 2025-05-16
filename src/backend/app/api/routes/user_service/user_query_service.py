@@ -49,7 +49,7 @@ async def get_users(
         logger.warning(f"[GET /users] No se encontraron usuarios registrados")
         context = {
             "request": request,
-            "usuarios": []  # Si no se encontraron usuarios
+            "usuarios": usuarios  # Si no se encontraron usuarios
         }
 
     return templates.TemplateResponse("usuarios.html", context)
@@ -59,14 +59,14 @@ async def get_users(
 def usuario(
     request: Request,
     id: int= Query(...),
-    current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
+    #current_user: dict = Security(get_current_user, scopes=["system", "administrador", "pasajero"])
 ):
     """
     Retrieve a user by its ID and render the 'usuario.html' template with its details.
     If the user is not found, display 'None' for all fields.
     """
-    logger.info(f"[GET /user] Usuario: {current_user['user_id']} - Consultando usuario con id={id}")
-    unit_usuario= controller.get_by_id(UserOut, id)
+    #logger.info(f"[GET /user] Usuario: {current_user['user_id']} - Consultando usuario con id={id}")
+    unit_usuario= controller.get_by_column(UserOut, "ID",id)
 
     if unit_usuario:
         logger.info(f"[GET /user] Usuario encontrados: {unit_usuario.ID}")
