@@ -4,7 +4,7 @@ from fastapi import (
 )
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-
+from backend.app.models.type_movement import TypeMovementCreate, TypeMovementOut
 from backend.app.models.movement import MovementCreate, MovementOut
 from backend.app.logic.universal_controller_instance import universal_controller as controller
 from backend.app.core.auth import get_current_user
@@ -23,6 +23,7 @@ def index_create(
 ):
     #logger.info(f"[GET /crear] Movimiento: {current_user['user_id']} - Mostrando formulario de creación de movimiento")
     try:
+        typemovements = controller.read_all(TypeMovementOut)
         movements = controller.read_all(MovementOut)
         ultimo_id = max(p["ID"] for p in movements) if movements else 0
         nuevo_id = ultimo_id + 1
@@ -32,7 +33,8 @@ def index_create(
 
     return templates.TemplateResponse("CrearAdministradorMovimiento.html", {
         "request": request,
-        "nuevo_id": nuevo_id
+        "nuevo_id": nuevo_id,
+        "typemovements":typemovements
     })
 
 

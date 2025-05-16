@@ -23,7 +23,7 @@ app = APIRouter(prefix="/movement", tags=["movement"])
 templates = Jinja2Templates(directory="src/backend/app/templates")
 
 
-@app.get("/administrador/consultar", response_class=HTMLResponse)
+@app.get("/consultar/administrador", response_class=HTMLResponse)
 def consultar(
     request: Request
 ):
@@ -81,7 +81,7 @@ async def get_all(request: Request):
 
 
 # Route to view a specific user by its ID and render the 'movement.html' template
-@app.get("/administrador/byid/movimiento", response_class=HTMLResponse)
+@app.get("/administrador/byid", response_class=HTMLResponse)
 def get_by_id(
     request: Request,
     ID: int=Query(...),
